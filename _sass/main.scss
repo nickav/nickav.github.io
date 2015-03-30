@@ -1,0 +1,214 @@
+@import "bourbon/bourbon";
+// Grid settings
+@import "neat/neat-helpers";
+$grid-columns: 10;
+$gutter: em(40);
+$max-width: em(1140);
+@import "neat/neat";
+@import "normalize/normalize";
+@import "config";
+@import "utils";
+
+// device sizes
+$desktop: new-breakpoint(min-width 1141px 10);
+$tablet: new-breakpoint(max-width 1140px 8);
+$large-tablet: new-breakpoint(min-width 861px 8);
+$small-tablet: new-breakpoint(max-width 860px 8);
+$not-mobile: new-breakpoint(min-width 701px 4);
+$mobile: new-breakpoint(max-width 700px 4);
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+// font smoothing
+body, input {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  font-smooth: antialiased;
+}
+
+body {
+  color: $dark-gray;
+}
+
+a {
+  text-decoration: none;
+  color: $red;
+  
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $header-font;
+}
+
+header {
+  @include clearfix;
+  width:100%;
+  padding: 2em 4em 2em;
+  background: $light-gray;
+  font-size: 1.25em;
+}
+
+.nav {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  
+  li {
+    display: inline-block;
+  }
+  
+  a {
+    color: inherit;
+  }
+}
+
+.menu {
+  @include span-columns(5);
+}
+
+.menu-links {
+  @extend .nav;
+  font-family: $header-font;
+  font-size: 0.9em;
+  li {
+    margin-right: 24px;
+  }
+}
+
+.social-links {
+  @include span-columns(5);
+  @extend .nav;
+  display: inline-block;
+  text-align: right;
+  li {
+    margin-left: 4px;
+    text-align: right;
+    
+    a {
+      padding: 10px;
+    }
+  }
+}
+
+div.container {
+  @include clearfix;
+  margin: 0 auto;
+  //overflow: hidden;
+  max-width: 1280px;
+  > .col-2 {
+    @include span-columns(2);
+    @include omega;
+  }
+  > .col-4 { @include span-columns(4); }
+}
+
+.hero {
+  background: $light-gray;
+  padding: 2em 0 4em 0;
+  margin-bottom: 4em;
+  text-align: center;
+  
+  .tagline-group a {
+    text-decoration: none;
+  }
+  
+  .tagline {
+    color: $dark-gray;
+    font-size: 2.5em;
+    margin: 0.25em 0;
+  }
+  
+  .tagline-byline {
+    color: $gray;
+  }
+  
+  .action {
+    padding-top: 2em;
+  }
+}
+
+.logo {
+  
+}
+h1.logo {
+  margin: 0;
+}
+
+.btn {
+  font-family: $header-font;
+  cursor: pointer;
+  padding: 1.2em 3em 1.1em 3em;
+  background: $dark-gray;
+  color: $light-gray;
+  display: inline-block;
+  border-radius: 5px;
+}
+
+/*`.menu-link` represents the responsive menu toggle that shows/hides on
+small screens.
+*/
+.menu-link {
+  @include transition(left 0.2s ease-out);
+  cursor: pointer;
+  position: fixed;
+  display: block; /* show this only on small screens */
+  top: 0;
+  right: 0;
+  background: #000;
+  background: rgba($dark-gray, 0.8);
+  font-size: 10px; /* change this value to increase/decrease button size */
+  z-index: 99998;
+  width: 2em;
+  height: auto;
+  padding: 2.1em 1.6em;
+
+  &:hover, &:focus {
+    background: $dark-gray;
+  }
+
+  span {
+    position: relative;
+    display: block;
+
+    &, &:before, &:after {
+      background-color: #fff;
+      width: 100%;
+      height: 0.2em;
+    }
+
+    &:before, &:after {
+      position: absolute;
+      margin-top: -0.6em;
+      content: " ";
+    }
+
+    &:after {
+      margin-top: 0.6em;
+    }
+  }
+
+  &, & a, & span {
+    @include box-sizing(initial);
+  }
+}
+
+@include media($large-tablet) {
+  .menu-link {
+    display: none;
+  }
+}
+
+@include media($mobile) {
+  #menu {
+    display: none;
+  }
+  .social-links {
+    @include span-columns($grid-columns);
+    text-align: center;
+  }
+}

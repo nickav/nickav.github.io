@@ -1,0 +1,24 @@
+{
+  "name": "Nick Aversano",
+  "version": "1.0.0",
+  "authors": [
+    "Nick Aversano <nick23hi@gmail.com>"
+  ],
+  "description": "My new personal website.",
+  "license": "MIT",
+  "homepage": "http://www.nickaversano.com",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bourbon": "~4.2.1",
+    "neat": "~1.7.2",
+    "normalize-scss": "~3.0.2",
+    "font-awesome": "~4.3.0"
+  }
+}

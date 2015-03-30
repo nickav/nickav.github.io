@@ -1,0 +1,20 @@
+{
+    "sass.enabled": false,
+    "path": {
+        "sass/main.scss": {
+            "sass.enabled": true,
+            "sass.options": {
+                "includePaths": [],
+                "outputDir": "../css/",
+                "imagePath": null,
+                "sourceComments": false,
+                "outputStyle": "nested"
+            },
+            "linting.collapsed": false,
+            "themes.theme": "rain.monokai-dark-soda",
+            "useTabChar": false,
+            "spaceUnits": 2,
+            "brackets-git.gitPath": "git"
+        }
+    }
+}

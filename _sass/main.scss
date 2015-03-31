@@ -86,7 +86,6 @@ header {
   display: inline-block;
   text-align: right;
   li {
-    margin-left: 4px;
     text-align: right;
     
     a {
@@ -113,8 +112,13 @@ div.container {
   margin-bottom: 4em;
   text-align: center;
   
-  .tagline-group a {
-    text-decoration: none;
+  .tagline-group {
+    padding: 0 4em;
+    max-width: 800px;
+    margin: 0 auto;
+    a {
+      text-decoration: none;
+    }
   }
   
   .tagline {
@@ -139,14 +143,99 @@ h1.logo {
   margin: 0;
 }
 
+.projects {
+  max-width: 780px;
+  margin: 0 auto;
+  text-align: center;
+  padding-bottom: 4em;
+  
+  a:hover {
+    text-decoration: none;
+  }
+  
+  .project {
+    color: #000;
+    background: $blue;
+    padding: 2.5em;
+    margin-bottom: 1.3em;
+    
+    &.red { background: $red; }
+    &.blue { background: $blue; }
+    &.yellow { background: $yellow; }
+    &.green { background: $green; }
+    
+    .tags {
+      opacity: 0.6;
+      font-family: $body-font;
+      font-weight: 500;
+    }
+    
+    .title {
+      margin: 0;
+      font-size: 2em;
+      font-weight: bold;
+      color: white;
+      padding: 0.2em 0 0.2em 0;
+    }
+    
+    .desc {
+      color: white;
+      font-weight: bold;
+      padding-top: 0.3em;
+    }
+  }
+  
+  .pagination {
+    .btn {
+      margin: 0 2em;
+    }
+    /*@include clearfix;
+    .prev {
+      float: left;
+    }
+    .next {
+      float: right;
+    }*/
+  }
+}
+
+footer {
+  background: $dark-gray;
+  color: $light-gray;
+  padding: 4em;
+}
+
 .btn {
   font-family: $header-font;
   cursor: pointer;
-  padding: 1.2em 3em 1.1em 3em;
+  padding: 1.1em 2em 1em 2em;
   background: $dark-gray;
   color: $light-gray;
   display: inline-block;
   border-radius: 5px;
+  font-size: 1.1em;
+  font-weight: bold;
+  position: relative;
+  
+  &.secondary {
+    background: transparent;
+    border: 3px solid transparent;
+    color: $dark-gray;
+  }
+  
+  &.prev:before {
+    @extend %psuedo-element;
+    content: '\2190';
+    left: 0;
+    padding-top: 1px;
+  }
+  
+  &.next:before {
+    @extend %psuedo-element;
+    content: '\2192';
+    right: 0;
+    padding-top: 1px;
+  }
 }
 
 /*`.menu-link` represents the responsive menu toggle that shows/hides on
@@ -158,9 +247,8 @@ small screens.
   position: fixed;
   display: block; /* show this only on small screens */
   top: 0;
-  right: 0;
-  background: #000;
-  background: rgba($dark-gray, 0.8);
+  left: 0;
+  background: $dark-gray;
   font-size: 10px; /* change this value to increase/decrease button size */
   z-index: 99998;
   width: 2em;
@@ -197,7 +285,7 @@ small screens.
   }
 }
 
-@include media($large-tablet) {
+@include media($not-mobile) {
   .menu-link {
     display: none;
   }
@@ -205,7 +293,29 @@ small screens.
 
 @include media($mobile) {
   #menu {
-    display: none;
+    position: fixed;
+    margin-left: -300px;
+    width: 300px;
+    height: 100%;
+    left: 0;
+    top:0;
+    z-index: 999999;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: black;
+    opacity: 0.97;
+    
+    nav {
+      ul.menu-links {
+        font-size: 1.5em;
+        color: white;
+        font-weight: bold;
+        li {
+          display: block;
+          padding-bottom: 0.5em;
+        }
+      }
+    }
   }
   .social-links {
     @include span-columns($grid-columns);

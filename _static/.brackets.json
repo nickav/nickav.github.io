@@ -10,7 +10,7 @@
                 "sourceComments": false,
                 "outputStyle": "nested"
             },
-            "linting.collapsed": false,
+            "linting.collapsed": true,
             "themes.theme": "rain.monokai-dark-soda",
             "useTabChar": false,
             "spaceUnits": 2,

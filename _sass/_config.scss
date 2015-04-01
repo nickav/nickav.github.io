@@ -1,12 +1,13 @@
 // colors
 $light-gray: #eee;
-$gray: #666;
 $dark-gray: #221e1f;
+$gray: lighten($dark-gray, 15);
 $red: #E74C3C;
 $blue: #3498DB;
 $green: #2ECC71;
 $yellow: #F39C12;
 
 // fonts
+$base-font: sans-serif;
 $body-font: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 $header-font: 'Source Sans Pro', sans-serif;

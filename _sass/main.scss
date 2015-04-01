@@ -78,6 +78,10 @@ header {
   li {
     margin-right: 24px;
   }
+  
+  .mini {
+    padding: 1em;
+  }
 }
 
 .social-links {
@@ -198,7 +202,7 @@ h1.logo {
 
 .feature {
   background: $red;
-  padding: 1em 0;
+  padding: 2em 0;
   margin-bottom: 4em;
   
   .content {
@@ -207,27 +211,39 @@ h1.logo {
   
   .title {
     color: white;
-    font-size: 3em;
+    font-size: 2.7em;
+    margin: 0;
+  }
+  
+  .sub {
+    padding-top: 1em;
   }
 }
 
 .single {
   margin-bottom: 4em;
   .content {
-    max-width: 700px;
+    max-width: 760px;
+    padding: 0 2em;
     
     p {
       line-height: 1.6em;
       font-size: 1.2em;
+      color: $gray;
     }
     
     img {
       width: 100%;
       height: auto;
+      vertical-align: middle;
       
       &.shadow {
-        box-shadow: 0 0 8px rgba(0,0,0,0.4);
+        box-shadow: 0 1px 8px rgba(0,0,0,0.15);
       }
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+      text-align: center;
     }
     
     h2 {
@@ -241,6 +257,42 @@ h1.logo {
       color: $gray;
     }
   }
+  
+  &.red .feature { background: $red; }
+  &.blue .feature { background: $blue; }
+  &.yellow .feature { background: $yellow; }
+  &.green .feature { background: $green; }
+}
+
+ul.tags {
+  @extend .nav;
+  padding: 0.5em 0;
+  text-align: center;
+  li {
+    margin: 0 2px;
+    a {
+      @include transition(all .1s);
+      padding: 10px 18px 9px 18px;
+      background: $light-gray;
+      font-weight: bold;
+      color: $gray;
+      
+      &:hover {
+        background: $red;
+        color: white;
+        text-decoration: none;
+        
+        &.red { background: $red; }
+        &.blue { background: $blue; }
+        &.green { background: $green; }
+        &.yellow { background: $yellow; }
+      }
+    }
+  }
+}
+
+a .fa-link {
+  padding-right: 8px;
 }
 
 footer {
@@ -271,7 +323,8 @@ footer {
     }
   }
   
-  &.prev:before {
+  /* text arrows */
+  /*&.prev:before {
     @extend %psuedo-element;
     content: '\2190';
     left: 0;
@@ -283,22 +336,49 @@ footer {
     content: '\2192';
     right: 0;
     padding-top: 1px;
+  }*/
+  
+  /* font awesome arrows */
+  &.prev:before {
+    @extend .fa;
+    content: "\f177";
+    left: 0;
+    position: absolute;
+    padding-top: 2px;
   }
+  
+  &.next:before {
+    @extend .fa;
+    content: "\f178";
+    right: 0;
+    position: absolute;
+    padding-top: 2px;
+  }
+}
+
+/* excerpt from FontAwesome 4.3.0 */
+.fa {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  transform: translate(0, 0);
 }
 
 /*`.menu-link` represents the responsive menu toggle that shows/hides on
 small screens.
 */
 .menu-link {
-  @include transition(left 0.2s ease-out);
+  @include transition(left 0.2s cubic-bezier(0.165, 0.840, 0.440, 1.000));
   cursor: pointer;
   position: fixed;
   display: block; /* show this only on small screens */
   top: 0;
-  left: 0;
+  right: 0;
   background: $dark-gray;
   font-size: 10px; /* change this value to increase/decrease button size */
-  z-index: 99998;
+  z-index: 999999;
   width: 2em;
   height: auto;
   padding: 2.1em 1.6em;
@@ -310,6 +390,10 @@ small screens.
   span {
     position: relative;
     display: block;
+    
+    & {
+      @include transition(all .2s);
+    }
 
     &, &:before, &:after {
       background-color: #fff;
@@ -318,9 +402,12 @@ small screens.
     }
 
     &:before, &:after {
+      @include transition(all .4s);
+      @include transform(rotate(deg));
       position: absolute;
       margin-top: -0.6em;
       content: " ";
+      top: 0;
     }
 
     &:after {
@@ -337,34 +424,73 @@ small screens.
   .menu-link {
     display: none;
   }
+  
+  .menu-links .mini {
+    display: none;
+  }
 }
 
 @include media($mobile) {
   #menu {
+    @include transition(left 0.2s cubic-bezier(0.165, 0.840, 0.440, 1.000));
+    -webkit-transform: translate3d(0,0,0); // new layer hack
     position: fixed;
     margin-left: -300px;
     width: 300px;
     height: 100%;
     left: 0;
     top:0;
-    z-index: 999999;
+    z-index: 999998;
     overflow-y: auto;
     overflow-x: hidden;
     background: black;
-    opacity: 0.97;
+    opacity: 0.9;
     
     nav {
       ul.menu-links {
+        text-align: center;
         font-size: 1.5em;
         color: white;
         font-weight: bold;
+        
         li {
           display: block;
-          padding-bottom: 0.5em;
+          margin: 0;
+          
+          a {
+            padding: 1em;
+            display: block;
+            
+            &:hover {
+              text-decoration: none;
+              color: $dark-gray;
+              background: white;
+            }
+          }
         }
       }
     }
   }
+  
+  body.active #menu {
+    left: 300px;
+  }
+  
+  body.active #toggle {
+    span {
+      background-color: rgba(255,255,255,0);
+
+      &:before {
+        @include transform(rotate(45deg));
+        top:6px;
+      }
+      &:after {
+        @include transform(rotate(-45deg));
+        top:-6px;
+      }
+    }
+  }
+  
   .social-links {
     @include span-columns($grid-columns);
     text-align: center;

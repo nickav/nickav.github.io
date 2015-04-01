@@ -5,3 +5,4 @@ _site
 build
 bower_components
 _static/css/*
+_static/tmp/*

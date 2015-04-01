@@ -1,0 +1,40 @@
+/* TEAM */
+  Developer: Nick Aversano
+  Twitter: @nickaversano
+  Location: NJ, USA, Earth
+
+/* THANKS */
+  Inspiration: startupshell.org
+  Twitter: @startup_shell
+  Location: College Park, MD
+
+/* SITE */
+  Last updated: 4/3/15
+  Standards: HTML5, CSS3
+  Components: YouMightNotNeedjQuery
+  Software:
+    I design in Illustrator. I convert designs with Brackets. Bourbon and SCSS make
+    CSS just about bearable. Bower for all those good frontend dependencies.
+    And I develop in Chrome. Cross browser testing in IE gives me the chills.
+    JPEGmini is my favorite loss-less image compression program for JPEGs, and
+    ImageOptim is great for PNGs too.
+
+    Unix stuff:
+      My favorite text editor is vim, although Sublime Text gets an honorable mention.
+      I can't use iTerm without tmux. And of course where would I be without git?
+      My preferred language is Ruby because it makes me happy.
+
+    Mac gems:
+      I can't use Finder without TotalFinder.
+      Dash is great for quick code referencing, though I spend a lot of time on Stack Overflow.
+      Quicksilver is maybe the coolest thing.
+      Windownaut is a must have (or the free Spectacle) for actual window management.
+      Karabiner lets me do some vim-y keybindings.
+      Dropbox.
+      And TextExpander so I never have to type my name again. Mmm... keystroke saving.
+      I typically jam out to Alternative Rock on Spotify.
+
+    Misc:
+      I've been playing guitar since 6th grade. Recently, I've started learning piano.
+      I try to maintain a beginner's mindset. If I'm not good at something, I know 
+      I can work at it to get better.

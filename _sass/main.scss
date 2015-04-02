@@ -302,11 +302,15 @@ footer {
   background: $dark-gray;
   color: $light-gray;
   padding: 4em;
-  //font-size: 1.25em;
   
   .about {
     @include span-columns(5);
+    font-family: $header-font;
     float: left;
+  }
+  
+  .social-links {
+    font-size: 1.25em;
   }
 }
 
@@ -439,6 +443,10 @@ small screens.
   }
   
   header .logo {
+    display: none;
+  }
+  
+  #menu {
     display: none;
   }
 }

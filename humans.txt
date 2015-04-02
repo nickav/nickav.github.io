@@ -8,6 +8,11 @@
   Twitter: @startup_shell
   Location: College Park, MD
 
+  Inspiration: jhil.co
+  Twitter: @jhilmd
+  
+  Inspiration: hugeinc.com
+
 /* SITE */
   Last updated: 4/3/15
   Standards: HTML5, CSS3
@@ -32,9 +37,9 @@
       Karabiner lets me do some vim-y keybindings.
       Dropbox.
       And TextExpander so I never have to type my name again. Mmm... keystroke saving.
-      I typically jam out to Alternative Rock on Spotify.
 
     Misc:
+      While working, I typically jam out to Alternative Rock on Spotify.
       I've been playing guitar since 6th grade. Recently, I've started learning piano.
       I try to maintain a beginner's mindset. If I'm not good at something, I know 
       I can work at it to get better.

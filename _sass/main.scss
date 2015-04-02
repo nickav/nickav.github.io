@@ -75,6 +75,8 @@ header {
   @extend .nav;
   font-family: $header-font;
   font-size: 0.9em;
+  padding: 0.3em 0;
+  
   li {
     margin-right: 24px;
   }
@@ -189,6 +191,7 @@ h1.logo {
       color: white;
       font-weight: bold;
       padding-top: 0.3em;
+      line-height: 1.5em;
     }
   }
   
@@ -299,6 +302,12 @@ footer {
   background: $dark-gray;
   color: $light-gray;
   padding: 4em;
+  //font-size: 1.25em;
+  
+  .about {
+    @include span-columns(5);
+    float: left;
+  }
 }
 
 .btn {
@@ -428,6 +437,10 @@ small screens.
   .menu-links .mini {
     display: none;
   }
+  
+  header .logo {
+    display: none;
+  }
 }
 
 @include media($mobile) {
@@ -494,5 +507,33 @@ small screens.
   .social-links {
     @include span-columns($grid-columns);
     text-align: center;
+  }
+  
+  footer .about {
+    @include span-columns($grid-columns);
+    text-align: center;
+    padding-bottom: 2em;
+  }
+  
+  header {
+    padding: 1.5em 2em;
+    
+    .social-links {
+      display: none;
+    }
+    
+    .menu {
+      @include span-columns($grid-columns);
+    }
+  }
+  
+  .pagination {
+    &.top .prev {
+      display: none;
+    }
+    
+    &.bottom .next {
+      display: none;
+    }
   }
 }

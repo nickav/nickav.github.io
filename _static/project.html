@@ -12,15 +12,23 @@
   <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 </head>
-<body class="active">
+<body>
+  <div id="menu" class="menu">
+    <nav>
+      <ul class="menu-links">
+        <div class="mini">
+          <img src="assets/nav-white.svg" alt="Nick Aversano" width="32px" height="32px" />
+        </div>
+        <li><a href="#">Nick Aversano</a></li>
+        <li><a href="/resume14.pdf" target="_blank">Résumé</a></li>
+      </ul>
+    </nav>
+  </div>
   <header>
     <div id="toggle" class="menu-link"><a href="javascript:void(0)"><span></span></a></div>
-    <div id="menu" class="menu">
+    <div class="menu">
      <nav>
         <ul class="menu-links">
-          <div class="mini">
-            <img src="assets/nav-white.svg" alt="Nick Aversano" width="32px" height="32px" />
-          </div>
           <li><a href="#">Nick Aversano</a></li>
           <li><a href="/resume14.pdf" target="_blank">Résumé</a></li>
         </ul>
@@ -60,7 +68,14 @@
   </section>
   <footer>
    <div class="container">
-     this website is made by <a href="/humans.txt" target="_blank">humans</a>.
+     <span class="about">this website is made by <a href="/humans.txt" target="_blank">humans</a>.</span>
+     <ul class="social-links">
+      <li><a href="#" title="Github" target="_blank"><span class="fa fa-github"></span></a></li>
+      <li><a href="#" title="Twitter" target="_blank"><span class="fa fa-twitter"></span></a></li>
+      <li><a href="#" title="Spotify" target="_blank"><span class="fa fa-spotify"></span></a></li>
+      <li><a href="#" title="LinkedIn" target="_blank"><span class="fa fa-linkedin"></span></a></li>
+      <li><a id="mail" href="mailto:nospam+at+nickaversano.com" title="Hit me up" target="_blank"><span class="fa fa-envelope"></span></a></li>
+    </ul> 
    </div>
   </footer>
   <script type="text/javascript" src="js/main.js"></script>

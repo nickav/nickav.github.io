@@ -1,23 +1,46 @@
 ---
 layout: default
 ---
+{% if paginator.page == 1 %}
+<section class="hero">
+  <div class="container">
+    <h1 class="logo">
+      <img src="/assets/nav.svg" alt="Nick Aversano" width="72px" height="72px" />
+    </h1>
+    <div class="tagline-group">
+      <h2 class="tagline">Some generic inspirational quote.</h2>
+      <div class="tagline-byline">&mdash; Unknown</div>
+    </div>
+    <div class="action">
+      <a class="btn">buy me a beer</a>
+    </div>
+  </div>
+</section>
+{% endif %}
 
-<div class="home">
-
-  <h1 class="page-heading">Posts</h1>
-
-  <ul class="post-list">
-    {% for post in site.posts %}
-      <li>
-        <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
-
-        <h2>
-          <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-        </h2>
-      </li>
+<section class="projects">
+  <div class="content">
+    {% if paginator.page > 1 %}
+      <div class="pagination">
+        {% if paginator.next_page %}<a href="{{ paginator.next_page_path }}" class="btn secondary prev">Older projects</a>{% endif %}
+        {% if paginator.previous_page %}<a href="{{ paginator.previous_page_path }}" class="btn secondary next">Newer projects</a>{% endif %}
+      </div>
+    {% endif %}
+    {% for post in paginator.posts %}
+    <a href="{{ post.url | preprend: site.baseurl }}">
+      {% assign color = post.categories[0] %}{% assign color = site.colors[color] %}
+      {% if post.color %}{% assign color = post.color %}{% endif %}
+      <div class="project {{ color }}">
+        {% comment %} post.categories | join: ", " | titleize {% endcomment %}
+        <div class="tags">{{ post.date | date: "%Y" }}</div>
+        <h3 class="title">{{ post.title }}</h3>
+        {% if post.headline %}<div class="desc">{{ post.headline }}</div>{% endif %}
+      </div>
+    </a>
     {% endfor %}
-  </ul>
-
-  <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p>
-
-</div>
+    <div class="pagination">
+      {% if paginator.next_page %}<a href="{{ paginator.next_page_path }}" class="btn secondary prev">Older projects</a>{% endif %}
+      {% if paginator.previous_page %}<a href="{{ paginator.previous_page_path }}" class="btn secondary next">Newer projects</a>{% endif %}
+    </div>
+  </div>
+</section>

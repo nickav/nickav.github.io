@@ -1,14 +1,26 @@
 # Site settings
-title: Your awesome title
-email: your-email@domain.com
+title: Nick Aversano
+email: nospam+at+nickaversano.com
 description: > # this means to ignore newlines until "baseurl:"
   Write an awesome description for your new site here. You can edit this
   line in _config.yml. It will appear in your document head meta (for
   Google search results) and in your feed.xml site description.
 baseurl: "" # the subpath of your site, e.g. /blog/
-url: "http://yourdomain.com" # the base hostname & protocol for your site
-twitter_username: jekyllrb
-github_username:  jekyll
+url: "http://nickaversano.com" # the base hostname & protocol for your site
+twitter_username: nickaversano
+github_username:  nickaversano
+spotify_username: 121907576
+linkedin_profile: https://www.linkedin.com/pub/nick-aversano/39/704/24b
+colors:
+  design: red
+  development: blue
+  video: green
 
 # Build settings
 markdown: kramdown
+permalink: /:title/
+paginate: 5
+collections:
+  projects:
+    output: true
+    permalink: /:title/

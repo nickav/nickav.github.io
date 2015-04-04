@@ -1,7 +1,11 @@
 // spam-free email links
 window.addEventListener('load', function() {
-  var mail = document.getElementById('mail');
-  mail.setAttribute('href', mail.getAttribute('href').replace('nospam+at+', 'nick@'));
+  var mails = document.getElementsByClassName('mail');
+  var mail;
+  for (var i=0,n=mails.length; i<n; i++) {
+    mail = mails[i];
+    mail.setAttribute('href', mail.getAttribute('href').replace('nospam+at+', 'nick@'));
+  }
   
   var toggle = document.getElementById('toggle');
   var open = false;

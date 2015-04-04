@@ -3,9 +3,7 @@ layout: post
 title:  Home Appétit
 headline: food delivery service in Philadelphia
 date:   2014-02-29 01:38:07
-categories:
-  - development
-  - design
+categories: [development, design]
 color: yellow
 link: https://www.homeappetitphilly.com/
 link_text: View website

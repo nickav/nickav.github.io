@@ -16,7 +16,7 @@ layout: default
     {% endif %}
     <ul class="tags">
       {% for category in page.categories %}
-      <li><a href="javascript:void(0)" class="{{ site.colors[category] }}">{{ category | capitalize }}</a></li>
+      <li><a href="javascript:void(0)" class="{{ site.colors[category] }}">{{ category | titleize }}</a></li>
       {% endfor %}
     </ul>
   </div>

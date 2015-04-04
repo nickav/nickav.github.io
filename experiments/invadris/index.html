@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta name="viewport" http-equiv="Content-Type" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width"/>
+<meta name="apple-mobile-web-app-capable" content="yes" /> <!---->
+<title>Invadris</title>
+
+<script type="text/javascript" charset="utf-8" src = "phonegap.js"></script>
+<script type="text/javascript" charset="utf-8" src="scripts/iphone.js"></script>
+
+<link rel="stylesheet" type="text/css" href="scripts/style.css" />
+
+<script language = "javascript" type = "text/javascript" src = "scripts/instances.js"></script>
+<script language = "javascript" type = "text/javascript" src = "scripts/methods.js"></script>
+<script language = "javascript" type = "text/javascript" src = "scripts/game.js"></script>
+<script language = "javascript" type = "text/javascript" src = "scripts/classes.js"></script>
+<script language = "javascript" type = "text/javascript" src = "scripts/load.js"></script>
+
+
+<script language = "javascript" type = "text/javascript">
+//**
+var code = "js", c = "";
+//for testing purposes
+function keyDown(e)
+{
+	(e.keyCode) ? keycode = e.keyCode : keycode = e.which;
+	
+	if (keycode == 39 || keycode == 68 || keycode == 37 || keycode == 65 ||
+		keycode == 38 || keycode == 87 || keycode == 40 || keycode == 83) keyReset();
+	else if (keycode == 32 || keycode == 81 || keycode == 70) pressingShoot = true;
+	if (keycode == 39 || keycode == 68) pressingRight = true;
+	if (keycode == 37 || keycode == 65) pressingLeft = true;
+	if (keycode == 38 || keycode == 87) pressingUp = true;
+	if (keycode == 40 || keycode == 83) pressingDown = true;
+};
+
+function keyUp(e)
+{
+	(e.keyCode) ? keycode = e.keyCode : keycode = e.which;
+	
+	if (keycode == 39 || keycode == 68) pressingRight = false;
+	if (keycode == 37 || keycode == 65) pressingLeft = false;
+	if (keycode == 38 || keycode == 87) pressingUp = false;
+	if (keycode == 40 || keycode == 83) pressingDown = false;
+	if (keycode == 32 || keycode == 81 || keycode == 70) pressingShoot = false;
+};
+
+function codeBox()
+{
+	 if (paused && pressingShoot)
+	 {
+	 	do {var s = eval(c = prompt(s, code)); if (c!=null && c!="") code = c;} while (c != null && c != "");
+		pressingShoot = false;
+	 }
+};
+
+function easy()
+{
+	for (var i in groups)
+	{
+		for (var j=0; j<4; j++)
+			groups[i].moveY();
+		for (var k in groups[i].blocks)
+		{
+			groups[i].blocks[k].alpha = 0.5;
+		}
+	}
+	return "Piece of Cake";
+};
+
+function clear()
+{
+	localStorage.highscore = highscore = 0;
+	return localStorage.highscore;
+};
+
+function pup2()
+{
+	new PowerUp(80,0,2);
+};
+
+function wup()
+{
+	new Instance().move = function(){blockscleared = 10;};
+};
+
+var mX, mY;
+function mouseX(evt) {
+	if (evt.pageX) return evt.pageX;
+	else if (evt.clientX)
+	   return evt.clientX + (document.documentElement.scrollLeft ?
+	   document.documentElement.scrollLeft :
+	   document.body.scrollLeft);
+	else return null;
+};
+function mouseY(evt) {
+	if (evt.pageY) return evt.pageY;
+	else if (evt.clientY)
+	   return evt.clientY + (document.documentElement.scrollTop ?
+	   document.documentElement.scrollTop :
+	   document.body.scrollTop);
+	else return null;
+};
+</script>
+
+</head>
+
+<body onLoad = "load();" onKeyDown="keyDown(event);" onKeyUp="keyUp(event);" onMouseMove="mX = mouseX(event); mY = mouseY(event);">
+
+<canvas id = "canvas" width = "320" height = "480"></canvas>
+
+<div id = "instanceField"></div>
+
+<canvas id = "topCanvas" width = "320" height = "480"></canvas>
+
+<div id = "screen" ontouchstart="getTouchCoords(event);" ontouchmove="getTouchCoords(event);" ontouchend="resetTouchCoords();"></div>
+<div id = "gameScreen" ontouchstart="gameScreenStart(event);" ontouchmove="getTouchCoords(event);"ontouchend="gameScreenEnd();"></div>
+<div id = "keyField" ontouchstart = "keypadPress(event); getTouchCoords(event);" ontouchmove = "keypadPress(event);" ontouchend = "keypadRelease(); resetTouchCoords();"></div>
+<div id = "sidebarButton" onMouseDown="pause();" ontouchstart="pause(); getTouchCoords(event);" ontouchmove="getTouchCoords(event);" ontouchend="resetTouchCoords();"></div> <!--onmousedown-->
+
+</body>
+</html>

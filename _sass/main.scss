@@ -188,13 +188,12 @@ h1.logo {
       font-size: 2.5em;
       font-weight: bold;
       color: white;
-      padding: 0.2em 0 0.2em 0;
+      padding: 0.1em 0 0.3em 0;
     }
     
     .desc {
       color: white;
       font-weight: bold;
-      padding-top: 0.3em;
       line-height: 1.5em;
     }
   }
@@ -314,12 +313,25 @@ footer {
     @include span-columns(5);
     font-family: $header-font;
     float: left;
+    font-weight: bold;
   }
   
   .social-links {
     font-size: 1.25em;
   }
 }
+
+// pure CSS sticky footer
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.page-content {
+  flex: 1;
+}
+// end
 
 .btn {
   font-family: $header-font;

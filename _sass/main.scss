@@ -434,7 +434,7 @@ small screens.
   }
 
   &, & a, & span {
-    @include box-sizing(initial);
+    box-sizing: initial;
   }
 }
 

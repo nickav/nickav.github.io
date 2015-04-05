@@ -171,15 +171,6 @@ h1.logo {
     padding: 2.5em;
     margin-bottom: 1.3em;
     
-    &.red { background: $red; }
-    &.blue { background: $blue; }
-    &.yellow { background: $yellow; }
-    /*&.orange { background: $orange; }*/
-    &.green { background: $green; }
-    &.purple { background: $purple; }
-    &.silver { background: $silver; }
-    &.turquoise { background: $turquoise; }
-    
     .tags {
       opacity: 0.6;
       font-family: $body-font;
@@ -232,8 +223,8 @@ h1.logo {
 .single {
   margin-bottom: 4em;
   .content {
-    max-width: 760px;
-    padding: 0 2em;
+    max-width: 740px;
+    padding: 0 1em;
     
     p {
       line-height: 1.6em;
@@ -266,14 +257,6 @@ h1.logo {
       color: $gray;
     }
   }
-  
-  &.red .feature { background: $red; }
-  &.blue .feature { background: $blue; }
-  &.yellow .feature { background: $yellow; }
-  &.green .feature { background: $green; }
-  &.purple .feature { background: $purple; }
-  &.silver .feature { background: $silver; }
-  &.turquoise .feature { background: $turquoise; }
 }
 
 ul.tags {
@@ -294,10 +277,13 @@ ul.tags {
         color: white;
         text-decoration: none;
         
-        &.red { background: $red; }
-        &.blue { background: $blue; }
-        &.green { background: $green; }
+        &.design { background: $red; }
+        &.development { background: $blue; }
+        &.video { background: $green; }
         &.yellow { background: $yellow; }
+        &.purple { background: $purple; }
+        &.silver { background: $silver; }
+        &.turquoise { background: $turquoise; }
       }
     }
   }

@@ -12,4 +12,16 @@
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
   <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
   <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}" />
+  {% assign color = page.categories[0] %}{% assign color = site.tag_colors[color] %}
+  {% if page.color %}{% assign color = page.color %}{% endif %}
+  {% if color %}
+  <style type="text/css">
+    a, a.btn.secondary {
+      color: #{{ color }};
+    }
+    .feature {
+      background: #{{ color }};
+    }
+  </style>
+  {% endif %}
 </head>

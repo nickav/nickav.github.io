@@ -7,10 +7,10 @@ layout: default
     <h1 class="logo">
       <img src="/assets/nav.svg" alt="Nick Aversano" width="72px" height="72px" />
     </h1>
-    <div class="tagline-group">
+    <!--<div class="tagline-group">
       <h2 class="tagline">Some generic inspirational quote.</h2>
       <div class="tagline-byline">&mdash; Unknown</div>
-    </div>
+    </div>-->
     <!--<div class="action">
       <a class="btn">do something</a>
     </div>-->
@@ -27,10 +27,10 @@ layout: default
       </div>
     {% endif %}
     {% for post in paginator.posts %}
-    <a href="{{ post.url | preprend: site.baseurl }}">
-      {% assign color = post.categories[0] %}{% assign color = site.colors[color] %}
+    <a href="{% if post.link_only %}{{ post.link }}{% else %}{{ post.url | preprend: site.baseurl }}{% endif %}">
+      {% assign color = post.categories[0] %}{% assign color = site.tag_colors[color] %}
       {% if post.color %}{% assign color = post.color %}{% endif %}
-      <div class="project {{ color }}">
+      <div class="project" style="background-color:#{{ color }};">
         {% comment %} post.categories | join: ", " | titleize {% endcomment %}
         <div class="tags">{{ post.date | date: "%Y" }}</div>
         <h3 class="title">{{ post.title }}</h3>

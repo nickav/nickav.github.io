@@ -4,8 +4,12 @@ title:  Home Appétit
 headline: food delivery service in Philadelphia
 date:   2014-02-29 01:38:07
 categories: [development, design]
-color: yellow
+color: F39C12
 link: https://www.homeappetitphilly.com/
 link_text: View website
 ---
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+A weekly food delivery service based in Philadelphia.
+
+Originally the site had been built on Squarespace, but it wasn't customizable enough. The biggest painpoint was that existing users would have constantly to re-enter their billing information every week.
+
+I re-made the site in Wordpress, building a custom Stripe checkout plugin and backend system to simplify the owner's weekly grunt tasks. I also designed the UX and UI for the checkout process. I wanted to streamline the experience for both existing and first-time users.

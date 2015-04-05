@@ -11,15 +11,15 @@ twitter_username: nickaversano
 github_username:  nickaversano
 spotify_username: 121907576
 linkedin_profile: https://www.linkedin.com/pub/nick-aversano/39/704/24b
-colors:
-  design: red
-  development: blue
-  video: green
+tag_colors:
+  design: E74C3C
+  development: 3498DB
+  video: 2ECC71
 
 # Build settings
 markdown: kramdown
 permalink: /:title/
-paginate: 5
+paginate: 6
 collections:
   projects:
     output: true

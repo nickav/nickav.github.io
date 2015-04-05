@@ -1,9 +1,7 @@
 ---
 layout: default
 ---
-{% assign color = page.categories[0] %}{% assign color = site.colors[color] %}
-{% if page.color %}{% assign color = page.color %}{% endif %}
-<section class="single {{ color }}">
+<section class="single">
   <div class="feature">
     <div class="content">
       <h1 class="title">{{ page.title }}</h1>
@@ -16,7 +14,7 @@ layout: default
     {% endif %}
     <ul class="tags">
       {% for category in page.categories %}
-      <li><a href="javascript:void(0)" class="{{ site.colors[category] }}">{{ category | titleize }}</a></li>
+      <li><a href="javascript:void(0)" class="{{ category }}">{{ category | titleize }}</a></li>
       {% endfor %}
     </ul>
   </div>

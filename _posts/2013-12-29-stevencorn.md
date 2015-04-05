@@ -5,9 +5,9 @@ headline: e-commerce website
 date:   2013-12-29 01:38:07
 categories:
   - development
-  - full stack
-color: yellow
+color: F39C12
 link: http://www.stevencorn.com/
 link_text: View website
+link_only: yes
 ---
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+I was brought onto this project to handle the frontend and backend development. After analyzing the available platforms, I decided to use Drupal to make this ecommerce website. Having never used Drupal before, I certainly learned a lot along the way.

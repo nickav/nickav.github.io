@@ -6,8 +6,14 @@ date:   2011-02-02 01:38:07
 categories:
   - development
   - photography
-link: http://www.cbsnews.com/
-link_text: Visit CBSNews.com
-color: purple
+link: http://www.hcwdesigns.com/
+link_text: Visit website
+color: 9B59B6
 ---
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+One of my first freelance websites. I designed and developed the site and shot all the photos too. Here are some of my favorites:
+
+<img src="/images/hcwdesigns/slide1.jpg" width="696px" height="522px" alt="HCW Designs" />
+
+<img src="/images/hcwdesigns/slide3.jpg" width="696px" height="522px" alt="HCW Designs" />
+
+<img src="/images/hcwdesigns/slide5.jpg" width="696px" height="522px" alt="HCW Designs" />

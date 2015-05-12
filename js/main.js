@@ -4,7 +4,8 @@ window.addEventListener('load', function() {
   var mail;
   for (var i=0,n=mails.length; i<n; i++) {
     mail = mails[i];
-    mail.setAttribute('href', mail.getAttribute('href').replace('nospam+at+', 'nick@'));
+    mail.setAttribute('href', mail.getAttribute('href').replace('nospam', 'nick'));
+    mail.setAttribute('href', mail.getAttribute('href').replace('+at+', '@'));
   }
   
   // mobile menu toggle

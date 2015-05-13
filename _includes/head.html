@@ -16,8 +16,12 @@
   {% if page.color %}{% assign color = page.color %}{% endif %}
   {% if color %}
   <style type="text/css">
-    a, a.btn.secondary {
+    a {
       color: #{{ color }};
+    }
+    a.btn.secondary {
+      background: #{{ color }};
+      color: white;
     }
     .feature {
       background: #{{ color }};

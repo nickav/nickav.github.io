@@ -22,8 +22,8 @@ layout: default
   <div class="content">
     {% if paginator.page > 1 %}
       <div class="pagination">
-        {% if paginator.next_page %}<a href="{{ paginator.next_page_path }}" class="btn secondary prev">Older projects</a>{% endif %}
-        {% if paginator.previous_page %}<a href="{{ paginator.previous_page_path }}" class="btn secondary next">Newer projects</a>{% endif %}
+        {% if paginator.next_page %}<a href="{{ paginator.next_page_path }}" class="btn text prev">Older projects</a>{% endif %}
+        {% if paginator.previous_page %}<a href="{{ paginator.previous_page_path }}" class="btn text next">Newer projects</a>{% endif %}
       </div>
     {% endif %}
     {% for post in paginator.posts %}
@@ -39,8 +39,8 @@ layout: default
     </a>
     {% endfor %}
     <div class="pagination">
-      {% if paginator.next_page %}<a href="{{ paginator.next_page_path }}" class="btn secondary prev">Older projects</a>{% endif %}
-      {% if paginator.previous_page %}<a href="{{ paginator.previous_page_path }}" class="btn secondary next">Newer projects</a>{% endif %}
+      {% if paginator.next_page %}<a href="{{ paginator.next_page_path }}" class="btn text prev">Older projects</a>{% endif %}
+      {% if paginator.previous_page %}<a href="{{ paginator.previous_page_path }}" class="btn text next">Newer projects</a>{% endif %}
     </div>
   </div>
 </section>

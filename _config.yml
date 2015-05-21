@@ -1,7 +1,6 @@
 # Site settings
 title: Nick Aversano
-# TODO: fix nick@nickaversano.com email
-email: nospam23hi+at+gmail.com
+email: nospam+at+nickaversano.com
 description: >
   Hi, I'm Nick. I create websites, develop apps, shoot videos, design things, and make games.
 baseurl: "" # the subpath of your site, e.g. /blog/

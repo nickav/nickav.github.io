@@ -26,6 +26,16 @@
     .feature {
       background: #{{ color }};
     }
+
+    ::selection {
+      background: #{{ color }};
+      color: white;
+    }
+
+    ::-moz-selection {
+      background: #{{ color }};
+      color: white;
+    }
   </style>
   {% endif %}
 </head>

@@ -240,6 +240,7 @@ h1.logo {
       &.shadow {
         box-shadow: 0 1px 8px rgba(0,0,0,0.15);
       }
+      @extend .shadow;
     }
     
     h1, h2, h3, h4, h5, h6 {

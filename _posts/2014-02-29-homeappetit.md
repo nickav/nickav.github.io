@@ -1,16 +1,13 @@
 ---
-title: Home Appétit
-date: 2014-03-01 01:38:07 Z
-categories:
-- development
-- design
 layout: post
+title:  Home Appétit
 headline: food delivery service in Philadelphia
+date:   2014-02-29 01:38:07
+categories: [development, design]
 color: F39C12
 link: https://www.homeappetitphilly.com/
 link_text: View website
 ---
-
 A weekly food delivery service based in Philadelphia.
 
 The site had originally been built on Squarespace, but wasn't customizable enough. The biggest painpoint was that existing users would have constantly to re-enter their billing information every week.

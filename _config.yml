@@ -1,24 +1,30 @@
-# Site settings
+---
 title: Nick Aversano
+timezone: UTC
+collections:
+  posts:
+    title: Posts
+    output: true
+  projects:
+    title: Projects
+    output: true
+    permalink: "/:title/"
+  uploads:
+    title: Uploads
+    output: true
 email: nospam+at+nickaversano.com
-description: >
+description: |
   Hi, I'm Nick. I create websites, develop apps, shoot videos, design things, and make games.
-baseurl: "" # the subpath of your site, e.g. /blog/
-url: "http://nickaversano.com" # the base hostname & protocol for your site
+baseurl: ''
+url: http://nickaversano.com
 twitter_username: nickaversano
-github_username:  nickaversano
+github_username: nickaversano
 spotify_username: 121907576
 linkedin_profile: https://www.linkedin.com/pub/nick-aversano/39/704/24b
 tag_colors:
   design: E74C3C
   development: 3498DB
   video: 2ECC71
-
-# Build settings
 markdown: kramdown
-permalink: /:title/
+permalink: "/:title/"
 paginate: 6
-collections:
-  projects:
-    output: true
-    permalink: /:title/

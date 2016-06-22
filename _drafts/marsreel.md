@@ -1,13 +1,14 @@
 ---
-layout: post
-title:  "umd.io"
-headline: API for University of Maryland data
-date:   2015-03-30 01:38:07
+title: umd.io
+date: 2015-03-30 01:38:07 Z
 categories:
-  - design
-  - development
+- design
+- development
+layout: post
+headline: API for University of Maryland data
 link: http://umd.io
 ---
+
 An API for University of Maryland data.
 
 I designed the documentation for this open-source project. I looked at other popular APIs for inspiration &mdash; mainly the [StripeAPI](), [Android Developer Docs](https://developer.android.com/guide/index.html) and [Travis CI API](http://docs.travis-ci.com/api/).

@@ -1,15 +1,18 @@
 @import 'responsive';
-$content-width: 66rem;
+$row-width: 72rem;
+$content-width: 45rem;
 
 @mixin column {
   box-sizing: border-box;
   float: left;
-  padding: 0 1.25rem;
+  padding: 0 1.5rem;
 }
 
 .row {
   @include clearfix;
-  max-width: $content-width;
+  max-width: $row-width;
+  margin-left: auto;
+  margin-right: auto;
 
   [class^="col-"] {
     @include column;
@@ -74,6 +77,16 @@ $content-width: 66rem;
   top: 50%;
   transform: translateY(-50%);
   z-index: 110;
+}
+
+section {
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+}
+
+.hero {
+  margin-top: 8rem;
+  margin-bottom: 8rem;
 }
 
 @media screen and (max-width: $tablet-portrait-max) {

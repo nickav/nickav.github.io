@@ -22,7 +22,7 @@ window.addEventListener('load', function() {
   var dark = false;
   if (window.location.pathname === '/') {
     $logo.addEventListener('click', function(e) {
-      toggleClass(document.body, 'dark-theme', (open = !open));
+      toggleClass(document.body, 'dark-theme', (dark = !dark));
       e.preventDefault();
     });
   }

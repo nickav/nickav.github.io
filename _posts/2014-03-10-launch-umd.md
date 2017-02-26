@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  Startup Shell - Launch UMD
-headline: video for campaign that raised over $12k
+headline: video campaign raising over $12k
 date:   2014-03-10 01:38:07
 categories:
   - video

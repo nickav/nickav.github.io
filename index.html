@@ -1,46 +1,31 @@
 ---
 layout: default
 ---
-{% if paginator.page == 1 %}
-<section class="hero">
-  <div class="container">
-    <h1 class="logo">
-      <img src="/assets/nav.svg" alt="Nick Aversano" width="72px" height="72px" />
-    </h1>
-    <!--<div class="tagline-group">
-      <h2 class="tagline">Some generic inspirational quote.</h2>
-      <div class="tagline-byline">&mdash; Unknown</div>
-    </div>-->
-    <!--<div class="action">
-      <a class="btn">do something</a>
-    </div>-->
+<section class="hero row">
+  <div class="col-12">
+    <h2 class="tagline">
+      Large bold text. Talk about myself.
+      <i class="light-gray">
+        Product Engineer at <a href="https://www.fin.com/">Fin</a>.
+      </i>
+      <br>
+      <i class="ultra-light-gray">
+        Previously at LinkedIn, CBSNews.com.
+      </i>
+    </h2>
   </div>
 </section>
-{% endif %}
 
-<section class="projects">
-  <div class="content">
-    {% if paginator.page > 1 %}
-      <div class="pagination">
-        {% if paginator.next_page %}<a href="{{ paginator.next_page_path }}" class="btn text prev">Older projects</a>{% endif %}
-        {% if paginator.previous_page %}<a href="{{ paginator.previous_page_path }}" class="btn text next">Newer projects</a>{% endif %}
-      </div>
-    {% endif %}
-    {% for post in paginator.posts %}
-    <a href="{% if post.link_only %}{{ post.link }}{% else %}{{ post.url | preprend: site.baseurl }}{% endif %}">
-      {% assign color = post.categories[0] %}{% assign color = site.tag_colors[color] %}
-      {% if post.color %}{% assign color = post.color %}{% endif %}
-      <div class="project" style="background-color:#{{ color }};">
-        {% comment %} post.categories | join: ", " | titleize {% endcomment %}
-        <div class="tags">{{ post.date | date: "%Y" }}</div>
+<section class="portfolio row">
+  <ul class="projects">
+    {% for post in site.posts %}
+    <li class="project">
+      <a href="{% if post.link_only %}{{ post.link }}{% else %}{{ post.url | preprend: site.baseurl }}{% endif %}">
+        <img src="/images/{{ post.image }}" alt="{{ post.title }}" />
         <h3 class="title">{{ post.title }}</h3>
         {% if post.headline %}<div class="desc">{{ post.headline }}</div>{% endif %}
-      </div>
-    </a>
+      </a>
+    </li>
     {% endfor %}
-    <div class="pagination">
-      {% if paginator.next_page %}<a href="{{ paginator.next_page_path }}" class="btn text prev">Older projects</a>{% endif %}
-      {% if paginator.previous_page %}<a href="{{ paginator.previous_page_path }}" class="btn text next">Newer projects</a>{% endif %}
-    </div>
-  </div>
+  </ul>
 </section>

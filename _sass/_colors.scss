@@ -6,3 +6,11 @@ $transparent: rgba(0, 0, 0, 0);
 $gray: #666666;
 $light-gray: #AAAAAA;
 $ultra-light-gray: #DDDDDD;
+
+.light-gray {
+  color: $light-gray;
+}
+
+.ultra-light-gray {
+  color: $ultra-light-gray;
+}

@@ -1,9 +1,18 @@
+// vendor
 @import 'lib/reset.min';
+
+// config
 @import 'colors';
 @import 'typography';
 @import 'mixins';
+
+// main
 @import 'base';
 @import 'layout';
 @import 'responsive';
 
+// components
 @import 'header';
+@import 'projects';
+@import 'footer';
+@import 'dark-theme';

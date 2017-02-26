@@ -1,30 +1,10 @@
-<div id="menu" class="menu">
-  <nav>
-    <ul class="menu-links">
-      <div class="mini">
-        <img src="/assets/nav-white.svg" alt="Nick Aversano" width="32px" height="32px" />
-      </div>
-      <li><a href="{{ site.baseurl }}/">{{ site.title }}</a></li>
-      <li><a href="https://medium.com/@nickaversano/learn-for-funs-sake-8d39f972b76a" target="_blank">My Story</a></li>
-      <li><a href="/resume15.pdf" target="_blank">Résumé</a></li>
-      {% for page in site.pages %}
-        {% if page.title %}
-        <li><a href="{{ page.url | prepend: site.baseurl }}">{{ page.title }}</a></li>
-        {% endif %}
-      {% endfor %}
-    </ul>
-  </nav>
-</div>
-<header>
-  <div id="toggle" class="menu-link"><a href="javascript:void(0)"><span></span></a></div>
-  <div class="menu">
-   <nav>
-      <ul class="menu-links">
-        <li><a href="{{ site.baseurl }}/">{{ site.title }}</a></li>
-        <li><a href="https://medium.com/@nickaversano/learn-for-funs-sake-8d39f972b76a" target="_blank">My Story</a></li>
-        <li><a href="/resume15.pdf" target="_blank">Résumé</a></li>
-      </ul>
-   </nav>
+<header class="header">
+  <div class="row">
+    <nav class="col-6">
+      <a id="logo" class="logo" href="{{ site.baseurl }}/">N<i class="slash">/</i>A</a>
+    </nav>
+    <div class="col-6">
+      {% include social.html %}
+    </div>
   </div>
-  {% include social.html %}
 </header>

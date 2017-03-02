@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Director's Cut
-headline: It's Berry Good for You
+headline: It's berry good for you
 date:   2016-04-29 00:00:00
 image: directors-cut.jpg
 categories:

@@ -10,17 +10,21 @@ layout: default
   </header>
   <article class="content">
     {% if page.image %}
-      <p><img src="/images/{{ page.image }}" alt="{{ page.title }}" /></p>
+      <figure>
+        <img src="/images/{{ page.image }}" alt="{{ page.title }}" />
+      </figure>
     {% endif %}
 
     {{ content }}
 
     {% if page.link %}
-    <p><a href="{{ page.link }}" class="btn secondary" target="_blank"><span class="fa fa-link"></span>{% if page.link_text %}{{ page.link_text }}{% else %}View project{% endif %}</a></p>
+    <p><a href="{{ page.link }}" class="button secondary" target="_blank">
+      {% if page.link_text %}{{ page.link_text }}{% else %}View project{% endif %}
+    </a></p>
     {% endif %}
     <ul class="tags">
       {% for category in page.categories %}
-      <li><a href="javascript:void(0)" class="{{ category }}">{{ category | titleize }}</a></li>
+      <li>{{ category | titleize }}</li>
       {% endfor %}
     </ul>
   </article>

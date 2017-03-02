@@ -3,6 +3,7 @@ layout: post
 title:  Steven Corn Furs
 headline: e-commerce website
 date:   2013-12-29 01:38:07
+image: stevencorn.png
 categories:
   - development
 color: 1ABC9C

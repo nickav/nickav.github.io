@@ -1,0 +1,13 @@
+.button {
+  padding: 1rem 2rem;
+  display: inline-block;
+  color: $black;
+  background: $white;
+  border: 2px solid $black;
+
+  &.primary {
+  }
+
+  &.secondary {
+  }
+}

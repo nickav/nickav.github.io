@@ -15,6 +15,6 @@ Created a Drone-powered Internet-of-Things Jackson Pollock splatter-painting whe
 
 Drone flew autonomously with an overhead OpenCV tracking camera and a Node.JS controller. I helped [Stef](http://stefcohen.com/) learn full-stack web dev. We built the website using HTML, CSS, JavaScript, Ruby, Bash and Git.
 
-<iframe width="696" height="392" src="//player.vimeo.com/video/152479854" frameborder="0" allowfullscreen></iframe>
+<p class="center"><iframe width="696" height="392" src="//player.vimeo.com/video/152479854" frameborder="0" allowfullscreen></iframe></p>
 
-<a href="http://drone.gotechnica.org" class="btn secondary" target="_blank" style="background: #015DC4;"><span class="fa fa-link"></span>View Project Website</a>
+<a href="http://drone.gotechnica.org" class="button secondary" target="_blank">View Project Website</a>

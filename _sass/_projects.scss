@@ -16,8 +16,42 @@
     width: 100%;
     padding: 1.5rem;
 
-    .desc {
-      color: $light-gray;
+    .project-desc {
+      color: $gray;
+    }
+
+    .project-image {
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 1rem;
+
+      &:before {
+        content: '';
+        display: block;
+        padding-top: 56.25%;
+      }
+
+      img {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+    }
+
+    // vertically center image
+    .project-image {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      img {
+        display: block;
+        object-fit: cover;
+        min-width: 100%;
+        min-height: 100%;
+        top: inherit;
+      }
     }
   }
 }

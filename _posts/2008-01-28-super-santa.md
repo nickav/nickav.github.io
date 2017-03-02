@@ -3,8 +3,8 @@ layout: post
 title:  Super Santa
 headline: winter-themed game
 date:   2008-01-28 01:38:07
+image: super-santa/default.jpg
 categories: [game making]
-color: E74C3C
 link: http://sandbox.yoyogames.com/games/88958-super-santa
 link_text: Play on YoYoGames
 link_only: true

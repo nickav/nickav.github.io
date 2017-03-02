@@ -30,6 +30,8 @@
     }
 
     &:hover {
+      text-decoration: none;
+
       .fletter {
         left: -4px;
       }
@@ -53,6 +55,7 @@
       line-height: 0;
 
       a {
+        color: $white;
         display: inline-block;
         padding: 1rem 0 1rem 1rem;
         margin-left: 1rem;
@@ -61,9 +64,6 @@
       svg {
         width: 1.25rem;
         height: 1.25rem;
-        path {
-          fill: $white;
-        }
       }
     }
   }

@@ -4,13 +4,16 @@ layout: default
 <section class="hero row">
   <div class="col-12">
     <h2 class="tagline">
-      Large bold text. Talk about myself.
-      <i class="light-gray">
+      <i class="black">
+        Large bold text. Talk about myself.
+      </i>
+      <i class="gray">
         Product Engineer at <a href="https://www.fin.com/">Fin</a>.
       </i>
       <br>
       <i class="ultra-light-gray">
-        Previously at LinkedIn, CBSNews.com.
+        Previously at <a href="https://www.linkedin.com/">LinkedIn</a>,
+        <a href="https://www.cbsnews.com/">CBSNews.com</a>.
       </i>
     </h2>
   </div>
@@ -21,9 +24,17 @@ layout: default
     {% for post in site.posts %}
     <li class="project">
       <a href="{% if post.link_only %}{{ post.link }}{% else %}{{ post.url | preprend: site.baseurl }}{% endif %}">
-        <img src="/images/{{ post.image }}" alt="{{ post.title }}" />
-        <h3 class="title">{{ post.title }}</h3>
-        {% if post.headline %}<div class="desc">{{ post.headline }}</div>{% endif %}
+        {% if post.image %}
+          <div class="project-image">
+            <img src="/images/{{ post.image }}" alt="{{ post.title }}" />
+          </div>
+        {% endif %}
+        <div class="project-meta">
+          <h3 class="project-title">{{ post.title }}</h3>
+          {% if post.headline %}
+            <div class="project-desc">{{ post.headline }}</div>
+          {% endif %}
+        </div>
       </a>
     </li>
     {% endfor %}

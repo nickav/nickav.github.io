@@ -1,14 +1,20 @@
 ---
 layout: default
 ---
-<section class="single">
-  <div class="feature">
+<section class="post">
+  <header>
     <div class="content">
-      <h1 class="title">{{ page.title }}</h1>
+      <h1 class="post-title">{{ page.title }}</h1>
+      <h3 class="post-desc">{{ page.headline }}</h3>
     </div>
-  </div>
-  <div class="content">
+  </header>
+  <article class="content">
+    {% if page.image %}
+      <p><img src="/images/{{ page.image }}" alt="{{ page.title }}" /></p>
+    {% endif %}
+
     {{ content }}
+
     {% if page.link %}
     <p><a href="{{ page.link }}" class="btn secondary" target="_blank"><span class="fa fa-link"></span>{% if page.link_text %}{{ page.link_text }}{% else %}View project{% endif %}</a></p>
     {% endif %}
@@ -17,5 +23,5 @@ layout: default
       <li><a href="javascript:void(0)" class="{{ category }}">{{ category | titleize }}</a></li>
       {% endfor %}
     </ul>
-  </div>
+  </article>
 </section>

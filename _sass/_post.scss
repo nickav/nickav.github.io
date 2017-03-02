@@ -1,0 +1,19 @@
+.post {
+  header {
+    margin: 4rem 0;
+  }
+
+  .post-title {
+    color: $black;
+  }
+
+  .post-desc {
+    color: $gray;
+  }
+
+  .content {
+    img, iframe, video {
+      margin: 1rem 0;
+    }
+  }
+}

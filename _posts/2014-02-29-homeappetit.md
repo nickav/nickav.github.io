@@ -4,7 +4,7 @@ title:  Home Appétit
 headline: food delivery service in Philadelphia
 date:   2014-02-29 01:38:07
 image: homeappetit/logo.png
-categories: [development, design]
+tags: work
 link: https://www.homeappetitphilly.com/
 link_text: View website
 ---

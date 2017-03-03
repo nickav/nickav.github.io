@@ -6,7 +6,10 @@ layout: default
     <div class="content">
       <h1 class="post-title">{{ page.title }}</h1>
       <h3 class="post-desc">{{ page.headline }}</h3>
-      <h5>{{ page.date | date: '%B %d, %Y' }}</h5>
+      <div class="post-extra">
+        <span class="post-tags">{% include tags.html %}</span>
+        <span class="post-date">{{ page.date | date: '%B %d, %Y' }}</span>
+      </div>
     </div>
   </header>
   <article class="content">

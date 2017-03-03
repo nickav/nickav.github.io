@@ -4,8 +4,7 @@ title:  Steven Corn Furs
 headline: e-commerce website
 date:   2013-12-29 01:38:07
 image: stevencorn.png
-categories:
-  - development
+tags: work
 color: 1ABC9C
 link: http://www.stevencorn.com/
 link_text: View website

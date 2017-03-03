@@ -4,9 +4,7 @@ title:  HCW Designs
 headline: photography
 date:   2011-02-02 01:38:07
 image: hcwdesigns/slide1.jpg
-categories:
-  - development
-  - photography
+tags: work
 link: http://www.hcwdesigns.com/
 link_text: Visit website
 color: 9B59B6

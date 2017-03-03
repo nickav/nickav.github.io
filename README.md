@@ -6,7 +6,8 @@ Built using Jekyll
 
 Install ruby. Run:
 ```
-gem install jekyll
+gem install bundle
+bundle install
 ```
 
 ## Run

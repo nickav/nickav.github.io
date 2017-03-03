@@ -1,0 +1,3 @@
+{% for tag in page.tags %}
+  {% if tag == "work" %}<a href= "/work">{% else %}<a href="/{{ tag }}s">{% endif %}#{{ tag }}</a>
+{% endfor %}

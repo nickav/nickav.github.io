@@ -1,0 +1,18 @@
+---
+layout: default
+---
+<section class="row">
+  <div class="col-12">
+    <h2>{{ page.title }}</h2>
+  </div>
+</section>
+
+<section class="tag">
+  <ul class="projects">
+    {% for post in site.posts %}
+      {% if post.tags contains page.tag %}
+        {% include post.html %}
+      {% endif %}
+    {% endfor %}
+  </ul>
+</section>

@@ -1,13 +1,17 @@
 .button {
   padding: 1rem 2rem;
   display: inline-block;
-  color: $black;
-  background: $white;
-  border: 2px solid $black;
+  background: $black;
+  color: $white;
 
   &.primary {
+    background: $black;
+    color: $white;
   }
 
   &.secondary {
+    background: $white;
+    color: $black;
+    border: 2px solid $black;
   }
 }

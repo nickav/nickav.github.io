@@ -4,8 +4,7 @@ title:  Startup Shell - Launch UMD
 headline: video campaign raising over $12k
 date:   2014-03-10 01:38:07
 image: timelapse.jpg
-categories:
-  - video
+tags: video
 link: https://www.launch.umd.edu/project/544e8a7614bdf75aabb38ebf
 link_text: Visit Launch UMD
 ---

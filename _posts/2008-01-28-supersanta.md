@@ -4,7 +4,7 @@ title:  Super Santa
 headline: winter-themed game
 date:   2008-01-28 01:38:07
 image: super-santa/default.jpg
-categories: [game making]
+tags: game
 ---
 
 <img src="/images/super-santa/gameplay.jpg" alt="Super Santa - Gameplay" />

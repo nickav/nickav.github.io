@@ -84,6 +84,7 @@ $content-width: 45rem;
 }
 
 section {
+  @extend .row;
   margin-top: 4rem;
   margin-bottom: 4rem;
 }

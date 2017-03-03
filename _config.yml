@@ -13,8 +13,8 @@ spotify_username: 121907576
 sass:
   sass_dir: _sass
 markdown: kramdown
-permalink: /:title/
+permalink: /:title
 collections:
   projects:
     output: true
-    permalink: /:title/
+    permalink: /:title

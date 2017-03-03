@@ -20,10 +20,13 @@
       color: $gray;
     }
 
+    .project-meta {
+      margin: 1rem 0;
+    }
+
     .project-image {
       position: relative;
       overflow: hidden;
-      margin-bottom: 1rem;
 
       &:before {
         content: '';

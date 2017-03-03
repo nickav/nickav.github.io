@@ -8,17 +8,25 @@ $light-gray: #AAAAAA;
 $ultra-light-gray: #DDDDDD;
 
 .black {
-  color: $black;
+  &, & > a {
+    color: $black;
+  }
 }
 
 .gray {
-  color: $gray;
+  &, & > a {
+    color: $gray;
+  }
 }
 
 .light-gray {
-  color: $light-gray;
+  &, & > a {
+    color: $light-gray;
+  }
 }
 
 .ultra-light-gray {
-  color: $ultra-light-gray;
+  &, & > a {
+    color: $ultra-light-gray;
+  }
 }

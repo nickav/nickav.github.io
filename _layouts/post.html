@@ -6,6 +6,7 @@ layout: default
     <div class="content">
       <h1 class="post-title">{{ page.title }}</h1>
       <h3 class="post-desc">{{ page.headline }}</h3>
+      <h5>{{ page.date | date: '%B %d, %Y' }}</h5>
     </div>
   </header>
   <article class="content">
@@ -22,10 +23,5 @@ layout: default
       {% if page.link_text %}{{ page.link_text }}{% else %}View project{% endif %}
     </a></p>
     {% endif %}
-    <ul class="tags">
-      {% for category in page.categories %}
-      <li>{{ category | titleize }}</li>
-      {% endfor %}
-    </ul>
   </article>
 </section>

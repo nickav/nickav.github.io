@@ -5,7 +5,7 @@ html, body {
   font-size: 16px;
   font-weight: $regular;
   height: 100%;
-  line-height: 1.5;
+  line-height: 2;
   position: relative;
 }
 
@@ -14,7 +14,7 @@ html, body {
 }
 
 a {
-  color: inherit;
+  color: $black;
   text-decoration: none;
 
   &:hover {

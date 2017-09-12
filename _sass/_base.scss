@@ -33,7 +33,7 @@ svg {
 hr {
   width: 100%;
   outline: 0;
-  border: 1px solid $ultra-light-gray;
+  border: 1px solid $black;
 }
 
 @mixin clearfix {
@@ -45,11 +45,11 @@ hr {
 }
 
 ::-moz-selection {
-  background: $black;
+  background: $pink;
   color: $white;
 }
 
 ::selection {
-  background: $black;
+  background: $pink;
   color: $white;
 }

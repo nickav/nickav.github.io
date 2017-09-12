@@ -1,11 +1,13 @@
-$black: #222222;
-$white: #FFFFFF;
+$black: #000;
+$white: #fff;
 
 $transparent: rgba(0, 0, 0, 0);
 
 $gray: #777777;
 $light-gray: #AAAAAA;
 $ultra-light-gray: #DDDDDD;
+
+$pink: #f31e8a;
 
 .black {
   &, & > a {
@@ -29,4 +31,10 @@ $ultra-light-gray: #DDDDDD;
   &, & > a {
     color: $ultra-light-gray;
   }
+}
+
+.pink {
+  background: $pink;
+
+  &, & > a { color: $white; }
 }

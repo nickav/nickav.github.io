@@ -16,6 +16,14 @@
     width: 100%;
     padding: 1.5rem;
 
+    a {
+      display: block;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+
     .project-desc {
       color: $gray;
     }
@@ -54,6 +62,14 @@
         min-width: 100%;
         min-height: 100%;
         top: inherit;
+        transform: scale(1);
+        transition: transform 0.2s;
+      }
+    }
+
+    a:hover > .project-image {
+      img {
+        transform: scale(1.05);
       }
     }
   }

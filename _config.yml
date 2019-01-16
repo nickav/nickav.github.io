@@ -1,12 +1,12 @@
 # Site settings
 title: Nick Aversano
-email: nospamnick+at+nickaversano.com
+email: nospamnick+at+nickav.co
 description: >
   Hi, I'm Nick. I create websites, develop apps, shoot videos, design things, and make games.
 baseurl: "" # the subpath of your site, e.g. /blog/
-url: "http://nickaversano.com" # the base hostname & protocol for your site
+url: "http://nickav.co" # the base hostname & protocol for your site
 twitter_username: nickaversano
-github_username:  nickaversano
+github_username:  nickav
 spotify_username: 121907576
 
 # Build settings

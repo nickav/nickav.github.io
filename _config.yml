@@ -8,6 +8,7 @@ url: "http://nickav.co" # the base hostname & protocol for your site
 twitter_username: nickaversano
 github_username:  nickav
 spotify_username: 121907576
+soundcloud_username:  nickaversano
 
 # Build settings
 sass:

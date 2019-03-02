@@ -4,6 +4,11 @@
       {% include /assets/github.svg %}
     </a></li>
   {% endif %}
+  {% if site.soundcloud_username %}
+    <li><a href="https://soundcloud.com/{{ site.soundcloud_username }}" title="SoundCloud" target="_blank">
+      {% include /assets/soundcloud.svg %}
+    </a></li>
+  {% endif %}
   {% if site.twitter_username %}
     <li><a href="https://twitter.com/{{ site.twitter_username }}" title="Twitter" target="_blank">
       {% include /assets/twitter.svg %}

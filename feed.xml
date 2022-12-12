@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version='2.0' xmlns:atom='http://www.w3.org/2005/Atom'>
+<channel>
+
+<title>Nick Aversano</title>
+<link>http://nickav.co</link>
+<description>Cool new web page</description>
+<pubDate>12 Dec 2022 21:12:53 +0000</pubDate>
+<lastBuildDate>12 Dec 2022 21:12:53 +0000</lastBuildDate>
+<language>en-us</language>
+<image><url></url></image>
+
+<item>
+<title>null</title>
+<description>null</description>
+<pubDate>00 (nu 0 00:00:00 +0000</pubDate>
+<link>http://nickav.co//posts/0001_hello_world</link>
+<guid isPermaLink='true'>http://nickav.co//posts/0001_hello_world</guid>
+<category>article</category>
+</item>
+
+<item>
+<title>null</title>
+<description>null</description>
+<pubDate>00 (nu 0 00:00:00 +0000</pubDate>
+<link>http://nickav.co//posts/9000_good_enough</link>
+<guid isPermaLink='true'>http://nickav.co//posts/9000_good_enough</guid>
+<category>article</category>
+</item>
+
+<item>
+<title>null</title>
+<description>null</description>
+<pubDate>00 (nu 0 00:00:00 +0000</pubDate>
+<link>http://nickav.co//posts/9001_memory_allocation</link>
+<guid isPermaLink='true'>http://nickav.co//posts/9001_memory_allocation</guid>
+<category>article</category>
+</item>
+
+<item>
+<title>null</title>
+<description>null</description>
+<pubDate>00 (nu 0 00:00:00 +0000</pubDate>
+<link>http://nickav.co//posts/9002_dronepollock</link>
+<guid isPermaLink='true'>http://nickav.co//posts/9002_dronepollock</guid>
+<category>article</category>
+</item>
+
+</channel>
+</rss>

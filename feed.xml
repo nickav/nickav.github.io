@@ -3,19 +3,19 @@
 <channel>
 
 <title>Nick Aversano</title>
-<link>http://nickav.co</link>
-<description>Cool new web page</description>
-<pubDate>12 Dec 2022 23:09:54 +0000</pubDate>
-<lastBuildDate>12 Dec 2022 23:09:54 +0000</lastBuildDate>
+<link>https://nickav.co</link>
+<description>My Personal Website</description>
+<pubDate>23 Feb 2023 05:48:55 +0000</pubDate>
+<lastBuildDate>23 Feb 2023 05:48:55 +0000</lastBuildDate>
 <language>en-us</language>
 <image><url></url></image>
 
 <item>
 <title>Hello, World!</title>
 <description>A breif backstory about me</description>
-<pubDate>19 Nov 2021 10:13:03 +0000</pubDate>
-<link>http://nickav.co//posts/0001_hello_world</link>
-<guid isPermaLink='true'>http://nickav.co//posts/0001_hello_world</guid>
+<pubDate>12 Dec 2022 10:13:03 +0000</pubDate>
+<link>https://nickav.co//posts/0001_hello_world</link>
+<guid isPermaLink='true'>https://nickav.co//posts/0001_hello_world</guid>
 <category>article</category>
 </item>
 

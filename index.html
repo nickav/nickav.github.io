@@ -26,6 +26,8 @@
 <link rel='alternate' type='application/rss+xml' title='Nick Aversano' href='https://nickav.co/feed.xml' />
 </head>
 <body>
+<h1>I'm fun</h1>
+<div id='content'>
 <div class='content flex-x pad-64  xs:flex-y sm:csy-8 sm:pad-32'>
 <div class='csx-16 flex-1 flex-x center-y'>
 <span class='font-24 font-bold'><a href='/'>Nick Aversano</a></span>
@@ -69,6 +71,7 @@
 </div>
 <div class='content pad-64 w-800 sm:pad-32 flex-x center-x'>
 <a class='pad-16' onclick='toggle()'>💡</a>
+</div>
 </div>
 <script>var invert = false;const up = (i) => {try { localStorage.setItem('invert', i ? 1 : 0); } catch(err) {}document.body.classList.toggle('invert', i);invert = i;};function toggle(){up(!invert);}if (window.matchMedia){try { i = localStorage.getItem('invert'); } catch(err) {}if (i === null) i = !window.matchMedia('(prefers-color-scheme: dark)').matches;else i = !!Number(i);up(i);window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {up(!e.matches, true);});}window.addEventListener('load', () => {document.getElementsByTagName('html')[0].className += 'load';});</script>
 <script src='/lightning.js'></script>

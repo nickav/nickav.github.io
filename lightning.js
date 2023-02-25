@@ -3,9 +3,15 @@
 // - fix back history being lost on page reload
 // - add documentation for options
 // - clean up cache and prefetch configs
+// - add configurable top bar when fetching
 //
 
 (function() {
+    if (typeof window === 'undefined' || typeof document === 'undefined')
+    {
+        return;
+    }
+
     if (window.Lightning) return;
 
     const defaultConfig = {
@@ -209,7 +215,7 @@
             if (options.cache)
             {
                 const path = window.location.pathname;
-                instance.pageCache[path] = { data: document.body.html, promise: null, time: 0 };
+                instance.pageCache[path] = { data: document.body.innerHTML, promise: null, time: 0 };
             }
 
             debug("Element:", getElement(document));
@@ -227,4 +233,4 @@
     window.Lightning = Lightning;
 })();
 
-Lightning({ debug: true, contentSelector: '#content' });
+Lightning();

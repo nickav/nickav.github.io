@@ -98,7 +98,7 @@ It's the <a class='link' href='https://handmade.network' target='_blank'>Handmad
     <span class='tok-Function'>WaitUntilNextFrame</span>();
 }</pre><p></p>I mean, really more like <a class='link' href='https://gafferongames.com/post/fix_your_timestep/' target='_blank'>this timestep</a>. But hopefully you get the idea.
 <p></p>Because I had to build everything myself, I had to learn how everything works from first principles.
-I didn't write literally everything myself. I got lots of inspiration—and sometimes even code snippets—from others.
+I didn't write everything myself. I got lots of inspiration and code snippets from others.
 The trick was finding a good balance between using what I knew and exploring what paths others had gone down.
 <p></p>I eventually decided to write a base layer that I could build on top of.
 Similar to what you would get in other programming languages.
@@ -152,9 +152,11 @@ And that's being extremely generous.
 </div>
 <div class='content pad-64 w-800 sm:pad-32 flex-y center-x'>
 <a class='pad-16' onclick='toggle()'>💡</a>
-<div style='min-width: 64px; max-width: 64px;'><img src='/r/guy_pixel.png' alt='Guy'  style='image-rendering:pixelated;'/>
-</div></div>
-<script>var invert = false;const up = (i) => {try { localStorage.setItem('invert', i ? 1 : 0); } catch(err) {}document.body.classList.toggle('invert', i);invert = i;};function toggle(){up(!invert);}if (window.matchMedia){try { i = localStorage.getItem('invert'); } catch(err) {}if (i === null) i = !window.matchMedia('(prefers-color-scheme: dark)').matches;else i = !!Number(i);up(i);window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {up(!e.matches, true);});}window.addEventListener('load', () => {document.getElementsByTagName('html')[0].className += 'load';});</script>
+<div style='min-width: 64px; max-width: 64px; margin-bottom: -64px'>
+<img src='/r/guy_pixel.png' alt='Guy'  style='image-rendering:pixelated;'/>
+</div>
+</div>
+<script>var invert = false;const up = (i) => {try { localStorage.setItem('invert', i ? 1 : 0); } catch(err) {}document.body.classList.toggle('invert', i);invert = i;};function toggle(){up(!invert);}function update(){try { i = localStorage.getItem('invert'); } catch(err) {}if (i === null) i = !window.matchMedia('(prefers-color-scheme: dark)').matches;else i = !!Number(i);up(i);}if (window.matchMedia){update();window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {up(!e.matches, true);});}window.addEventListener('load', () => {document.getElementsByTagName('html')[0].className += 'load';});</script>
 <script src='/lightning.js'></script>
 </body>
 </html>

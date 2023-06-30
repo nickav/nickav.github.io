@@ -68,13 +68,13 @@ My computer should be able to reload things instantly!
 I also knew that my code could run as fast as the hardware would allow.
 If you want to prove that you learned something, explaining it to someone is a good test. Explaining it to a computer is even better.
 <p></p>I also decided to take it one step further by not allowing myself to use many libraries.
-I do use the C-Runtime Library (CRT) and some third-party libraries, but I try them to a minimum.
+I do use the C Runtime Library (CRT) and some third-party single-file header libraries, but I try them to a minimum.
 <p></p>What I learned to love about C is it gives you almost nothing.
 You are in control of everything that happens.
 You're as close to the computer as you can get without writing assembly code.
 And you can even see the <a class='link' href='https://uops.info/table.html' target='_blank'>instructions</a> if you want to!
 <p></p><blockquote class='quote'>As it turns out CPUs are more complicated these days, and there are things called micro-ops which some instructions break further down into. But let's not get into that here!</blockquote>Games have to do what every application on your computer needs to do. They need to open a window, get user input, display the results, and play sound.
-And they have to run in 16ms per frame (every frame!).
+And they have to run in 16ms per frame, every frame.
 And they have to build a fun experience on top of that!
 <p></p>So as it turns out, learning how to make games from scratch is also a great way to learn
 how to build applications from scratch.
@@ -98,7 +98,9 @@ It's the <a class='link' href='https://handmade.network' target='_blank'>Handmad
     <span class='tok-Function'>WaitUntilNextFrame</span>();
 }</pre><p></p>I mean, really more like <a class='link' href='https://gafferongames.com/post/fix_your_timestep/' target='_blank'>this timestep</a>. But hopefully you get the idea.
 <p></p>Because I had to build everything myself, I had to learn how everything works from first principles.
-I eventually decided to write a base layer that I could build on top of.
+I didn't write literally everything myself. I got lots of inspiration—and sometimes even code snippets—from others.
+The trick was finding a good balance between using what I knew and exploring what paths others had gone down.
+<p></p>I eventually decided to write a base layer that I could build on top of.
 Similar to what you would get in other programming languages.
 <p></p>Only, I could fully integrate all my own concepts.
 And if something has a bug, that means I can fix it!
@@ -116,14 +118,19 @@ Or at the very least learn a lot about software rendering.
 <p></p>Want controller input? Well there's like 4 different Windows APIs and they all give different and overlapping information: XInput, DirectInput, Raw Input, ...
 <p></p>Want fonts? That's a rabbit hole. At the very least, you have to write a font-atlas and space out all the glyphs manually, not to mention dealing with other languages! And did I mention there are some right-to-left languages?
 <p></p><hr/><p></p>You really appreciate everything when you have nothing.
-<p></p>It also gives you a first-principles perspective to the problems of other programming domains.
+<p></p>I still encounter many things I don't understand and probably always will.
+But I've learned that I can learn anything with time and dedication and patience.
+It's okay to get inspiration from others, but try not to worry about exactly how others solved their problems.
+Solve it for yourself.
+Start where you are, use what you have, do what you can.
+And remember to be kind to yourself!
+<p></p>C gives you a first-principles mindset to problems in programming more generally.
 Why do we do things the way we do them now?
 Are we getting good results?
 If not, why not?
 <p></p>It seems like modern day programming is inundated with libraries, OOP, TDD, slowness, bad UX, and often outright malicious practices.
 And there are lots of programmers who don't even try to get better.
 They just repeat the same dogma. Maybe because it's all they know. Maybe they're scared of confronting what they don't know?
-Of feeling like a fraud.
 <p></p>I think it's safe to say that we have massive problems as an industry today.
 Programmers have failed.
 Software continues to get slower and worse.
@@ -143,9 +150,10 @@ And that's being extremely generous.
 <p></p>We need to get back to the basics.
 <p></p>And that is why I write C.
 </div>
-<div class='content pad-64 w-800 sm:pad-32 flex-x center-x'>
+<div class='content pad-64 w-800 sm:pad-32 flex-y center-x'>
 <a class='pad-16' onclick='toggle()'>💡</a>
-</div>
+<div style='min-width: 64px; max-width: 64px;'><img src='/r/guy_pixel.png' alt='Guy'  style='image-rendering:pixelated;'/>
+</div></div>
 <script>var invert = false;const up = (i) => {try { localStorage.setItem('invert', i ? 1 : 0); } catch(err) {}document.body.classList.toggle('invert', i);invert = i;};function toggle(){up(!invert);}if (window.matchMedia){try { i = localStorage.getItem('invert'); } catch(err) {}if (i === null) i = !window.matchMedia('(prefers-color-scheme: dark)').matches;else i = !!Number(i);up(i);window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {up(!e.matches, true);});}window.addEventListener('load', () => {document.getElementsByTagName('html')[0].className += 'load';});</script>
 <script src='/lightning.js'></script>
 </body>

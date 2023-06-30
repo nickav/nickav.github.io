@@ -78,9 +78,10 @@ Software today keeps getting slower and slower. It's gotten so bad that users ha
 <p></p>Meaning, I shrink my window on Windows and that's exactly the same window.I would see on Android if it were the same size as that display, it would have to handle text rendering extremely well.So similar to browsers, but it could use something like, free type to get started.
 <p></p>It would have to interface with all of the operating systems calls, for example, to get new memory, to read and write from the system clipboard, etc.It would also have to do accessibility pretty well, which is to say tell the operating system that there are these text widgets at certain positions that screen readers can read out. 
 <p></p>But honestly, that's probably the last tuning detail to this whole system at its core.It means.</div>
-<div class='content pad-64 w-800 sm:pad-32 flex-x center-x'>
+<div class='content pad-64 w-800 sm:pad-32 flex-y center-x'>
 <a class='pad-16' onclick='toggle()'>💡</a>
-</div>
+<div style='min-width: 64px; max-width: 64px;'><img src='/r/guy_pixel.png' alt='Guy'  style='image-rendering:pixelated;'/>
+</div></div>
 <script>var invert = false;const up = (i) => {try { localStorage.setItem('invert', i ? 1 : 0); } catch(err) {}document.body.classList.toggle('invert', i);invert = i;};function toggle(){up(!invert);}if (window.matchMedia){try { i = localStorage.getItem('invert'); } catch(err) {}if (i === null) i = !window.matchMedia('(prefers-color-scheme: dark)').matches;else i = !!Number(i);up(i);window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {up(!e.matches, true);});}window.addEventListener('load', () => {document.getElementsByTagName('html')[0].className += 'load';});</script>
 <script src='/lightning.js'></script>
 </body>

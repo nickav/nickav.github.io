@@ -3,20 +3,20 @@
 <head>
 <meta charset='utf-8' />
 <meta name='viewport' content='width=device-width, initial-scale=1' />
-<title>On Memory Allocation</title>
-<meta name='description' content='The messy reality of dealing with memory in real-time applications' />
-<meta itemprop='name' content='On Memory Allocation'>
-<meta itemprop='description' content='The messy reality of dealing with memory in real-time applications'>
+<title>Why I Write C</title>
+<meta name='description' content='A handmade journey into game engines' />
+<meta itemprop='name' content='Why I Write C'>
+<meta itemprop='description' content='A handmade journey into game engines'>
 <meta itemprop='image' content='godrays_04.png'>
-<meta property='og:title' content='On Memory Allocation' />
-<meta property='og:description' content='The messy reality of dealing with memory in real-time applications' />
+<meta property='og:title' content='Why I Write C' />
+<meta property='og:description' content='A handmade journey into game engines' />
 <meta property='og:type' content='website' />
 <meta property='og:url' content='null' />
 <meta property='og:site_name' content='Nick Aversano' />
 <meta property='og:locale' content='en_us' />
 <meta name='twitter:card' content='summary' />
-<meta name='twitter:title' content='On Memory Allocation' />
-<meta name='twitter:description' content='The messy reality of dealing with memory in real-time applications' />
+<meta name='twitter:title' content='Why I Write C' />
+<meta name='twitter:description' content='A handmade journey into game engines' />
 <meta name='twitter:image' content='godrays_04.png' />
 <meta name='twitter:site' content='@nickaversano' />
 <meta name='theme-color' content='#000000' />
@@ -25,7 +25,7 @@
 <style type='text/css'>*{margin:0}*,*:before,*:after{box-sizing:border-box}html,body{height:100%}img,video{display:block;max-width:100%;height:auto;margin:0 auto}img{width:100%}input,button,textarea,select{font:inherit}h1,h2,h3,h4,h5,h6,p{padding:0;overflow-wrap:break-word}svg{fill:currentColor}:root{--black:#000;--white:#fff;--gray:#bbb;--gray-light:rgba(255,255,255,0.25);--white-light:rgba(255,255,255,0.1);--black-light:rgba(0,0,0,0.1);--bg:var(--black);--color:var(--white);--highlight:var(--white-light);--accent:#afaffc}.invert{--bg:var(--white);--color:var(--black);--highlight:var(--black-light);--gray:#555;--gray-light:rgba(0,0,0,0.25);background:var(--bg);color:var(--color)}html{font-size:16px;font-weight:400;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased}body{background:var(--bg);color:var(--color);min-width:320px}.load *{transition:opacity 200ms,background 200ms,color 200ms}a{color:inherit;text-decoration:none;cursor:pointer}a:not(.no-hover):hover{opacity:0.5}p{margin:1rem 0}hr{margin:4rem 0;border:0;display:flex;justify-content:center}hr:after{content:'';max-width:100px;width:100%;border:1px solid var(--gray-light)}.link{border-bottom:4px solid var(--accent)}.c-gray{color:var(--gray)}.bg-light{background:var(--highlight)}.font-normal{font-weight:400}.font-bold{font-weight:700}.font-16{font-size:1rem}.font-24{font-size:1.5rem}.font-32{font-size:2rem}.inline-block{display:inline-block}.inline-flex{display:inline-flex}.flex-x{display:flex;flex-direction:row}.flex-y{display:flex;flex-direction:column}.flex-1{flex:1}.align-right{margin-left:auto}.flex-row.center-y{align-items:center}.flex-col.center-y{justify-content:center}.flex-row.center-x{justify-content:center}.flex-col.center-x{align-items:center}.flex-x.center-y{align-items:center}.flex-y.center-y{justify-content:center}.flex-x.center-x{justify-content:center}.flex-y.center-x{align-items:center}.center{justify-content:center;align-items:center}.grid{display:grid;grid-template-columns:repeat(2,1fr);grid-gap:1rem;grid-auto-rows:1fr}.size-16{width:1rem;height:1rem}.size-20{width:1.25rem;height:1.25rem}.size-24{width:1.5rem;height:1.5rem}.size-32{width:2rem;height:2rem}.padx-8{padding-left:0.5rem;padding-right:0.5rem}.padx-16{padding-left:1rem;padding-right:1rem}.padx-32{padding-left:2rem;padding-right:2rem}.padx-64{padding-left:4rem;padding-right:4rem}.pady-8{padding-top:0.5rem;padding-bottom:0.5rem}.pady-16{padding-top:1rem;padding-bottom:1rem}.pady-32{padding-top:2rem;padding-bottom:2rem}.pady-64{padding-top:4rem;padding-bottom:4rem}.pad-8{padding:0.5rem}.pad-16{padding:1rem}.pad-32{padding:2rem}.pad-64{padding:4rem}.mary-32{margin-top:2rem;margin-bottom:2rem}.marb-32{margin-bottom:2rem}.w-full{width:100%}.w-1280{max-width:80rem;width:100%}.w-800{max-width:50rem;width:100%}.h-full{height:100%}.h-64{height:4rem}.h-128{height:8rem}.h-200{height:12.5rem}.h-320{height:20rem}.csx-8>*:not(:last-child){margin-right:0.5rem}.csx-16>*:not(:last-child){margin-right:1rem}.csx-32>*:not(:last-child){margin-right:2rem}.csx-64>*:not(:last-child){margin-right:4rem}.csy-8>*:not(:last-child){margin-bottom:0.5rem}.csy-16>*:not(:last-child){margin-bottom:1rem}.csy-32>*:not(:last-child){margin-bottom:2rem}.csy-64>*:not(:last-child){margin-bottom:4rem}.bg{position:absolute;z-index:-1;opacity:0.25}a:hover .bg{opacity:0.75}.cover{object-fit:cover;width:100%;height:100%}.content{max-width:44rem;margin:0 auto;width:100%}.content :is(h2,h3,h4,h5,h6){margin:2rem 0 0.5rem 0}.video{position:relative;padding-bottom:56.25%;height:0}.video iframe{position:absolute;top:0;left:0;width:100%;height:100%}.round{border-radius:2px}.round-2{border-radius:4px}.crop{overflow:hidden}.quote{border-radius:4px;background:#272822;color:#F8F8F2;font-weight:500;white-space:pre-line;padding:2rem;margin:2rem 0}.code,.inline_code{border-radius:4px;background:#272822;color:#F8F8F2;font-weight:500;font-family:SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace}.inline_code{display:inline;padding:0.2rem 0.4rem}.code{overflow-x:auto;padding:2rem;margin:2rem 0}.tok-Keyword,.tok-Macro{color:#F92672}.tok-Type{color:#66D9EF}.tok-Comment{color:#75715E}.tok-Number,.tok-Literal{color:#AE81FF}.tok-String{color:#E6DB74 }.tok-Function{color:#A6E22E}@media screen and (max-width:640px){html{font-size:16px}}@media screen and (min-width:961px){html{font-size:18px}}@media screen and (min-width:1441px){html{font-size:20px}.xl\:h-480{height:30rem}}@media screen and (max-width:960px){.md\:flex-x{display:flex;flex-direction:row}.md\:flex-y{display:flex;flex-direction:column}.md\:csy-8>*:not(:last-child){margin-bottom:0.5rem}.md\:pad-32{padding:2rem}}@media screen and (max-width:640px){.sm\:flex-x{display:flex;flex-direction:row}.sm\:flex-y{display:flex;flex-direction:column}.sm\:csy-8>*:not(:last-child){margin-bottom:0.5rem}.sm\:pad-32{padding:2rem}.sm\:pad-16{padding:1rem}.sm\:padx-32{padding-left:2rem;padding-right:2rem}.sm\:h-160{height:11rem}.sm\:h-240{height:15rem}.grid{grid-template-columns:repeat(1,1fr)}}@media screen and (max-width:480px){.xs\:flex-y{display:flex;flex-direction:column}}</style>
 <link rel='alternate' type='application/rss+xml' title='Nick Aversano' href='https://nickav.co/feed.xml' />
 </head>
-<body class='On Memory Allocation'>
+<body class='Why I Write C'>
 <div class='content flex-x pad-64  xs:flex-y sm:csy-8 sm:pad-32'>
 <div class='csx-16 flex-1 flex-x center-y'>
 <span class='font-24 font-bold'><a href='/'>Nick Aversano</a></span>
@@ -42,73 +42,107 @@
 <div class='content padx-64 sm:padx-32 h-64 flex-x center-y csx-32' style='margin-bottom: -2rem'><a class='font-bold pady-16' href='/posts/0001_hello_world'>← Prev</a></div>
 <div id='content' class='content pad-64 sm:pad-32'>
 <div class='marb-32'>
-<div class='c-gray' style='font-size:0.8rem'>3 min read</div>
-<h1>On Memory Allocation</h1>
-<div class='c-gray'>19 November 2021</div>
+<div class='c-gray' style='font-size:0.8rem'>4 min read</div>
+<h1>Why I Write C</h1>
+<div class='c-gray'>29 June 2023</div>
 <div>By <a class='font-bold link' href='/'>Nick Aversano</a></div>
 </div>
 
-When writing high-performance software, organizing your program's memory properly can result in dramatic speed improvements.
-While you don't need to do the optimal thing, memory access can <i>definitely</i> be a runtime bound on your program's maximum speed.
-It also turns out that in most cases there is a dramatically simpler solution.
-<p></p>As programmers, we often think of memory access as <code class='inline_code'>O(1)</code> runtime complexity. But the code we write runs on an actual physical CPU in the real world. So while that's true in the theoretical sense, it's not at all true when dealing with modern CPUs.
-<p></p><h2>Heap Allocators</h2><p></p>If you've gone to computer school, then you've probably learned about <code class='inline_code'>malloc</code> and <code class='inline_code'>free</code>.
-You may have even been taught to write linked lists of <code class='inline_code'>Node</code>s by <code class='inline_code'>malloc</code>-ing each node.
-This is almost always bad because of how memory acess on a CPU works.
-<p></p>The only time this is a good solution is if you need to constantly allocate and free unknown sized buffers in random orders.
-<p></p>When you access memory from the CPU, it turns out there are 3 levels of caching that sits in between you and RAM. This is to help with the fact that memory access is <i>so slow</i>.
-So while your CPU is taking a stroll down to RAM memory lane, it might as well grab a bunch of stuff while it's already there.
-<p></p>Beacuse memory access on a CPU is incredibly slow, modern CPUs typically have 3 layers of caching to help hide latency.
-These layers are called: L1, L2, and L3 and might be sized: 64KB, 256KB, 16MB.
-So when you ask for memory, the CPU goes and fetches a whole page and sticks it in the cache.
-Similarly for writing values back to memory, but we won't get into that now!
-<p></p>The main problem with a general-purpose heap allocator is that often your allocations aren't in the same cache page.
-Allow me to provide a demonstration:
-<p></p><div class="flex-x center">
-<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Trying to explain the data-oriented approach.<a href="https://t.co/qHcVssbwgH">pic.twitter.com/qHcVssbwgH</a></p>&mdash; Keijiro Takahashi (@_kzr)
-<a href="https://twitter.com/_kzr/status/1672497446705037312?ref_src=twsrc%5Etfw">June 24, 2023</a></blockquote>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+I started learning how to write my own game engines 5 years ago.
+In doing so, I've learned a ton about how computers actually work.
+C++ has been a great choice in many ways.
+It has also been an extremely humbling choice—I've encountered many things I didn't understand.
+Now I know some things, and I know that I don't know even more things.
+There's always more to learn!
+<p></p>Since the jQuery days, I had been doing frontend and backend web development.
+I've written web backends in almost every language I know.
+And I spent a ton of time writing React applications.
+After writing many many "web apps" I started to feel overwhelmingly frustrated with the web ecosystem.
+And with the trend of software in general.
+There are: slow build times, projects with 10k+ dependencies all for a pretty crappy UX. Seems like a bad trade!
+<p></p>The initial spark for writing my own engine came from the web, actually.
+I wanted to get back into game development, but was extremely frustrated by the now 5+ second build times of Game Maker Studio.
+I wondered if I could bring hot reloading from the web to game making?
+My computer should be able to reload things instantly!
+<p></p>I decided to use C because I knew that lots of game engines are written in C and C++.
+I also knew that my code could run as fast as the hardware would allow.
+If you want to prove that you learned something, explaining it to someone is a good test. Explaining it to a computer is even better.
+<p></p>I also decided to take it one step further by not allowing myself to use many libraries.
+I do use the C-Runtime Library (CRT) and some third-party libraries, but I try them to a minimum.
+<p></p>What I learned to love about C is it gives you almost nothing.
+You are in control of everything that happens.
+You're as close to the computer as you can get without writing assembly code.
+And you can even see the <a class='link' href='https://uops.info/table.html' target='_blank'>instructions</a> if you want to!
+<p></p><blockquote class='quote'>As it turns out CPUs are more complicated these days, and there are things called micro-ops which some instructions break further down into. But let's not get into that here!</blockquote>Games have to do what every application on your computer needs to do. They need to open a window, get user input, display the results, and play sound.
+And they have to run in 16ms per frame (every frame!).
+And they have to build a fun experience on top of that!
+<p></p>So as it turns out, learning how to make games from scratch is also a great way to learn
+how to build applications from scratch.
+It's the <a class='link' href='https://handmade.network' target='_blank'>Handmade</a> ethos if you will.
+<p></p>At their core, games need to:
+<p></p><ol><li>Get input from the outside world</li><li>Do some updates based on that input</li><li>Display the result to the user</li></ol><p></p><pre class='code'><span class='tok-Function'>GetInput</span>();
+<span class='tok-Function'>Update</span>();
+<span class='tok-Function'>Draw</span>();</pre><p></p>In practice, what this actually looks like is more like:
+<p></p><pre class='code'><span class='tok-Type'>f64</span> then = <span class='tok-Function'>OS_Time</span>();
+
+<span class='tok-Keyword'>while</span> (!<span class='tok-Function'>ShouldCloseApp</span>())
+{
+    <span class='tok-Type'>f64</span> now = <span class='tok-Function'>OS_Time</span>();
+    <span class='tok-Type'>f64</span> delta_time = then - now;
+    now = then;
+
+    <span class='tok-Function'>GetInput</span>();
+    <span class='tok-Function'>Update</span>(delta_time);
+    <span class='tok-Function'>Draw</span>(delta_time);
+
+    <span class='tok-Function'>WaitUntilNextFrame</span>();
+}</pre><p></p>I mean, really more like <a class='link' href='https://gafferongames.com/post/fix_your_timestep/' target='_blank'>this timestep</a>. But hopefully you get the idea.
+<p></p>Because I had to build everything myself, I had to learn how everything works from first principles.
+I eventually decided to write a base layer that I could build on top of.
+Similar to what you would get in other programming languages.
+<p></p>Only, I could fully integrate all my own concepts.
+And if something has a bug, that means I can fix it!
+And if something has a bug, that means I have to fix it.
+<p></p>This <a class='link' href='https://github.com/nickav/na/blob/master/na.h' target='_blank'>base layer</a> includes:
+<ul><li>Basic types and macros</li><li>Arenas and allocators for memory management</li><li>Strings and Unicode conversions</li><li>File IO, dates and times</li><li>Threading primitives like semaphores and mutexes</li><li>Arrays and Tables</li></ul><p></p>I also built a core layer on top of the base layer that includes:
+<ul><li>Math</li><li>Windows and mouse and keyboard input</li><li>Controller input</li><li>Graphics</li><li>Fonts</li><li>Audio</li><li>Sound mixing</li><li>Networking</li><li>Image reading and writing</li></ul><p></p>And finally the game itself typically includes:
+<ul><li>An asset pack system</li><li>Hot reloading</li><li>Entities</li></ul><p></p>As it turns out, things at the operating system level get a little bit ticky.
+The world is a mess of complexity and <a class='link' href='https://en.wikipedia.org/wiki/Conway%27s_law' target='_blank'>Conway's Law</a>.
+Microsoft APIs are no exception:
+<p></p>Want to open a window? Well, there's a lot of quirks with that.
+<p></p>Want graphics to show up on the screen? You're going to have to wrangle GPU APIs (similar to doing your taxes).
+Or at the very least learn a lot about software rendering.
+<p></p>Want sounds? You need to really care about the speed of that! Not to mention sound mixing.
+<p></p>Want controller input? Well there's like 4 different Windows APIs and they all give different and overlapping information: XInput, DirectInput, Raw Input, ...
+<p></p>Want fonts? That's a rabbit hole. At the very least, you have to write a font-atlas and space out all the glyphs manually, not to mention dealing with other languages! And did I mention there are some right-to-left languages?
+<p></p><hr/><p></p>You really appreciate everything when you have nothing.
+<p></p>It also gives you a first-principles perspective to the problems of other programming domains.
+Why do we do things the way we do them now?
+Are we getting good results?
+If not, why not?
+<p></p>It seems like modern day programming is inundated with libraries, OOP, TDD, slowness, bad UX, and often outright malicious practices.
+And there are lots of programmers who don't even try to get better.
+They just repeat the same dogma. Maybe because it's all they know. Maybe they're scared of confronting what they don't know?
+Of feeling like a fraud.
+<p></p>I think it's safe to say that we have massive problems as an industry today.
+Programmers have failed.
+Software continues to get slower and worse.
+Users are increasingly being used for business profits with little or no care.
+<p></p>Maybe as a culture we've also forgotten how fast computers used to be?
+I know I certainly did!
+I had forgotten how fast applications used to start up.
+There was no load times, no updates, no restarts.
+Things just worked better.
+<p></p>If we did literally just did nothing, then software that is 20 years old should be 1000x faster today (by <a class='link' href='https://en.wikipedia.org/wiki/De_Morgan%27s_laws' target='_blank'>De Morgan's Law</a>).
+And yet, the software we use today is slower by at least an order of magnitude!
+And that's being extremely generous.
+<p></p>So maybe we need to change our mindset?
+<p></p>Maybe we need to start caring?
+<p></p>Maybe we need to stop using so many goddamn dependencies.
+<p></p>We need to count in milliseconds, not seconds.
+<p></p>We need to get back to the basics.
+<p></p>And that is why I write C.
 </div>
-<p></p>The way to make your code as fast as possible is to think "Data-Oriented" about it!
-So if heap allocators are too slow, what else can you do?
-<p></p><h2>Static Allocation</h2><p></p>Meaning, just declare the thing to be as big as you ever want it to be:
-<p></p><pre class='code'><span class='tok-Type'>struct</span> Game_Memory
-{
-    <span class='tok-Type'>Entity</span> entities[<span class='tok-Number'>2048</span>]; <span class='tok-Comment'>// 2048 should be enough for anybody</span>
-    <span class='tok-Type'>i64</span>    count;
-};</pre><p></p>The drawbacks to this approach should be obvious, but there are some good properties worth talking about:
-<p></p><ol><li>You know exactly what your worst possible case scenario is and you can make sure your program runs smoothly at the limit. This has knock-on effects with algorithmic complexity.</li><li>If your program starts at all, then it definitely has enough memory to run.</li></ol><p></p>Depending on your usage, this memory can be stored in a few different places: the stack, the heap, or the data segment.
-In fact, the data segment is not any more special than program memory.
-When your program is started, the OS loads it into memory somewhere and marks it as read-only.
-The only difference is the data segment has both read-write and read-only areas. Whereas program code is read-only.
-<p></p><h2>Arena Allocators</h2><p></p>Enter one my favorite memory strategies. It's so simple you'll fall out of your chair:
-<p></p><pre class='code'><span class='tok-Type'>struct</span> Arena
-{
-    <span class='tok-Type'>u8</span> *data;
-    <span class='tok-Type'>u64</span> offset;
-    <span class='tok-Type'>u64</span> size;
-};</pre><p></p>I first learned about this approach from watching the Handmade Hero series.
-The concept is simple: grab a large block of memory to sub-allocate from. Whenever you need more memory, just bump the <code class='inline_code'>offset</code> forward and return a pointer into that block.
-You can also trivially align the resulting pointers.
-<p></p>The pros of this approach is it's dead simple. And it's extremely fast.
-It's also trival to free the entire block. All you do is set <code class='inline_code'>offset</code> to zero.
-<p></p>One of the tricky things with this approach is there's not really a natural way to "free" anything. Unless you happen to be in the happy case where the thing you were trying to free was the last operation you did in the block.
-But in practice every subsystem can just manage it's own memory directly.
-<p></p>Here's what some usage code might look like:
-<p></p><pre class='code'><span class='tok-Type'>u64</span> size = <span class='tok-Function'>kilobytes</span>(<span class='tok-Number'>1</span>);
-<span class='tok-Type'>u8</span> *data = <span class='tok-Function'>arena_push</span>(arena, size);
-<span class='tok-Keyword'>for</span> (<span class='tok-Type'>int</span> i = <span class='tok-Number'>0</span>; i &lt; size; i += <span class='tok-Number'>1</span>)
-{
-    data[i] = <span class='tok-Number'>0x42</span>;
-}
-<span class='tok-Function'>arena_pop</span>(size);</pre><p></p>But, sometimes you need to free things out of order. In that case, this approach doesn't really work so well. Or does it?
-Well, one thing you can do is to have multiple arena allocators that serve different purposes.
-<p></p>Another drawback to this approach is because everything is allocated from a single block in one-shot, your application might use a lot more memory than it actually needs.
-<p></p>But, there's another pattern we can lean on here to make this a really compelling general-case memory allocation strategy. Enter OS Virtual Memory:
-<p></p><h2>OS Virtual Memory</h2><p></p>Modern operating systems provide a mechanism for virtual memory.
-Virtual memory is like real memory, except that it has no restrictions on what address it can start at.
-<p></p>The other cool thing about virtual memory, is you don't need to "commit" the memory upfront — because it's virtual!
-<p></p>So, combining arenas</div>
 <div class='content pad-64 w-800 sm:pad-32 flex-x center-x'>
 <a class='pad-16' onclick='toggle()'>💡</a>
 </div>

@@ -68,17 +68,17 @@ My computer should be able to reload things instantly!
 I also knew that my code could run as fast as the hardware would allow.
 If you want to prove that you learned something, explaining it to someone is a good test. Explaining it to a computer is even better.
 <p></p>I also decided to take it one step further by not allowing myself to use many libraries.
-I do use the C Runtime Library (CRT) and some third-party single-file header libraries, but I try them to a minimum.
+I do use the C Runtime Library (CRT) and some third-party <a class='link' href='https://github.com/nothings/stb' target='_blank'>single-file header libraries</a>, but I try them to a minimum.
 <p></p>What I learned to love about C is it gives you almost nothing.
 You are in control of everything that happens.
-You're as close to the computer as you can get without writing assembly code.
+You're just about as close to the computer as you can get without writing assembly code.
 And you can even see the <a class='link' href='https://uops.info/table.html' target='_blank'>instructions</a> if you want to!
-<p></p><blockquote class='quote'>As it turns out CPUs are more complicated these days, and there are things called micro-ops which some instructions break further down into. But let's not get into that here!</blockquote>Games have to do what every application on your computer needs to do. They need to open a window, get user input, display the results, and play sound.
-And they have to run in 16ms per frame, every frame.
-And they have to build a fun experience on top of that!
-<p></p>So as it turns out, learning how to make games from scratch is also a great way to learn
+<p></p><blockquote class='quote'>As it turns out CPUs are more complicated these days, and there are things called micro-ops which some instructions break further down into. But let's not get into that here!</blockquote>Learning how to make game engines from scratch is also a great way to learn
 how to build applications from scratch.
 It's the <a class='link' href='https://handmade.network' target='_blank'>Handmade</a> ethos if you will.
+Games have to do what every application on your computer needs to do. They need to open a window, get user input, display the results, and play sound.
+And they have to run in 16ms per frame, every frame.
+And they have to build a fun experience on top of that!
 <p></p>At their core, games need to:
 <p></p><ol><li>Get input from the outside world</li><li>Do some updates based on that input</li><li>Display the result to the user</li></ol><p></p><pre class='code'><span class='tok-Function'>GetInput</span>();
 <span class='tok-Function'>Update</span>();
@@ -102,53 +102,49 @@ I didn't write everything myself. I got lots of inspiration and code snippets fr
 The trick was finding a good balance between using what I knew and exploring what paths others had gone down.
 <p></p>I eventually decided to write a base layer that I could build on top of.
 Similar to what you would get in other programming languages.
-<p></p>Only, I could fully integrate all my own concepts.
-And if something has a bug, that means I can fix it!
+And if something has a bug, that means I could fix it!
 And if something has a bug, that means I have to fix it.
 <p></p>This <a class='link' href='https://github.com/nickav/na/blob/master/na.h' target='_blank'>base layer</a> includes:
 <ul><li>Basic types and macros</li><li>Arenas and allocators for memory management</li><li>Strings and Unicode conversions</li><li>File IO, dates and times</li><li>Threading primitives like semaphores and mutexes</li><li>Arrays and Tables</li></ul><p></p>I also built a core layer on top of the base layer that includes:
 <ul><li>Math</li><li>Windows and mouse and keyboard input</li><li>Controller input</li><li>Graphics</li><li>Fonts</li><li>Audio</li><li>Sound mixing</li><li>Networking</li><li>Image reading and writing</li></ul><p></p>And finally the game itself typically includes:
-<ul><li>An asset pack system</li><li>Hot reloading</li><li>Entities</li></ul><p></p>As it turns out, things at the operating system level get a little bit ticky.
+<ul><li>An asset system</li><li>Hot reloading</li><li>Entities</li></ul><p></p>As it turns out, things at the operating system level get a little bit ticky.
 The world is a mess of complexity and <a class='link' href='https://en.wikipedia.org/wiki/Conway%27s_law' target='_blank'>Conway's Law</a>.
 Microsoft APIs are no exception:
-<p></p>Want to open a window? Well, there's a lot of quirks with that.
-<p></p>Want graphics to show up on the screen? You're going to have to wrangle GPU APIs (similar to doing your taxes).
-Or at the very least learn a lot about software rendering.
-<p></p>Want sounds? You need to really care about the speed of that! Not to mention sound mixing.
-<p></p>Want controller input? Well there's like 4 different Windows APIs and they all give different and overlapping information: XInput, DirectInput, Raw Input, ...
-<p></p>Want fonts? That's a rabbit hole. At the very least, you have to write a font-atlas and space out all the glyphs manually, not to mention dealing with other languages! And did I mention there are some right-to-left languages?
-<p></p><hr/><p></p>You really appreciate everything when you have nothing.
-<p></p>I still encounter many things I don't understand and probably always will.
-But I've learned that I can learn anything with time and dedication and patience.
-It's okay to get inspiration from others, but try not to worry about exactly how others solved their problems.
-Solve it for yourself.
-Start where you are, use what you have, do what you can.
-And remember to be kind to yourself!
-<p></p>C gives you a first-principles mindset to problems in programming more generally.
+<p></p><ul><li>Want to open a window? Well, there's a lot of quirks with that.</li><li>Want graphics to show up on the screen? You're going to have to wrangle GPU APIs (similar to doing your taxes). Or at the very least learn a lot about software rendering.</li><li>Want sounds? You need to really care about the speed of that! Not to mention sound mixing.</li><li>Want controller input? Well there's like 4 different Windows APIs and they all give different and overlapping information: XInput, DirectInput, Raw Input, ...</li><li>Want fonts? That's a rabbit hole. At the very least, you have to write a font-atlas and space out all the glyphs manually, not to mention dealing with other languages! And did I mention there are some right-to-left languages?</li></ul><p></p><hr/><p></p>You really appreciate everything when you have nothing.
+<p></p>C gives you a first-principles mindset to problems in computing more generally.
+In some sense, you know exactly what the hardware is doing.
+Too many things are built on top of towers of abstractions, and it's harder to reason about what's actually going on.
 Why do we do things the way we do them now?
 Are we getting good results?
 If not, why not?
-<p></p>It seems like modern day programming is inundated with libraries, OOP, TDD, slowness, bad UX, and often outright malicious practices.
+<p></p>It seems like modern day programming is inundated with libraries, OOP, TDD, slowness, bad UX, and <a class='link' href='https://sneak.berlin/20201112/your-computer-isnt-yours/' target='_blank'>outright malicious</a> practices.
 And there are lots of programmers who don't even try to get better.
 They just repeat the same dogma. Maybe because it's all they know. Maybe they're scared of confronting what they don't know?
-<p></p>I think it's safe to say that we have massive problems as an industry today.
+<p></p>I think it's safe to say that the software industry has massive problems today.
 Programmers have failed.
 Software continues to get slower and worse.
 Users are increasingly being used for business profits with little or no care.
 <p></p>Maybe as a culture we've also forgotten how fast computers used to be?
-I know I certainly did!
+I certainly did!
 I had forgotten how fast applications used to start up.
-There was no load times, no updates, no restarts.
+There were no load times, no updates while you try to open the thing, no restarts.
 Things just worked better.
-<p></p>If we did literally just did nothing, then software that is 20 years old should be 1000x faster today (by <a class='link' href='https://en.wikipedia.org/wiki/De_Morgan%27s_laws' target='_blank'>De Morgan's Law</a>).
-And yet, the software we use today is slower by at least an order of magnitude!
-And that's being extremely generous.
+<p></p>Don't believe me? <a class='link' href='https://jmmv.dev/2023/06/fast-machines-slow-machines.html' target='_blank'>Check this out</a>.
+<p></p>If we did literally did nothing, then software that is 20 years old should be 1000x faster today by <a class='link' href='https://en.wikipedia.org/wiki/De_Morgan%27s_laws' target='_blank'>De Morgan's Law</a>.
+And yet, the software we use today is slower by <i>at least</i> an order of magnitude!
+And that's being generous.
 <p></p>So maybe we need to change our mindset?
 <p></p>Maybe we need to start caring?
 <p></p>Maybe we need to stop using so many goddamn dependencies.
 <p></p>We need to count in milliseconds, not seconds.
 <p></p>We need to get back to the basics.
 <p></p>And that is why I write C.
+<p></p><hr/><p></p>I still encounter many things I don't understand and probably always will.
+But I've learned that I can learn anything with enough time and practice.
+It's okay to get inspiration from others, but try not to worry about exactly how others solved their problems.
+Solve it for yourself.
+Start where you are, use what you have, do what you can.
+And remember to be kind to yourself!
 </div>
 <div class='content pad-64 w-800 sm:pad-32 flex-y center-x'>
 <a class='pad-16' onclick='toggle()'>💡</a>
@@ -156,7 +152,7 @@ And that's being extremely generous.
 <img src='/r/guy_pixel.png' alt='Guy'  style='image-rendering:pixelated;'/>
 </div>
 </div>
-<script>var invert = false;const up = (i) => {try { localStorage.setItem('invert', i ? 1 : 0); } catch(err) {}document.body.classList.toggle('invert', i);invert = i;};function toggle(){up(!invert);}function update(){try { i = localStorage.getItem('invert'); } catch(err) {}if (i === null) i = !window.matchMedia('(prefers-color-scheme: dark)').matches;else i = !!Number(i);up(i);}if (window.matchMedia){update();window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {up(!e.matches, true);});}window.addEventListener('load', () => {document.getElementsByTagName('html')[0].className += 'load';});</script>
+<script>var invert = false;const up = (i) => {try { localStorage.setItem('invert', i ? 1 : 0); } catch(err) {}document.body.classList.toggle('invert', i);invert = i;};function toggle(){up(!invert);}if (window.matchMedia){try { i = localStorage.getItem('invert'); } catch(err) {}if (i === null) i = !window.matchMedia('(prefers-color-scheme: dark)').matches;else i = !!Number(i);up(i);window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {up(!e.matches, true);});}window.addEventListener('load', () => {document.getElementsByTagName('html')[0].className += 'load';});</script>
 <script src='/lightning.js'></script>
 </body>
 </html>

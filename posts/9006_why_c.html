@@ -60,14 +60,21 @@ And I spent a ton of time writing React applications.
 After writing many many "web apps" I started to feel overwhelmingly frustrated with the web ecosystem.
 And with the trend of software in general.
 There are: slow build times, projects with 10k+ dependencies all for a pretty crappy UX. Seems like a bad trade!
-<p></p>The initial spark for writing my own engine came from the web, actually.
-I wanted to get back into game development, but was extremely frustrated by the now 5+ second build times of Game Maker Studio.
+<p></p>I started writing <a class='link' href='https://github.com/nickav/myspace' target='_blank'>web projects</a> with less dependencies and implemented my own libraries.
+I enjoyed figuring out how everything works, and created new solutions that were simpler.
+Often it was not even that much code—I only wrote exactly what I needed.
+My last React project had 2 dependencies: <code class='inline_code'>esbuild</code> and <code class='inline_code'>preact</code>.
+There was no scrollbar in the <code class='inline_code'>node_modules</code> folder!
+But I still felt like I could do better.
+Browsers are so wasteful and slow.
+And web apps feel so much worse than well-written native apps.
+<p></p>The initial spark for writing my own game engine came from the web.
+I wanted to get back into game development, but was extremely frustrated by the 5+ second build times of Game Maker Studio.
 I wondered if I could bring hot reloading from the web to game making?
 My computer should be able to reload things instantly!
 <p></p>I decided to use C because I knew that lots of game engines are written in C and C++.
 I also knew that my code could run as fast as the hardware would allow.
-If you want to prove that you learned something, explaining it to someone is a good test. Explaining it to a computer is even better.
-<p></p>I also decided to take it one step further by not allowing myself to use many libraries.
+I also decided to take it one step further by not allowing myself to use many libraries.
 I do use the C Runtime Library (CRT) and some third-party <a class='link' href='https://github.com/nothings/stb' target='_blank'>single-file header libraries</a>, but I try them to a minimum.
 It's the <a class='link' href='https://handmade.network' target='_blank'>Handmade</a> ethos if you will.
 <p></p>What I learned to love about C is it gives you almost nothing.

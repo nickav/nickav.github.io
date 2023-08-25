@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<meta name='viewport' content='width=device-width, initial-scale=1' />
+<title>WASM from Scratch</title>
+<meta name='description' content='A practical guide for working with Web Assembly' />
+<meta itemprop='name' content='WASM from Scratch'>
+<meta itemprop='description' content='A practical guide for working with Web Assembly'>
+<meta itemprop='image' content='3.jpg'>
+<meta property='og:title' content='WASM from Scratch' />
+<meta property='og:description' content='A practical guide for working with Web Assembly' />
+<meta property='og:type' content='website' />
+<meta property='og:url' content='null' />
+<meta property='og:site_name' content='Nick Aversano' />
+<meta property='og:locale' content='en_us' />
+<meta name='twitter:card' content='summary' />
+<meta name='twitter:title' content='WASM from Scratch' />
+<meta name='twitter:description' content='A practical guide for working with Web Assembly' />
+<meta name='twitter:image' content='3.jpg' />
+<meta name='twitter:site' content='@nickaversano' />
+<meta name='theme-color' content='#000000' />
+<meta name='msapplication-TileColor' content='#000000' />
+<link rel='shortcut icon' href='/favicon.png' sizes='32x32' />
+<style type='text/css'>*{margin:0}*,*:before,*:after{box-sizing:border-box}html,body{height:100%}img,video{display:block;max-width:100%;height:auto;margin:0 auto}img{width:100%}input,button,textarea,select{font:inherit}h1,h2,h3,h4,h5,h6,p{padding:0;overflow-wrap:break-word}svg{fill:currentColor}:root{--black:#000;--white:#fff;--gray:#bbb;--gray-light:rgba(255,255,255,0.25);--white-light:rgba(255,255,255,0.1);--black-light:rgba(0,0,0,0.1);--bg:var(--black);--color:var(--white);--highlight:var(--white-light);--accent:#afaffc}.invert{--bg:var(--white);--color:var(--black);--highlight:var(--black-light);--gray:#555;--gray-light:rgba(0,0,0,0.25);background:var(--bg);color:var(--color)}html{font-size:16px;font-weight:400;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased}body{background:var(--bg);color:var(--color);min-width:320px}.load *{transition:opacity 200ms,background 200ms,color 200ms}a{color:inherit;text-decoration:none;cursor:pointer}a:not(.no-hover):hover{opacity:0.5}p{margin:1rem 0}hr{margin:4rem 0;border:0;display:flex;justify-content:center}hr:after{content:'';max-width:100px;width:100%;border:1px solid var(--gray-light)}.link{border-bottom:4px solid var(--accent)}.message{border-left:4px solid var(--accent);padding:1rem 2rem;margin:2rem 0;font-weight:500}.c-gray{color:var(--gray)}.bg-light{background:var(--highlight)}.font-normal{font-weight:400}.font-bold{font-weight:700}.font-16{font-size:1rem}.font-24{font-size:1.5rem}.font-32{font-size:2rem}.inline-block{display:inline-block}.inline-flex{display:inline-flex}.flex-x{display:flex;flex-direction:row}.flex-y{display:flex;flex-direction:column}.flex-1{flex:1}.align-right{margin-left:auto}.flex-row.center-y{align-items:center}.flex-col.center-y{justify-content:center}.flex-row.center-x{justify-content:center}.flex-col.center-x{align-items:center}.flex-x.center-y{align-items:center}.flex-y.center-y{justify-content:center}.flex-x.center-x{justify-content:center}.flex-y.center-x{align-items:center}.center{justify-content:center;align-items:center}.grid{display:grid;grid-template-columns:repeat(2,1fr);grid-gap:1rem;grid-auto-rows:1fr}.size-16{width:1rem;height:1rem}.size-20{width:1.25rem;height:1.25rem}.size-24{width:1.5rem;height:1.5rem}.size-32{width:2rem;height:2rem}.padx-8{padding-left:0.5rem;padding-right:0.5rem}.padx-16{padding-left:1rem;padding-right:1rem}.padx-32{padding-left:2rem;padding-right:2rem}.padx-64{padding-left:4rem;padding-right:4rem}.pady-8{padding-top:0.5rem;padding-bottom:0.5rem}.pady-16{padding-top:1rem;padding-bottom:1rem}.pady-32{padding-top:2rem;padding-bottom:2rem}.pady-64{padding-top:4rem;padding-bottom:4rem}.pad-8{padding:0.5rem}.pad-16{padding:1rem}.pad-32{padding:2rem}.pad-64{padding:4rem}.mary-32{margin-top:2rem;margin-bottom:2rem}.marb-32{margin-bottom:2rem}.w-full{width:100%}.w-1280{max-width:80rem;width:100%}.w-800{max-width:50rem;width:100%}.h-full{height:100%}.h-64{height:4rem}.h-128{height:8rem}.h-144{height:9rem}.h-160{height:10rem}.h-200{height:12.5rem}.h-320{height:20rem}.csx-8>*:not(:last-child){margin-right:0.5rem}.csx-16>*:not(:last-child){margin-right:1rem}.csx-32>*:not(:last-child){margin-right:2rem}.csx-64>*:not(:last-child){margin-right:4rem}.csy-8>*:not(:last-child){margin-bottom:0.5rem}.csy-16>*:not(:last-child){margin-bottom:1rem}.csy-32>*:not(:last-child){margin-bottom:2rem}.csy-64>*:not(:last-child){margin-bottom:4rem}.bg{position:absolute;z-index:-1;opacity:0.25}a:hover .bg{opacity:0.75}.hero{aspect-ratio:2 / 1;max-height:55vh}.cover{object-fit:cover;width:100%;height:100%}.content{max-width:48rem;margin:0 auto;width:100%}.content :is(h2,h3,h4,h5,h6){margin:2.5rem 0 0.5rem 0}.content .link{word-break:break-all}.video{position:relative;padding-bottom:56.25%;height:0}.video iframe{position:absolute;top:0;left:0;width:100%;height:100%}.round{border-radius:2px}.round-2{border-radius:4px}.crop{overflow:hidden}.quote{border-radius:4px;background:#272822;color:#F8F8F2;font-weight:500;white-space:pre-line;padding:2rem;margin:2rem 0}.code,.inline_code{border-radius:4px;background:#272822;color:#F8F8F2;font-weight:500;font-family:SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;font-size:0.9em}.inline_code{white-space:nowrap;display:inline;padding:0.1rem 0.4rem}.code{overflow-x:auto;padding:2rem;margin:2rem 0}.no_select{user-select:none}.tok-Keyword,.tok-Macro{color:#F92672}.tok-Type{color:#66D9EF}.tok-Comment{color:#75715E}.tok-Number,.tok-Literal{color:#AE81FF}.tok-String{color:#E6DB74 }.tok-Function{color:#A6E22E}@media screen and (max-width:640px){html{font-size:16px}}@media screen and (min-width:961px){html{font-size:18px}}@media screen and (min-width:1441px){html{font-size:20px}.xl\:h-480{height:30rem}}@media screen and (max-width:960px){.md\:flex-x{display:flex;flex-direction:row}.md\:flex-y{display:flex;flex-direction:column}.md\:csy-8>*:not(:last-child){margin-bottom:0.5rem}.md\:pad-32{padding:2rem}}@media screen and (max-width:640px){.sm\:flex-x{display:flex;flex-direction:row}.sm\:flex-y{display:flex;flex-direction:column}.sm\:csy-8>*:not(:last-child){margin-bottom:0.5rem}.sm\:pad-32{padding:2rem}.sm\:pad-16{padding:1rem}.sm\:padx-32{padding-left:2rem;padding-right:2rem}.sm\:h-160{height:11rem}.sm\:h-240{height:15rem}.grid{grid-template-columns:repeat(1,1fr)}}@media screen and (max-width:480px){.xs\:flex-y{display:flex;flex-direction:column}}</style>
+<link rel='alternate' type='application/rss+xml' title='Nick Aversano' href='https://nickav.co/feed.xml' />
+</head>
+<body class='WASM from Scratch'>
+<div class='content flex-x pad-64  xs:flex-y sm:csy-8 sm:pad-32'>
+<div class='csx-16 flex-1 flex-x center-y'>
+<span class='font-24 font-bold'><a href='/'>Nick Aversano</a></span>
+</div>
+<div class='csx-16 flex-x'>
+<a title='Twitch' href='https://twitch.tv/naversano' target='_blank' class='inline-flex center pad-8'><div class='inline-block size-20'><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Twitch</title><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714Z"/></svg></div></a>
+<a title='Twitter' href='https://www.twitter.com/nickaversano' target='_blank' class='inline-flex center pad-8'><div class='inline-block size-20'><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Twitter</title><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg></div></a>
+<a title='Github' href='https://www.github.com/nickav' target='_blank' class='inline-flex center pad-8'><div class='inline-block size-20'><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>GitHub</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></div></a>
+</div>
+</div>
+<div class='hero w-full bg-light'>
+<img src='/r/3.jpg' alt='' class='cover'/>
+</div>
+<div class='content padx-64 sm:padx-32 h-64 flex-x center-y csx-32' style='margin-bottom: -2rem'><a class='font-bold pady-16' href='/posts/0002_why_c'>← Prev</a></div>
+<div id='content' class='content pad-64 sm:pad-32'>
+<div class='marb-32'>
+<div class='c-gray' style='font-size:0.8rem'>10 min read</div>
+<h1>WASM from Scratch</h1>
+<div class='c-gray'>23 August 2023</div>
+<div>By <a class='font-bold link' href='/'>Nick Aversano</a></div>
+</div>
+
+I recently was trying to figure out how to compile my C code to WASM.
+If you search the internet for this, you'll find a <i>ton</i> of resources that say to use <code class='inline_code'>emscripten</code>. Even <a class='link' href='https://developer.mozilla.org/en-US/docs/WebAssembly/C_to_Wasm' target='_blank'>MDN</a> says this.
+While emscripten is not a bad choice, it does <i>a lot</i> for you.
+Not to mention that installing it can be a bit of a pain.
+If you're like me and prefer to take a more <a class='link' href='https://handmade.network' target='_blank'>handmade</a> approach to building software, it can be difficult to figure out everything you have to do to just compile some C code to WASM and run it.
+<p></p>Here is a comprehensive guide to what I learned after searching the internet and talking with some friends:
+<p></p><h2 id='basics'>Basics</h2><p></p>Writing for Web Assembly is similar to writing for an embedded system.
+So if you've already taken care to keep your <a class='link' href='https://github.com/nickav/na/blob/master/na.h' target='_blank'>dependencies minimal</a>, this should be pretty straightforward.
+If you're starting a new project I <b>strongly</b> recommend this.
+<p></p>Let's say you have the world's most basic C program:
+<pre class='code'><span class='tok-Comment'>// File: hello.c</span>
+<span class='tok-Type'>typedef</span> <span class='tok-Type'>signed</span> <span class='tok-Type'>int</span> <span class='tok-Type'>i32</span>;
+
+<span class='tok-Comment'>// NOTE(nick): tell clang to export the function and call it "add"</span>
+<span class='tok-Keyword'>__attribute__</span>((<span class='tok-Function'>export_name</span>(<span class='tok-String'>"add"</span>)))
+<span class='tok-Type'>i32</span> <span class='tok-Function'>add</span>(<span class='tok-Type'>i32</span> a, <span class='tok-Type'>i32</span> b) {
+    <span class='tok-Keyword'>return</span> a + b;
+}</pre><p></p><code class='inline_code'>clang</code> can compile our C code directly to WASM with a few additional command-line arguments.
+If you run <code class='inline_code'>clang -print-targets</code> you can see the available compile targets. And indeed, we can see both <code class='inline_code'>wasm32</code> and <code class='inline_code'>wasm64</code> are present.
+Great! Let's try compiling with <code class='inline_code'>clang</code> and specify we want to use the <code class='inline_code'>wasm32</code> build target:
+<p></p><pre class='code'><span class='tok-Keyword no_select'>></span> <span class='tok-Function'>clang</span> <span class='tok-Number'>--target</span><span class='tok-Keyword'>=</span><span class='tok-String'>wasm32</span> <span class='tok-Type'>-o</span> hello.wasm hello.c</pre><p></p>But if you just try to run this, you'll get the following error:
+<pre class='code'>C:\dev\myspace<span class='tok-Keyword no_select'>></span> <span class='tok-Function'>clang</span> <span class='tok-Number'>--target</span><span class='tok-Keyword'>=</span><span class='tok-String'>wasm32</span> <span class='tok-Type'>-o</span> hello.wasm hello.c
+<span class='tok-Function'>wasm-ld:</span> error: cannot open crt1.o: no such file or directory
+<span class='tok-Function'>wasm-ld:</span> error: unable to find library <span class='tok-Type'>-lc</span>
+<span class='tok-Function'>wasm-ld:</span> error: cannot open C:\Program Files (x86)\Microsoft Visual <span class='tok-Type'>Studio\2019\Community\VC\Tools\Llvm\lib\clang\12.0.0\lib\libclang_rt.builtins-wasm32.a:</span> no such file or directory
+<span class='tok-Function'>clang:</span> error: linker command failed with exit code 1 (use <span class='tok-Type'>-v</span> to see invocation)</pre><p></p>This is because, much like embeded software, there is no C standard library!
+OK, no problem, we've got the <code class='inline_code'>--no-standard-libraries</code> flag. So let's try that and get another error:
+<p></p><pre class='code'>C:\dev\myspace<span class='tok-Keyword no_select'>></span> <span class='tok-Function'>clang</span> <span class='tok-Number'>--target</span><span class='tok-Keyword'>=</span><span class='tok-String'>wasm32</span> <span class='tok-Type'>--no-standard-libraries</span> <span class='tok-Type'>-o</span> hello.wasm hello.c
+<span class='tok-Function'>wasm-ld:</span> error: entry symbol not defined (pass <span class='tok-Type'>--no-entry</span> to suppress): _start
+<span class='tok-Function'>clang:</span> error: linker command failed with exit code 1 (use <span class='tok-Type'>-v</span> to see invocation)</pre><p></p>This is clang telling us that here is no <code class='inline_code'>_start</code> function (the function that eventually calls <code class='inline_code'>int main</code> in a typical C program). OK, well it looks like there's a suggestion there too so let's just using that. The thing is <code class='inline_code'>wasm-ld</code> is giving us the error. To pass a <code class='inline_code'>wasm-ld</code> linker flag you have to prefix it with <code class='inline_code'>-Wl,</code>, so the actual flag looks like: <code class='inline_code'>-Wl,--no-entry</code>.
+<p></p>I will now take the liberty to add a few more compiler flags that will matter later:
+<p></p><code class='inline_code'>-Wl,--no-entry</code> - no entry point (we're just building a library)
+<p></p><code class='inline_code'>-Wl,--import-memory</code> - import our memory from the JS environment
+<p></p><code class='inline_code'>-mbulk-memory</code> - tell the compiler not to be too clever and replace our loops with <code class='inline_code'>memset</code> (because remember, no C standard library)
+<p></p>I also added the <code class='inline_code'>-O1</code> optimization flag to make the output a little bit more concise.
+<p></p>Note that we explicitly told <code class='inline_code'>clang</code> to export our function with the special <code class='inline_code'>__attribute__((export_name("add")))</code> decorator.
+If you prefer to export all the symbols in your program, you can do that with the <code class='inline_code'>-Wl,--export-all</code> linker flag.
+If you're curious, here's a list of <a class='link' href='https://lld.llvm.org/WebAssembly.html' target='_blank'>LLVM linker flags</a> you can use.
+<p></p>So now we can compile our program again:
+<p></p><pre class='code'><span class='tok-Keyword no_select'>></span> <span class='tok-Function'>clang</span> <span class='tok-Type'>-O1</span> <span class='tok-Number'>--target</span><span class='tok-Keyword'>=</span><span class='tok-String'>wasm32</span> <span class='tok-Type'>--no-standard-libraries</span> <span class='tok-Type'>-mbulk-memory</span> <span class='tok-Type'>-Wl,--no-entry</span> <span class='tok-Type'>-Wl,--import-memory</span> <span class='tok-Type'>-o</span> hello.wasm hello.c</pre><p></p>And that works!
+<p></p><div class="message">
+💡 Web Assembly is a binary format, and similar to machine assembly there is a text format called WAT (Web Assembly Text).
+</div>
+<p></p>You can view the WAT of the WASM binary directly in the browser. Go to the Network tab, then click Preview:
+<p></p><pre class='code'><span class='tok-Comment'>// File: hello.wat</span>
+(<span class='tok-Function'>module</span>
+  (<span class='tok-Type'>memory</span> $env<span class='tok-Unknown'>.</span><span class='tok-Function'>memory</span> (;<span class='tok-Number'>0</span>;) (<span class='tok-Keyword'>import</span> <span class='tok-String'>"env"</span> <span class='tok-String'>"memory"</span>) <span class='tok-Number'>2</span>)
+  (<span class='tok-Keyword'>global</span> <span class='tok-Function'>$__stack_pointer</span> (;<span class='tok-Number'>0</span>;) (mut <span class='tok-Type'>i32</span>) (<span class='tok-Type'>i32</span><span class='tok-Unknown'>.</span><span class='tok-Keyword'>const</span> <span class='tok-Number'>66560</span>))
+  (<span class='tok-Type'>func</span> <span class='tok-Function'>$add</span> (;<span class='tok-Number'>0</span>;) (<span class='tok-Keyword'>export</span> <span class='tok-String'>"add"</span>) (<span class='tok-Type'>param</span> $var0 <span class='tok-Type'>i32</span>) (<span class='tok-Type'>param</span> $var1 <span class='tok-Type'>i32</span>) (result <span class='tok-Type'>i32</span>)
+    <span class='tok-Keyword'>local</span><span class='tok-Unknown'>.</span><span class='tok-Type'>get</span> $var1
+    <span class='tok-Keyword'>local</span><span class='tok-Unknown'>.</span><span class='tok-Type'>get</span> $var0
+    <span class='tok-Type'>i32</span><span class='tok-Unknown'>.</span>add
+  )
+)</pre><p></p>You can also use a CLI tool like <a class='link' href='https://webassembly.github.io/wabt/demo/wasm2wat/' target='_blank'>wasm2wat</a> to disassemble the binary.
+<p></p><h2 id='using_the_wasm_binary'>Using the WASM binary</h2><p></p>To use the WASM binary, we need a runtime environment.
+We can use the browser for this, but there are <a class='link' href='https://github.com/wasmerio/wasmer' target='_blank'>other</a> <a class='link' href='https://github.com/bytecodealliance/wasmtime' target='_blank'>WASM</a> <a class='link' href='https://github.com/wasm3/wasm3' target='_blank'>runtimes</a>.
+<p></p>Here is a simple HTML file to load our WASM:
+<p></p><pre class='code'><span class='tok-Comment'>// File: hello.html</span>
+&lt;!<span class='tok-Type'>doctype</span> html&gt;
+&lt;html&gt;
+&lt;body&gt;
+&lt;script&gt;
+    <span class='tok-Keyword'>const</span> run = <span class='tok-Function'>async</span> () =&gt; {
+        <span class='tok-Keyword'>const</span> response = <span class='tok-Type'>await</span> <span class='tok-Function'>fetch</span>(<span class='tok-String'>'/hello.wasm'</span>);
+        <span class='tok-Keyword'>const</span> bytes = <span class='tok-Type'>await</span> response<span class='tok-Unknown'>.</span><span class='tok-Function'>arrayBuffer</span>();
+
+        <span class='tok-Keyword'>const</span> numPages = <span class='tok-Number'>4</span>;
+        <span class='tok-Keyword'>const</span> memory = <span class='tok-Keyword'>new</span> WebAssembly<span class='tok-Unknown'>.</span><span class='tok-Function'>Memory</span>({ initial<span class='tok-Unknown'>:</span> numPages });
+
+        <span class='tok-Keyword'>const</span> wasm = <span class='tok-Type'>await</span> WebAssembly<span class='tok-Unknown'>.</span><span class='tok-Function'>instantiate</span>(bytes, {
+            env<span class='tok-Unknown'>:</span> {
+                memory,
+            },
+        });
+
+        <span class='tok-Keyword'>const</span> { instance } = wasm;
+
+        console<span class='tok-Unknown'>.</span><span class='tok-Function'>log</span>(instance<span class='tok-Unknown'>.</span>exports<span class='tok-Unknown'>.</span><span class='tok-Function'>add</span>(<span class='tok-Number'>42</span>, <span class='tok-Number'>42</span>));
+    };
+
+    <span class='tok-Function'>run</span>();
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre><p></p>Unfortunately, because of "security reasons" you can't just open this HTML file in your browser. You need to run a local web server to dynamically fetch content.
+<p></p>Any of the following commands will work:
+<p></p><pre class='code'><span class='tok-Keyword no_select'>></span> <span class='tok-Function'>python</span> <span class='tok-Type'>-m</span> http.server 8000
+<span class='tok-Function'></span>
+<span class='tok-Keyword no_select'>></span> <span class='tok-Function'>npx</span> serve <span class='tok-Type'>-p</span> 8000</pre><p></p>Now navigate to <a class='link' href='http://localhost:8000/hello.html' target='_blank'>http://localhost:8000/hello.html</a> and open the developer console. You should see:
+<p></p><pre class='code'><span class='tok-Number'>84</span></pre><p></p><h2 id='built-ins'>Built-Ins</h2><p></p>Clang has built-in functions for a few things such as:
+<p></p><pre class='code'><span class='tok-Type'>f64</span> <span class='tok-Function'>sqrt</span>(<span class='tok-Type'>f64</span> x) {
+    <span class='tok-Keyword'>return</span> <span class='tok-Function'>__builtin_sqrt</span>(x);
+}</pre><p></p>This will <i>just work</i> in WASM because there is are <code class='inline_code'>f32.sqrt</code> and <code class='inline_code'>f64.sqrt</code> instructions!
+<p></p>There are a few more notable built-ins:
+<p></p><pre class='code'><span class='tok-Function'>__builtin_sqrt</span>(x); <span class='tok-Comment'>// compiles to WASM f32.sqrt or f64.sqrt instruction</span>
+<span class='tok-Function'>__builtin_wasm_memory_size</span>(<span class='tok-Number'>0</span>); <span class='tok-Comment'>// the number of 64Kb pages we have</span>
+<span class='tok-Function'>__builtin_wasm_memory_grow</span>(<span class='tok-Number'>0</span>, blocks); <span class='tok-Comment'>// increases amount of pages</span>
+<span class='tok-Function'>__builtin_huge_valf</span>(); <span class='tok-Comment'>// similar to Infinity in JS</span></pre><p></p>There are no functions for <code class='inline_code'>sin</code> and <code class='inline_code'>cos</code> for example. For these you can: copy their source from <a class='link' href='https://www.musl-libc.org/' target='_blank'>MUSL</a>, write them yourself, or expose them from JavaScript.
+<p></p>When in doubt, you can actually <i>look</i> at what how <a class='link' href='https://github.com/emscripten-core/emscripten' target='_blank'>emscripten</a> implemented a feature you want.
+Emscripten does a lot of weird and clever things to emulate certain native features.
+For example, threads don't exist in WASM. Everything is single-threaded!
+<p></p><h2 id='imports'>Imports</h2><p></p>Because our WASM code is running in it's own sandbox, it will need to talk to the outside world.
+In order to expose some JavaScript callbacks, you use the following syntax:
+<p></p><pre class='code'><span class='tok-Keyword'>__attribute__</span>((<span class='tok-Function'>import_module</span>(<span class='tok-String'>"env"</span>), <span class='tok-Function'>import_name</span>(<span class='tok-String'>"js__sin"</span>)))
+<span class='tok-Type'>f64</span> <span class='tok-Function'>js__sin</span>(<span class='tok-Type'>f64</span> x);</pre><p></p>This tells <code class='inline_code'>clang</code> that there is some external function that will be provided when the WASM module starts up.
+Note that you <i>must</i> provide the function now otherwise the WASM module will fail to initialize.
+<p></p>And then add the corresponding <code class='inline_code'>js__sin</code> function to the <code class='inline_code'>env</code> property of the WASM module:
+<pre class='code'><span class='tok-Keyword'>const</span> wasm = <span class='tok-Type'>await</span> WebAssembly<span class='tok-Unknown'>.</span><span class='tok-Function'>instantiate</span>(bytes, {
+    env<span class='tok-Unknown'>:</span> {
+        memory,
+        js__sin<span class='tok-Unknown'>:</span> Math<span class='tok-Unknown'>.</span>sin, <span class='tok-Comment'>// added</span>
+    },
+});</pre><p></p>Now you can call <code class='inline_code'>js__sin</code> from C.
+<p></p>This is also, for example, how you would do OpenGL bindings in WASM.
+<p></p><h2 id='memory'>Memory</h2><p></p>When we booted up our WASM code, we told it exactly how many memory pages it has to run in. Each memory page is 64KB.
+<p></p>Our whole program must run with the memory that it's given.
+While there is a builtin to request more memory from the WASM runtime, I prefer to just declare all the memory I will ever use upfront.
+<p></p><div class="message">
+⚠️ If you just try to write directly into your WASM program's memory you will be writing over the stack from <code class='inline_code'>[0, &__heap_base)</code>.
+</div>
+<p></p>You can get the heap size and base pointer with:
+<p></p><pre class='code'><span class='tok-Comment'>//</span>
+<span class='tok-Comment'>// NOTE(nick): clang will set the address of this variable to be in the</span>
+<span class='tok-Comment'>// memory location of the heap base</span>
+<span class='tok-Comment'>//</span>
+<span class='tok-Keyword'>extern</span> <span class='tok-Type'>u32</span> __heap_base;
+
+<span class='tok-Type'>u64</span> <span class='tok-Function'>wasm__heap_size_in_bytes</span>()
+{
+    <span class='tok-Keyword'>return</span> <span class='tok-Function'>__builtin_wasm_memory_size</span>(<span class='tok-Number'>0</span>) &lt;&lt; <span class='tok-Number'>16</span>;
+}
+
+<span class='tok-Type'>void</span> *<span class='tok-Function'>wasm__heap_pointer</span>()
+{
+    <span class='tok-Comment'>// IMPORTANT! get the _address_ of the __heap_base symbol</span>
+    <span class='tok-Keyword'>return</span> (<span class='tok-Type'>void</span> *)&__heap_base;
+}</pre><p></p>Now we can define our own global allocator with a simple bump allocator:
+<p></p><pre class='code'><span class='tok-Keyword'>static</span> <span class='tok-Type'>u32</span> offset = <span class='tok-Number'>0</span>;
+
+<span class='tok-Type'>u8</span> *<span class='tok-Function'>wasm__push</span>(<span class='tok-Type'>u32</span> size)
+{
+    <span class='tok-Type'>u8</span> *result = NULL;
+
+    <span class='tok-Comment'>// NOTE(nick): align up to the nearest 16 bytes</span>
+    size = (size + <span class='tok-Number'>15</span>) & ~<span class='tok-Number'>15</span>;
+
+    <span class='tok-Keyword'>if</span> (offset + size &lt; <span class='tok-Function'>wasm__heap_size_in_bytes</span>())
+    {
+        result = (<span class='tok-Type'>u8</span> *)(<span class='tok-Function'>wasm__heap_pointer</span>()) + offset;
+        offset += size;
+    }
+
+    <span class='tok-Keyword'>return</span> result;
+}
+
+<span class='tok-Type'>void</span> <span class='tok-Function'>wasm__pop</span>(<span class='tok-Type'>u32</span> size)
+{
+    <span class='tok-Comment'>// NOTE(nick): align up to the nearest 16 bytes</span>
+    size = (size + <span class='tok-Number'>15</span>) & ~<span class='tok-Number'>15</span>;
+
+    <span class='tok-Keyword'>if</span> ((<span class='tok-Type'>i64</span>)offset - size &gt; <span class='tok-Number'>0</span>) {
+        offset -= size;
+    } <span class='tok-Keyword'>else</span> {
+        offset = <span class='tok-Number'>0</span>;
+    }
+}</pre><p></p><div class="message">
+⚠️ Note that we always align our allocations because some data structures like <code class='inline_code'>Float64Array</code> require that the memory is 8-byte aligned!
+</div>
+<p></p>If you are using <code class='inline_code'>wasm32</code> then pointers with be <code class='inline_code'>u32</code>-sized.
+As far as I can tell, the most you can return from a native function via the WASM FFI is a <code class='inline_code'>u64</code> and this gets returned to JavaScript as a <code class='inline_code'>BigInt</code>.
+If you need to read or write more than that, then you can use the <code class='inline_code'>wasm__push</code> and <code class='inline_code'>wasm__pop</code> functions.
+Another strategy would be to just agree on a reserved address space for JS-WASM communication, sort of like a global scratch buffer.
+<p></p>There is no <code class='inline_code'>malloc</code> or <code class='inline_code'>free</code> (again, no standard library).
+If you absolutely can't live without them, you can define your own or find an implementation online.
+In practice, I literally just use my <code class='inline_code'>Arena</code> allocator on top of my <code class='inline_code'>wasm__push</code> and <code class='inline_code'>wasm__pop</code> funtions.
+<p></p><h2 id='strings'>Strings</h2><p></p>Strings in WASM are a special case of dealing with exchanging large amounts of information back and forth (I mean, larger than a <code class='inline_code'>u64</code>).
+You might require special handling to get the UTF8 part correctly, but otherwise we are literally just writing the bytes to some shared location on the heap and passing the pointer to them.
+<p></p>The browser has two built-in functions for dealing with UTF8 strings: <code class='inline_code'>TextDecoder</code> and <code class='inline_code'>TextEncoder</code>.
+<p></p>Let's define a couple of functions for reading and writing UTF8 strings:
+<p></p><pre class='code'><span class='tok-Keyword'>const</span> decoder = <span class='tok-Keyword'>new</span> <span class='tok-Function'>TextDecoder</span>(<span class='tok-String'>"utf8"</span>);
+
+<span class='tok-Keyword'>const</span> DecodeString = (u8Array, idx, length) =&gt; {
+    <span class='tok-Keyword'>if</span> (!idx) <span class='tok-Keyword'>return</span> <span class='tok-String'>""</span>;
+    <span class='tok-Keyword'>const</span> endPtr = idx + length;
+    <span class='tok-Keyword'>return</span> decoder<span class='tok-Unknown'>.</span><span class='tok-Function'>decode</span>(u8Array<span class='tok-Unknown'>.</span><span class='tok-Function'>subarray</span>(idx, endPtr));
+}
+
+<span class='tok-Keyword'>const</span> StringLength = (u8Array, ptr) =&gt; {
+    <span class='tok-Type'>let</span> endPtr = ptr;
+    <span class='tok-Keyword'>while</span> (u8Array[endPtr]) ++endPtr;
+    <span class='tok-Keyword'>return</span> endPtr - ptr;
+}
+
+<span class='tok-Keyword'>const</span> encoder = <span class='tok-Keyword'>new</span> <span class='tok-Function'>TextEncoder</span>(<span class='tok-String'>"utf8"</span>);
+
+<span class='tok-Comment'>// NOTE(nick): the output space needed is >= s.length and <= s.length * 3</span>
+<span class='tok-Keyword'>const</span> EncodeString = (u8Array, base, string) =&gt; {
+    <span class='tok-Keyword'>if</span> (!string<span class='tok-Unknown'>.</span>length) <span class='tok-Keyword'>return</span> <span class='tok-Number'>0</span>;
+    <span class='tok-Keyword'>return</span> encoder<span class='tok-Unknown'>.</span><span class='tok-Function'>encodeInto</span>(string, u8Array<span class='tok-Unknown'>.</span><span class='tok-Function'>subarray</span>(base))<span class='tok-Unknown'>.</span>written;
+}</pre><p></p>Then we can use this code to read strings from WASM like this:
+<pre class='code'><span class='tok-Comment'>// NOTE(nick): given some function that returns a NULL-terminated string</span>
+<span class='tok-Keyword'>const</span> ptr = instance<span class='tok-Unknown'>.</span>exports<span class='tok-Unknown'>.</span><span class='tok-Function'>secret_message</span>();
+
+<span class='tok-Keyword'>const</span> result = <span class='tok-Function'>DecodeString</span>(heap, ptr, <span class='tok-Function'>StringLength</span>(heap, ptr));
+console<span class='tok-Unknown'>.</span><span class='tok-Function'>log</span>(<span class='tok-String'>"The secret message is:"</span>, result);</pre><p></p>If we want to pass a JS string to WASM we can do this:
+<pre class='code'><span class='tok-Comment'>// NOTE(nick): we need to put the string into WASM's memory</span>
+<span class='tok-Keyword'>const</span> ptr = instance<span class='tok-Unknown'>.</span>exports<span class='tok-Unknown'>.</span><span class='tok-Function'>wasm__push</span>(<span class='tok-Number'>3</span> * message<span class='tok-Unknown'>.</span>length);
+<span class='tok-Keyword'>const</span> count = <span class='tok-Function'>EncodeString</span>(heap, ptr, message);
+<span class='tok-Comment'>// NOTE(nick): then we pass a pointer to where we put the bytes</span>
+instance<span class='tok-Unknown'>.</span>exports<span class='tok-Unknown'>.</span><span class='tok-Function'>ping</span>(ptr, count);
+<span class='tok-Comment'>// NOTE(nick): now we're done with the memory</span>
+instance<span class='tok-Unknown'>.</span>exports<span class='tok-Unknown'>.</span><span class='tok-Function'>wasm__pop</span>(<span class='tok-Number'>3</span> * message<span class='tok-Unknown'>.</span>length);</pre><p></p><h2 id='structs'>Structs</h2><p></p>As far as I can tell, the most you can return from a function is a <code class='inline_code'>u64</code> and this gets returned to JS as a <code class='inline_code'>BigInt</code>.
+If you want to return a struct from a function you can either pack it into a <code class='inline_code'>u32</code> or a <code class='inline_code'>u64</code> and re-interpret the bytes as needed, or you can return a pointer to the struct and decode the struct fields from the pointer. I think returning a pointer is a bit easier to work with so that's what I normally do.
+<p></p>For example:
+<p></p><pre class='code'><span class='tok-Comment'>// File: hello.c</span>
+<span class='tok-Type'>typedef</span> <span class='tok-Type'>unsigned</span> <span class='tok-Type'>int</span> <span class='tok-Type'>u32</span>;
+<span class='tok-Type'>struct</span> Foo {
+    <span class='tok-Type'>u32</span> x;
+    <span class='tok-Type'>u32</span> y;
+};
+
+<span class='tok-Comment'>// File: hello.js</span>
+<span class='tok-Comment'>// NOTE(nick): given that this function returns a pointer to Foo:</span>
+<span class='tok-Keyword'>const</span> ptr = instance<span class='tok-Unknown'>.</span>exports<span class='tok-Unknown'>.</span><span class='tok-Function'>new__foo</span>();
+
+<span class='tok-Comment'>// NOTE(nick): `DataView` helps us read values out of the struct</span>
+<span class='tok-Keyword'>const</span> dataView = <span class='tok-Keyword'>new</span> <span class='tok-Function'>DataView</span>(memory<span class='tok-Unknown'>.</span>buffer);
+<span class='tok-Type'>let</span> at = ptr;
+<span class='tok-Keyword'>const</span> x = dataView<span class='tok-Unknown'>.</span><span class='tok-Function'>getUint32</span>(at, true);
+at += <span class='tok-Number'>4</span>;
+<span class='tok-Keyword'>const</span> y = dataView<span class='tok-Unknown'>.</span><span class='tok-Function'>getUint32</span>(at, true);
+at += <span class='tok-Number'>4</span>;
+
+<span class='tok-Comment'>// Now here is our reconstructed foo struct:</span>
+<span class='tok-Keyword'>const</span> foo = { x, y };</pre><p></p><code class='inline_code'>DataView</code> has a bunch of <a class='link' href='https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView' target='_blank'>methods</a> for interpretting different kinds of data.
+<p></p>The second argument should be <code class='inline_code'>true</code> because according to <a class='link' href='https://rsms.me/wasm-intro' target='_blank'>Rasmus</a> the bytes are always little endian independent of the host-machine's endianess.
+<p></p>This strategy also works for pointers fields.
+<p></p><h2 id='arrays'>Arrays</h2><p></p>We already saw a couple of examples for reading and writing strings. Arrays are similar.
+<p></p>To send an <code class='inline_code'>f64</code> array to WASM:
+<p></p><pre class='code'><span class='tok-Keyword'>const</span> jsArray = [<span class='tok-Number'>1</span>, <span class='tok-Number'>2</span>, <span class='tok-Number'>3</span>, <span class='tok-Number'>4</span>, <span class='tok-Number'>5</span>];
+<span class='tok-Comment'>// NOTE(nick): sizeof(f64) == 8</span>
+<span class='tok-Keyword'>const</span> cArrayPtr = instance<span class='tok-Unknown'>.</span>exports<span class='tok-Unknown'>.</span><span class='tok-Function'>wasm__push</span>(<span class='tok-Number'>8</span> * array<span class='tok-Unknown'>.</span>length);
+<span class='tok-Keyword'>const</span> cArray = <span class='tok-Keyword'>new</span> <span class='tok-Function'>Float64Array</span>(memory<span class='tok-Unknown'>.</span>buffer, cArrayPtr, jsArray<span class='tok-Unknown'>.</span>length);
+cArray<span class='tok-Unknown'>.</span><span class='tok-Function'>set</span>(jsArray);
+
+instance<span class='tok-Unknown'>.</span>exports<span class='tok-Unknown'>.</span><span class='tok-Function'>compute_square_roots</span>(cArrayPtr, jsArray<span class='tok-Unknown'>.</span>length);
+
+<span class='tok-Comment'>// NOTE(nick): if the memory was modified in place, we can read it now</span>
+<span class='tok-Keyword'>const</span> result = Array<span class='tok-Unknown'>.</span><span class='tok-Function'>from</span>(cArray);
+
+instance<span class='tok-Unknown'>.</span>exports<span class='tok-Unknown'>.</span><span class='tok-Function'>wasm__pop</span>(<span class='tok-Number'>8</span> * array<span class='tok-Unknown'>.</span>length);</pre><p></p>To read an <code class='inline_code'>f64</code> array from WASM:
+<p></p><pre class='code'><span class='tok-Keyword'>const</span> ptr = instance<span class='tok-Unknown'>.</span>exports<span class='tok-Unknown'>.</span><span class='tok-Function'>push_f64_array</span>(length);
+
+<span class='tok-Comment'>// NOTE(nick): read the memory directly</span>
+<span class='tok-Keyword'>const</span> dataView = <span class='tok-Keyword'>new</span> <span class='tok-Function'>DataView</span>(memory<span class='tok-Unknown'>.</span>buffer);
+<span class='tok-Type'>let</span> at = ptr;
+<span class='tok-Keyword'>const</span> count = dataView<span class='tok-Unknown'>.</span><span class='tok-Function'>getUint32</span>(at, true);
+at += <span class='tok-Number'>4</span>;
+<span class='tok-Comment'>// NOTE(nick): pointers are u32</span>
+<span class='tok-Keyword'>const</span> data = dataView<span class='tok-Unknown'>.</span><span class='tok-Function'>getUint32</span>(at, true);
+at += <span class='tok-Number'>4</span>;
+
+<span class='tok-Keyword'>const</span> result = <span class='tok-Keyword'>new</span> <span class='tok-Function'>Float64Array</span>(memory<span class='tok-Unknown'>.</span>buffer, data, count);
+<span class='tok-Keyword'>return</span> result;</pre><p></p>Note that because we just returned a <code class='inline_code'>Float64Array</code> into WASM's memory, this will actually change when WASM overwrites that memory. So you should take care to copy the array if you need to.
+<p></p>For small arrays you can use <code class='inline_code'>Array.from(float64Array)</code> to make it a plain JavaScript array.
+You can also copy the typed array itself with <code class='inline_code'>float64Array.slice()</code>.
+<p></p><div class="message">
+⚠️ One caveat with <code class='inline_code'>TypedArray</code>s is that <code class='inline_code'>Array.isArray</code> will actually return <code class='inline_code'>false</code> for them!
+You should use <code class='inline_code'>ArrayBuffer.isView()</code> instead.
+</div>
+<p></p><h2 id='source_code'>Source code</h2><p></p>Here is the full source code of our program, also available on <a class='link' href='https://gist.github.com/nickav/b371ba3769160cd321063eac5503c9c7' target='_blank'>Github</a>:
+<p></p><pre class='code'><span class='tok-Comment'>// File: hello.c</span>
+<span class='tok-Comment'>// Types</span>
+<span class='tok-Macro'>#define</span> NULL <span class='tok-Number'>0</span>
+<span class='tok-Type'>typedef</span> <span class='tok-Type'>unsigned</span> <span class='tok-Type'>char</span>      <span class='tok-Type'>u8</span>;
+<span class='tok-Type'>typedef</span> <span class='tok-Type'>unsigned</span> <span class='tok-Type'>int</span>       <span class='tok-Type'>u32</span>;
+<span class='tok-Type'>typedef</span> <span class='tok-Type'>signed</span> <span class='tok-Type'>int</span>         <span class='tok-Type'>i32</span>;
+<span class='tok-Type'>typedef</span> <span class='tok-Type'>signed</span> <span class='tok-Type'>long</span> long   <span class='tok-Type'>i64</span>;
+<span class='tok-Type'>typedef</span> <span class='tok-Type'>double</span>             <span class='tok-Type'>f64</span>;
+
+
+<span class='tok-Comment'>// Imports</span>
+<span class='tok-Keyword'>__attribute__</span>((<span class='tok-Function'>import_module</span>(<span class='tok-String'>"env"</span>), <span class='tok-Function'>import_name</span>(<span class='tok-String'>"js__output"</span>)))
+<span class='tok-Type'>void</span> <span class='tok-Function'>js__output</span>(<span class='tok-Type'>char</span> *str, <span class='tok-Type'>i32</span> size);
+
+<span class='tok-Keyword'>__attribute__</span>((<span class='tok-Function'>import_module</span>(<span class='tok-String'>"env"</span>), <span class='tok-Function'>import_name</span>(<span class='tok-String'>"js__sin"</span>)))
+<span class='tok-Type'>f64</span> <span class='tok-Function'>js__sin</span>(<span class='tok-Type'>f64</span> x);
+
+<span class='tok-Comment'>// Math</span>
+<span class='tok-Type'>f64</span> <span class='tok-Function'>sqrt</span>(<span class='tok-Type'>f64</span> x)
+{
+    <span class='tok-Keyword'>return</span> <span class='tok-Function'>__builtin_sqrt</span>(x);
+}
+
+<span class='tok-Type'>f64</span> <span class='tok-Function'>sin</span>(<span class='tok-Type'>f64</span> x)
+{
+    <span class='tok-Keyword'>return</span> <span class='tok-Function'>js__sin</span>(x);
+}
+
+<span class='tok-Comment'>// Memory</span>
+<span class='tok-Type'>u32</span> <span class='tok-Function'>wasm__heap_size_in_bytes</span>()
+{
+    <span class='tok-Keyword'>return</span> <span class='tok-Function'>__builtin_wasm_memory_size</span>(<span class='tok-Number'>0</span>) &lt;&lt; <span class='tok-Number'>16</span>;
+}
+
+<span class='tok-Keyword'>extern</span> <span class='tok-Type'>u32</span> __heap_base;
+<span class='tok-Type'>void</span> *<span class='tok-Function'>wasm__heap_pointer</span>()
+{
+    <span class='tok-Keyword'>return</span> (<span class='tok-Type'>void</span> *)&__heap_base;
+}
+
+<span class='tok-Keyword'>static</span> <span class='tok-Type'>u32</span> offset = <span class='tok-Number'>0</span>;
+
+<span class='tok-Keyword'>__attribute__</span>((<span class='tok-Function'>export_name</span>(<span class='tok-String'>"wasm__push"</span>)))
+<span class='tok-Type'>u8</span> *<span class='tok-Function'>wasm__push</span>(<span class='tok-Type'>u32</span> size)
+{
+    <span class='tok-Type'>u8</span> *result = NULL;
+
+    <span class='tok-Comment'>// NOTE(nick): align up to the nearest 16 bytes</span>
+    size = (size + <span class='tok-Number'>15</span>) & ~<span class='tok-Number'>15</span>;
+
+    <span class='tok-Keyword'>if</span> (offset + size &lt; <span class='tok-Function'>wasm__heap_size_in_bytes</span>())
+    {
+        result = (<span class='tok-Type'>u8</span> *)(<span class='tok-Function'>wasm__heap_pointer</span>()) + offset;
+        offset += size;
+    }
+
+    <span class='tok-Keyword'>return</span> result;
+}
+
+<span class='tok-Keyword'>__attribute__</span>((<span class='tok-Function'>export_name</span>(<span class='tok-String'>"wasm__pop"</span>)))
+<span class='tok-Type'>void</span> <span class='tok-Function'>wasm__pop</span>(<span class='tok-Type'>u32</span> size)
+{
+    <span class='tok-Comment'>// NOTE(nick): align up to the nearest 16 bytes</span>
+    size = (size + <span class='tok-Number'>15</span>) & ~<span class='tok-Number'>15</span>;
+
+    <span class='tok-Keyword'>if</span> ((<span class='tok-Type'>i64</span>)offset - size &gt; <span class='tok-Number'>0</span>) {
+        offset -= size;
+    } <span class='tok-Keyword'>else</span> {
+        offset = <span class='tok-Number'>0</span>;
+    }
+}
+
+<span class='tok-Comment'>//</span>
+<span class='tok-Comment'>// Exported API</span>
+<span class='tok-Comment'>//</span>
+
+<span class='tok-Type'>typedef</span> <span class='tok-Type'>struct</span> <span class='tok-Type'>f64_Array</span> f64_Array;
+<span class='tok-Type'>struct</span> f64_Array
+{
+    <span class='tok-Type'>u32</span> count;
+    <span class='tok-Type'>f64</span> *data;
+};
+
+<span class='tok-Keyword'>__attribute__</span>((<span class='tok-Function'>export_name</span>(<span class='tok-String'>"add"</span>)))
+<span class='tok-Type'>i32</span> <span class='tok-Function'>add</span>(<span class='tok-Type'>i32</span> x, <span class='tok-Type'>i32</span> y)
+{
+    <span class='tok-Keyword'>return</span> x + y;
+}
+
+<span class='tok-Keyword'>__attribute__</span>((<span class='tok-Function'>export_name</span>(<span class='tok-String'>"secret_message"</span>)))
+<span class='tok-Type'>char</span> *<span class='tok-Function'>secret_message</span>()
+{
+    <span class='tok-Keyword'>return</span> (<span class='tok-Type'>char</span> *)<span class='tok-String'>"Hello, Sailor!"</span>;
+}
+
+<span class='tok-Keyword'>__attribute__</span>((<span class='tok-Function'>export_name</span>(<span class='tok-String'>"ping"</span>)))
+<span class='tok-Type'>void</span> <span class='tok-Function'>ping</span>(<span class='tok-Type'>char</span> *message, <span class='tok-Type'>i32</span> count)
+{
+    <span class='tok-Function'>js__output</span>(message, count);
+}
+
+<span class='tok-Keyword'>__attribute__</span>((<span class='tok-Function'>export_name</span>(<span class='tok-String'>"compute_square_roots"</span>)))
+<span class='tok-Type'>void</span> <span class='tok-Function'>compute_square_roots</span>(<span class='tok-Type'>f64</span> *array, <span class='tok-Type'>i32</span> count)
+{
+    <span class='tok-Keyword'>for</span> (<span class='tok-Type'>i32</span> i = <span class='tok-Number'>0</span>; i &lt; count; i += <span class='tok-Number'>1</span>)
+    {
+        array[i] = <span class='tok-Function'>sqrt</span>(array[i]);
+    }
+}
+
+<span class='tok-Keyword'>__attribute__</span>((<span class='tok-Function'>export_name</span>(<span class='tok-String'>"push_f64_array"</span>)))
+f64_Array *<span class='tok-Function'>push_f64_array</span>(<span class='tok-Type'>u32</span> count)
+{
+    f64_Array *result = (f64_Array *)<span class='tok-Function'>wasm__push</span>(<span class='tok-Keyword'>sizeof</span>(f64_Array));
+    result-&gt;count = count;
+    result-&gt;data = (<span class='tok-Type'>f64</span> *)<span class='tok-Function'>wasm__push</span>(<span class='tok-Keyword'>sizeof</span>(<span class='tok-Type'>f64</span>) * count);
+
+    <span class='tok-Keyword'>for</span> (<span class='tok-Type'>i32</span> i = <span class='tok-Number'>0</span>; i &lt; count; i += <span class='tok-Number'>1</span>)
+    {
+        result-&gt;data[i] = <span class='tok-Number'>0</span>;
+    }
+
+    <span class='tok-Keyword'>return</span> result;
+}</pre><p></p><pre class='code'><span class='tok-Comment'>// File: hello.html</span>
+&lt;!<span class='tok-Type'>doctype</span> html&gt;
+&lt;html&gt;
+&lt;<span class='tok-Type'>script</span> src=<span class='tok-String'>"./hello.js"</span>&gt;
+&lt;/script&gt;
+&lt;/html&gt;</pre><p></p><pre class='code'><span class='tok-Comment'>// File: hello.js</span>
+<span class='tok-Keyword'>const</span> decoder = <span class='tok-Keyword'>new</span> <span class='tok-Function'>TextDecoder</span>(<span class='tok-String'>"utf8"</span>);
+
+<span class='tok-Keyword'>const</span> DecodeString = (u8Array, idx, length) =&gt; {
+    <span class='tok-Keyword'>if</span> (!idx) <span class='tok-Keyword'>return</span> <span class='tok-String'>""</span>;
+    <span class='tok-Keyword'>const</span> endPtr = idx + length;
+    <span class='tok-Keyword'>return</span> decoder<span class='tok-Unknown'>.</span><span class='tok-Function'>decode</span>(u8Array<span class='tok-Unknown'>.</span><span class='tok-Function'>subarray</span>(idx, endPtr));
+}
+
+<span class='tok-Keyword'>const</span> StringLength = (u8Array, ptr) =&gt; {
+    <span class='tok-Type'>let</span> endPtr = ptr;
+    <span class='tok-Keyword'>while</span> (u8Array[endPtr]) ++endPtr;
+    <span class='tok-Keyword'>return</span> endPtr - ptr;
+}
+
+<span class='tok-Keyword'>const</span> encoder = <span class='tok-Keyword'>new</span> <span class='tok-Function'>TextEncoder</span>(<span class='tok-String'>"utf8"</span>);
+
+<span class='tok-Comment'>// NOTE(nick): the output space needed is >= s.length and <= s.length * 3</span>
+<span class='tok-Keyword'>const</span> EncodeString = (u8Array, base, string) =&gt; {
+    <span class='tok-Keyword'>if</span> (!string<span class='tok-Unknown'>.</span>length) <span class='tok-Keyword'>return</span> <span class='tok-Number'>0</span>;
+    <span class='tok-Keyword'>return</span> encoder<span class='tok-Unknown'>.</span><span class='tok-Function'>encodeInto</span>(string, u8Array<span class='tok-Unknown'>.</span><span class='tok-Function'>subarray</span>(base))<span class='tok-Unknown'>.</span>written;
+}
+
+<span class='tok-Keyword'>const</span> Kilobytes = (x) =&gt; <span class='tok-Number'>1024</span> * x;
+<span class='tok-Keyword'>const</span> Megabytes = (x) =&gt; <span class='tok-Number'>1024</span> * <span class='tok-Number'>1024</span> * x;
+
+<span class='tok-Keyword'>const</span> load = <span class='tok-Function'>async</span> (wasmPath) =&gt; {
+    <span class='tok-Keyword'>const</span> response = <span class='tok-Type'>await</span> <span class='tok-Function'>fetch</span>(wasmPath);
+    <span class='tok-Keyword'>const</span> bytes = <span class='tok-Type'>await</span> response<span class='tok-Unknown'>.</span><span class='tok-Function'>arrayBuffer</span>();
+
+    <span class='tok-Comment'>// NOTE(nick): WASM pages are 64K each</span>
+    <span class='tok-Keyword'>const</span> numPages = <span class='tok-Function'>Megabytes</span>(<span class='tok-Number'>64</span>) / <span class='tok-Function'>Kilobytes</span>(<span class='tok-Number'>64</span>);
+
+    <span class='tok-Keyword'>const</span> memory = <span class='tok-Keyword'>new</span> WebAssembly<span class='tok-Unknown'>.</span><span class='tok-Function'>Memory</span>({ initial<span class='tok-Unknown'>:</span> numPages });
+    <span class='tok-Keyword'>const</span> heap = <span class='tok-Keyword'>new</span> <span class='tok-Function'>Uint8Array</span>(memory<span class='tok-Unknown'>.</span>buffer);
+
+    <span class='tok-Keyword'>const</span> wasm = <span class='tok-Type'>await</span> WebAssembly<span class='tok-Unknown'>.</span><span class='tok-Function'>instantiate</span>(bytes, {
+        env<span class='tok-Unknown'>:</span> {
+            memory,
+            js__output<span class='tok-Unknown'>:</span> (str, size) =&gt; {
+                <span class='tok-Keyword'>const</span> result = <span class='tok-Function'>DecodeString</span>(heap, str, size);
+                console<span class='tok-Unknown'>.</span><span class='tok-Function'>log</span>(<span class='tok-String'>"[hello]"</span>, result);
+            },
+            js__sin<span class='tok-Unknown'>:</span> Math<span class='tok-Unknown'>.</span>sin,
+        },
+    });
+
+    <span class='tok-Keyword'>const</span> { instance } = wasm;
+
+    <span class='tok-Keyword'>return</span> {
+        add<span class='tok-Unknown'>:</span> (x, y) =&gt; {
+            <span class='tok-Keyword'>return</span> instance<span class='tok-Unknown'>.</span>exports<span class='tok-Unknown'>.</span><span class='tok-Function'>add</span>(x, y);
+        },
+
+        secret_message<span class='tok-Unknown'>:</span> () =&gt; {
+            <span class='tok-Keyword'>const</span> ptr = instance<span class='tok-Unknown'>.</span>exports<span class='tok-Unknown'>.</span><span class='tok-Function'>secret_message</span>();
+            <span class='tok-Keyword'>return</span> <span class='tok-Function'>DecodeString</span>(heap, ptr, <span class='tok-Function'>StringLength</span>(heap, ptr));
+        },
+
+        ping<span class='tok-Unknown'>:</span> (message) =&gt; {
+            <span class='tok-Keyword'>const</span> ptr = instance<span class='tok-Unknown'>.</span>exports<span class='tok-Unknown'>.</span><span class='tok-Function'>wasm__push</span>(<span class='tok-Number'>3</span> * message<span class='tok-Unknown'>.</span>length);
+            <span class='tok-Keyword'>const</span> count = <span class='tok-Function'>EncodeString</span>(heap, ptr, message);
+            instance<span class='tok-Unknown'>.</span>exports<span class='tok-Unknown'>.</span><span class='tok-Function'>ping</span>(ptr, count);
+            instance<span class='tok-Unknown'>.</span>exports<span class='tok-Unknown'>.</span><span class='tok-Function'>wasm__pop</span>(<span class='tok-Number'>3</span> * message<span class='tok-Unknown'>.</span>length);
+        },
+
+        compute_square_roots<span class='tok-Unknown'>:</span> (array) =&gt; {
+            <span class='tok-Keyword'>const</span> cArrayPtr = instance<span class='tok-Unknown'>.</span>exports<span class='tok-Unknown'>.</span><span class='tok-Function'>wasm__push</span>(<span class='tok-Number'>8</span> * array<span class='tok-Unknown'>.</span>length);
+            <span class='tok-Keyword'>const</span> cArray = <span class='tok-Keyword'>new</span> <span class='tok-Function'>Float64Array</span>(memory<span class='tok-Unknown'>.</span>buffer, cArrayPtr, array<span class='tok-Unknown'>.</span>length);
+            cArray<span class='tok-Unknown'>.</span><span class='tok-Function'>set</span>(array);
+
+            instance<span class='tok-Unknown'>.</span>exports<span class='tok-Unknown'>.</span><span class='tok-Function'>compute_square_roots</span>(cArrayPtr, array<span class='tok-Unknown'>.</span>length);
+
+            instance<span class='tok-Unknown'>.</span>exports<span class='tok-Unknown'>.</span><span class='tok-Function'>wasm__pop</span>(<span class='tok-Number'>8</span> * array<span class='tok-Unknown'>.</span>length);
+
+            <span class='tok-Keyword'>return</span> Array<span class='tok-Unknown'>.</span><span class='tok-Function'>from</span>(cArray);
+        },
+
+        push_f64_array<span class='tok-Unknown'>:</span> (length) =&gt; {
+            <span class='tok-Keyword'>const</span> ptr = instance<span class='tok-Unknown'>.</span>exports<span class='tok-Unknown'>.</span><span class='tok-Function'>push_f64_array</span>(length);
+
+            <span class='tok-Comment'>// NOTE(nick): read the memory directly</span>
+            <span class='tok-Keyword'>const</span> dataView = <span class='tok-Keyword'>new</span> <span class='tok-Function'>DataView</span>(memory<span class='tok-Unknown'>.</span>buffer);
+            <span class='tok-Type'>let</span> at = ptr;
+            <span class='tok-Keyword'>const</span> count = dataView<span class='tok-Unknown'>.</span><span class='tok-Function'>getUint32</span>(at, true);
+            at += <span class='tok-Number'>4</span>;
+            <span class='tok-Comment'>// NOTE(nick): pointers are u32</span>
+            <span class='tok-Keyword'>const</span> data = dataView<span class='tok-Unknown'>.</span><span class='tok-Function'>getUint32</span>(at, true);
+            at += <span class='tok-Number'>4</span>;
+
+            <span class='tok-Keyword'>const</span> result = <span class='tok-Keyword'>new</span> <span class='tok-Function'>Float64Array</span>(memory<span class='tok-Unknown'>.</span>buffer, data, count);
+            <span class='tok-Keyword'>return</span> result;
+        },
+    };
+};
+
+<span class='tok-Keyword'>const</span> main = <span class='tok-Function'>async</span> () =&gt; {
+    <span class='tok-Keyword'>const</span> hello = <span class='tok-Type'>await</span> <span class='tok-Function'>load</span>(<span class='tok-String'>'/hello.wasm'</span>);
+
+    console<span class='tok-Unknown'>.</span><span class='tok-Function'>log</span>(<span class='tok-String'>"hello.add(42, 42):"</span>, hello<span class='tok-Unknown'>.</span><span class='tok-Function'>add</span>(<span class='tok-Number'>42</span>, <span class='tok-Number'>42</span>));
+    console<span class='tok-Unknown'>.</span><span class='tok-Function'>log</span>(<span class='tok-String'>"secret_message():"</span>, hello<span class='tok-Unknown'>.</span><span class='tok-Function'>secret_message</span>());
+    console<span class='tok-Unknown'>.</span><span class='tok-Function'>log</span>(<span class='tok-Unknown'>`</span><span class='tok-Function'>ping</span>(<span class='tok-String'>"hello, good sir"</span>)<span class='tok-Unknown'>:</span><span class='tok-Unknown'>`</span>, hello<span class='tok-Unknown'>.</span><span class='tok-Function'>ping</span>(<span class='tok-String'>"hello, good sir"</span>));
+    console<span class='tok-Unknown'>.</span><span class='tok-Function'>log</span>(<span class='tok-Unknown'>`</span><span class='tok-Function'>compute_square_roots</span>([<span class='tok-Number'>1</span>, <span class='tok-Number'>2</span>, <span class='tok-Number'>3</span>, <span class='tok-Number'>4</span>, <span class='tok-Number'>5</span>])<span class='tok-Unknown'>:</span><span class='tok-Unknown'>`</span>, hello<span class='tok-Unknown'>.</span><span class='tok-Function'>compute_square_roots</span>([<span class='tok-Number'>1</span>, <span class='tok-Number'>2</span>, <span class='tok-Number'>3</span>, <span class='tok-Number'>4</span>, <span class='tok-Number'>5</span>]));
+    console<span class='tok-Unknown'>.</span><span class='tok-Function'>log</span>(<span class='tok-Unknown'>`</span><span class='tok-Function'>push_f64_array</span>(<span class='tok-Number'>10</span>)<span class='tok-Unknown'>:</span><span class='tok-Unknown'>`</span>, hello<span class='tok-Unknown'>.</span><span class='tok-Function'>push_f64_array</span>(<span class='tok-Number'>10</span>));
+};
+
+<span class='tok-Function'>main</span>();</pre><p></p><hr/><p></p><h2 id='wrap_up'>Wrap Up</h2><p></p>While it would be a lot of work to emulate <i>everything</i> <code class='inline_code'>emscripten</code> is doing, I hope this has shown you a viable alternative.
+<p></p>Overall I have enjoyed working with WASM despite some of it's limitations.
+<p></p><h2 id='links'>Links</h2><p></p><a class='link' href='https://rsms.me/wasm-intro' target='_blank'>https://rsms.me/wasm-intro</a><p></p><a class='link' href='https://depth-first.com/articles/2019/10/16/compiling-c-to-webassembly-and-running-it-without-emscripten/' target='_blank'>https://depth-first.com/articles/2019/10/16/compiling-c-to-webassembly-and-running-it-without-emscripten/</a><p></p><a class='link' href='https://dassur.ma/things/c-to-webassembly/' target='_blank'>https://dassur.ma/things/c-to-webassembly/</a><p></p><a class='link' href='https://github.com/llvm-mirror/clang/blob/master/test/CodeGen/builtins-wasm.c' target='_blank'>https://github.com/llvm-mirror/clang/blob/master/test/CodeGen/builtins-wasm.c</a><p></p><a class='link' href='https://github.com/emscripten-core/emscripten/tree/main/system/lib/libc/musl' target='_blank'>https://github.com/emscripten-core/emscripten/tree/main/system/lib/libc/musl</a></div>
+<div class='content pad-64 w-800 sm:pad-32 flex-y center-x'>
+<a class='pad-16' onclick='toggle()'>💡</a>
+<div style='min-width: 64px; max-width: 64px; margin-bottom: -64px'>
+<img src='/r/guy_pixel.png' alt='Guy'  style='image-rendering:pixelated;'/>
+</div>
+</div>
+<script>var invert = false;const up = (i) => {try { localStorage.setItem('invert', i ? 1 : 0); } catch(err) {}document.body.classList.toggle('invert', i);invert = i;};function toggle(){up(!invert);}if (window.matchMedia){try { i = localStorage.getItem('invert'); } catch(err) {}if (i === null) i = !window.matchMedia('(prefers-color-scheme: dark)').matches;else i = !!Number(i);up(i);window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {up(!e.matches, true);});}window.addEventListener('load', () => {document.getElementsByTagName('html')[0].className += 'load';});</script>
+<script src='/lightning.js'></script>
+</body>
+</html>

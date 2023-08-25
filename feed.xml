@@ -5,8 +5,8 @@
 <title>Nick Aversano</title>
 <link>https://nickav.co</link>
 <description>My Personal Website</description>
-<pubDate>07 Jul 2023 14:32:21 +0000</pubDate>
-<lastBuildDate>07 Jul 2023 14:32:21 +0000</lastBuildDate>
+<pubDate>25 Aug 2023 01:49:07 +0000</pubDate>
+<lastBuildDate>25 Aug 2023 01:49:07 +0000</lastBuildDate>
 <language>en-us</language>
 <image><url></url></image>
 
@@ -25,6 +25,15 @@
 <pubDate>29 Jun 2023 23:31:03 +0000</pubDate>
 <link>https://nickav.co//posts/0002_why_c</link>
 <guid isPermaLink='true'>https://nickav.co//posts/0002_why_c</guid>
+<category>article</category>
+</item>
+
+<item>
+<title>WASM from Scratch</title>
+<description>A practical guide for working with Web Assembly</description>
+<pubDate>23 Aug 2023 23:23:23 +0000</pubDate>
+<link>https://nickav.co//posts/0003_wasm_from_scratch</link>
+<guid isPermaLink='true'>https://nickav.co//posts/0003_wasm_from_scratch</guid>
 <category>article</category>
 </item>
 

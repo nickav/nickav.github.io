@@ -215,13 +215,13 @@ While there is a builtin to request more memory from the WASM runtime, I prefer 
 }</pre><p></p><div class="message">
 ⚠️ Note that we always align our allocations because some data structures like <code class='inline_code'>Float64Array</code> require that the memory is 8-byte aligned!
 </div>
-<p></p>If you are using <code class='inline_code'>wasm32</code> then pointers with be <code class='inline_code'>u32</code>-sized.
+<p></p>Pointers will be <code class='inline_code'>u32</code>-sized because we are using <code class='inline_code'>wasm32</code>.
 As far as I can tell, the most you can return from a native function via the WASM FFI is a <code class='inline_code'>u64</code> and this gets returned to JavaScript as a <code class='inline_code'>BigInt</code>.
 If you need to read or write more than that, then you can use the <code class='inline_code'>wasm__push</code> and <code class='inline_code'>wasm__pop</code> functions.
 Another strategy would be to just agree on a reserved address space for JS-WASM communication, sort of like a global scratch buffer.
 <p></p>There is no <code class='inline_code'>malloc</code> or <code class='inline_code'>free</code> (again, no standard library).
 If you absolutely can't live without them, you can define your own or find an implementation online.
-In practice, I literally just use my <code class='inline_code'>Arena</code> allocator on top of my <code class='inline_code'>wasm__push</code> and <code class='inline_code'>wasm__pop</code> funtions.
+In practice, I literally just use my <code class='inline_code'>Arena</code> allocator on top of the <code class='inline_code'>wasm__push</code> and <code class='inline_code'>wasm__pop</code> functions.
 <p></p><h2 id='strings'>Strings</h2><p></p>Strings in WASM are a special case of dealing with exchanging large amounts of information back and forth (I mean, larger than a <code class='inline_code'>u64</code>).
 You might require special handling to get the UTF8 part correctly, but otherwise we are literally just writing the bytes to some shared location on the heap and passing the pointer to them.
 <p></p>The browser has two built-in functions for dealing with UTF8 strings: <code class='inline_code'>TextDecoder</code> and <code class='inline_code'>TextEncoder</code>.
@@ -258,8 +258,7 @@ console<span class='tok-Unknown'>.</span><span class='tok-Function'>log</span>(<
 <span class='tok-Comment'>// NOTE(nick): then we pass a pointer to where we put the bytes</span>
 instance<span class='tok-Unknown'>.</span>exports<span class='tok-Unknown'>.</span><span class='tok-Function'>ping</span>(ptr, count);
 <span class='tok-Comment'>// NOTE(nick): now we're done with the memory</span>
-instance<span class='tok-Unknown'>.</span>exports<span class='tok-Unknown'>.</span><span class='tok-Function'>wasm__pop</span>(<span class='tok-Number'>3</span> * message<span class='tok-Unknown'>.</span>length);</pre><p></p><h2 id='structs'>Structs</h2><p></p>As far as I can tell, the most you can return from a function is a <code class='inline_code'>u64</code> and this gets returned to JS as a <code class='inline_code'>BigInt</code>.
-If you want to return a struct from a function you can either pack it into a <code class='inline_code'>u32</code> or a <code class='inline_code'>u64</code> and re-interpret the bytes as needed, or you can return a pointer to the struct and decode the struct fields from the pointer. I think returning a pointer is a bit easier to work with so that's what I normally do.
+instance<span class='tok-Unknown'>.</span>exports<span class='tok-Unknown'>.</span><span class='tok-Function'>wasm__pop</span>(<span class='tok-Number'>3</span> * message<span class='tok-Unknown'>.</span>length);</pre><p></p><h2 id='structs'>Structs</h2><p></p>If you want to return a struct from a function you can either pack it into a <code class='inline_code'>u32</code> or a <code class='inline_code'>u64</code> and re-interpret the bytes, or you can return a pointer to the struct and decode the struct fields. I think returning a pointer is a bit easier to work with so that's what I normally do.
 <p></p>For example:
 <p></p><pre class='code'><span class='tok-Comment'>// File: hello.c</span>
 <span class='tok-Type'>typedef</span> <span class='tok-Type'>unsigned</span> <span class='tok-Type'>int</span> <span class='tok-Type'>u32</span>;
@@ -281,9 +280,9 @@ at += <span class='tok-Number'>4</span>;
 at += <span class='tok-Number'>4</span>;
 
 <span class='tok-Comment'>// Now here is our reconstructed foo struct:</span>
-<span class='tok-Keyword'>const</span> foo = { x, y };</pre><p></p><code class='inline_code'>DataView</code> has a bunch of <a class='link' href='https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView' target='_blank'>methods</a> for interpretting different kinds of data.
+<span class='tok-Keyword'>const</span> foo = { x, y };</pre><p></p><code class='inline_code'>DataView</code> has a bunch of <a class='link' href='https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView' target='_blank'>methods</a> for interpreting different kinds of data.
 <p></p>The second argument should be <code class='inline_code'>true</code> because according to <a class='link' href='https://rsms.me/wasm-intro' target='_blank'>Rasmus</a> the bytes are always little endian independent of the host-machine's endianess.
-<p></p>This strategy also works for pointers fields.
+<p></p>This strategy also works for pointer fields.
 <p></p><h2 id='arrays'>Arrays</h2><p></p>We already saw a couple of examples for reading and writing strings. Arrays are similar.
 <p></p>To send an <code class='inline_code'>f64</code> array to WASM:
 <p></p><pre class='code'><span class='tok-Keyword'>const</span> jsArray = [<span class='tok-Number'>1</span>, <span class='tok-Number'>2</span>, <span class='tok-Number'>3</span>, <span class='tok-Number'>4</span>, <span class='tok-Number'>5</span>];
@@ -310,8 +309,8 @@ at += <span class='tok-Number'>4</span>;
 at += <span class='tok-Number'>4</span>;
 
 <span class='tok-Keyword'>const</span> result = <span class='tok-Keyword'>new</span> <span class='tok-Function'>Float64Array</span>(memory<span class='tok-Unknown'>.</span>buffer, data, count);
-<span class='tok-Keyword'>return</span> result;</pre><p></p>Note that because we just returned a <code class='inline_code'>Float64Array</code> into WASM's memory, this will actually change when WASM overwrites that memory. So you should take care to copy the array if you need to.
-<p></p>For small arrays you can use <code class='inline_code'>Array.from(float64Array)</code> to make it a plain JavaScript array.
+<span class='tok-Keyword'>return</span> result;</pre><p></p>Note that because we just returned a <code class='inline_code'>Float64Array</code> into WASM's memory, these values will actually change if WASM overwrites that memory. So you should take care to copy the array if you need to, or make sure the memory stays at a fixed address.
+<p></p>For small arrays you can use <code class='inline_code'>Array.from(float64Array)</code> to convert the <code class='inline_code'>TypedArray</code> into a plain JavaScript array.
 You can also copy the typed array itself with <code class='inline_code'>float64Array.slice()</code>.
 <p></p><div class="message">
 ⚠️ One caveat with <code class='inline_code'>TypedArray</code>s is that <code class='inline_code'>Array.isArray</code> will actually return <code class='inline_code'>false</code> for them!
@@ -552,7 +551,8 @@ f64_Array *<span class='tok-Function'>push_f64_array</span>(<span class='tok-Typ
     console<span class='tok-Unknown'>.</span><span class='tok-Function'>log</span>(<span class='tok-Unknown'>`</span><span class='tok-Function'>push_f64_array</span>(<span class='tok-Number'>10</span>)<span class='tok-Unknown'>:</span><span class='tok-Unknown'>`</span>, hello<span class='tok-Unknown'>.</span><span class='tok-Function'>push_f64_array</span>(<span class='tok-Number'>10</span>));
 };
 
-<span class='tok-Function'>main</span>();</pre><p></p><hr/><p></p><h2 id='wrap_up'>Wrap Up</h2><p></p>While it would be a lot of work to emulate <i>everything</i> <code class='inline_code'>emscripten</code> is doing, I hope this has shown you a viable alternative.
+<span class='tok-Function'>main</span>();</pre><p></p><hr/><p></p><h2 id='wrap_up'>Wrap Up</h2><p></p>The code I've shared should cover just about everything you could ever want to do in WASM.
+While it would be a lot of work to emulate <i>everything</i> <code class='inline_code'>emscripten</code> is doing, I hope this has shown you a viable alternative.
 <p></p>Overall I have enjoyed working with WASM despite some of it's limitations.
 <p></p><h2 id='links'>Links</h2><p></p><a class='link' href='https://rsms.me/wasm-intro' target='_blank'>https://rsms.me/wasm-intro</a><p></p><a class='link' href='https://depth-first.com/articles/2019/10/16/compiling-c-to-webassembly-and-running-it-without-emscripten/' target='_blank'>https://depth-first.com/articles/2019/10/16/compiling-c-to-webassembly-and-running-it-without-emscripten/</a><p></p><a class='link' href='https://dassur.ma/things/c-to-webassembly/' target='_blank'>https://dassur.ma/things/c-to-webassembly/</a><p></p><a class='link' href='https://github.com/llvm-mirror/clang/blob/master/test/CodeGen/builtins-wasm.c' target='_blank'>https://github.com/llvm-mirror/clang/blob/master/test/CodeGen/builtins-wasm.c</a><p></p><a class='link' href='https://github.com/emscripten-core/emscripten/tree/main/system/lib/libc/musl' target='_blank'>https://github.com/emscripten-core/emscripten/tree/main/system/lib/libc/musl</a></div>
 <div class='content pad-64 w-800 sm:pad-32 flex-y center-x'>

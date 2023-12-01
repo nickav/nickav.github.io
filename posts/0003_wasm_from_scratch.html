@@ -73,11 +73,11 @@ Great! Let's try compiling with <code class='inline_code'>clang</code> and speci
 <span class='tok-Function'>wasm-ld:</span> error: cannot open crt1.o: no such file or directory
 <span class='tok-Function'>wasm-ld:</span> error: unable to find library <span class='tok-Type'>-lc</span>
 <span class='tok-Function'>wasm-ld:</span> error: cannot open C:\Program Files (x86)\Microsoft Visual <span class='tok-Type'>Studio\2019\Community\VC\Tools\Llvm\lib\clang\12.0.0\lib\libclang_rt.builtins-wasm32.a:</span> no such file or directory
-<span class='tok-Function'>clang:</span> error: linker command failed with exit code 1 (use <span class='tok-Type'>-v</span> to see invocation)</pre><p></p>This is because, much like embeded software, there is no C standard library!
+<span class='tok-Function'>clang:</span> error: linker command failed with exit code 1 (use <span class='tok-Type'>-v</span> to see invocation)</pre><p></p>This is because, much like embedded software, there is no C standard library!
 OK, no problem, we've got the <code class='inline_code'>--no-standard-libraries</code> flag. So let's try that and get another error:
 <p></p><pre class='code'>C:\dev\myspace<span class='tok-Keyword no_select'>></span> <span class='tok-Function'>clang</span> <span class='tok-Number'>--target</span><span class='tok-Keyword'>=</span><span class='tok-String'>wasm32</span> <span class='tok-Type'>--no-standard-libraries</span> <span class='tok-Type'>-o</span> hello.wasm hello.c
 <span class='tok-Function'>wasm-ld:</span> error: entry symbol not defined (pass <span class='tok-Type'>--no-entry</span> to suppress): _start
-<span class='tok-Function'>clang:</span> error: linker command failed with exit code 1 (use <span class='tok-Type'>-v</span> to see invocation)</pre><p></p>This is clang telling us that here is no <code class='inline_code'>_start</code> function (the function that eventually calls <code class='inline_code'>int main</code> in a typical C program). OK, well it looks like there's a suggestion there too so let's just using that. The thing is <code class='inline_code'>wasm-ld</code> is giving us the error. To pass a <code class='inline_code'>wasm-ld</code> linker flag you have to prefix it with <code class='inline_code'>-Wl,</code>, so the actual flag looks like: <code class='inline_code'>-Wl,--no-entry</code>.
+<span class='tok-Function'>clang:</span> error: linker command failed with exit code 1 (use <span class='tok-Type'>-v</span> to see invocation)</pre><p></p>This is clang telling us that there is no <code class='inline_code'>_start</code> function (the function that eventually calls <code class='inline_code'>int main</code> in a typical C program). Well it looks like there's a suggestion there too so let's just using that. The thing is <code class='inline_code'>wasm-ld</code> is giving us the error. To pass a <code class='inline_code'>wasm-ld</code> linker flag you have to prefix it with <code class='inline_code'>-Wl,</code>, so the actual flag looks like: <code class='inline_code'>-Wl,--no-entry</code>.
 <p></p>I will now take the liberty to add a few more compiler flags that will matter later:
 <p></p><code class='inline_code'>-Wl,--no-entry</code> - no entry point (we're just building a library)
 <p></p><code class='inline_code'>-Wl,--import-memory</code> - import our memory from the JS environment
@@ -139,7 +139,7 @@ We can use the browser for this, but there are <a class='link' href='https://git
 <p></p><pre class='code'><span class='tok-Number'>84</span></pre><p></p><h2 id='built-ins'>Built-Ins</h2><p></p>Clang has built-in functions for a few things such as:
 <p></p><pre class='code'><span class='tok-Type'>f64</span> <span class='tok-Function'>sqrt</span>(<span class='tok-Type'>f64</span> x) {
     <span class='tok-Keyword'>return</span> <span class='tok-Function'>__builtin_sqrt</span>(x);
-}</pre><p></p>This will <i>just work</i> in WASM because there is are <code class='inline_code'>f32.sqrt</code> and <code class='inline_code'>f64.sqrt</code> instructions!
+}</pre><p></p>This will <i>just work</i> in WASM because there are <code class='inline_code'>f32.sqrt</code> and <code class='inline_code'>f64.sqrt</code> instructions!
 <p></p>There are a few more notable built-ins:
 <p></p><pre class='code'><span class='tok-Function'>__builtin_sqrt</span>(x); <span class='tok-Comment'>// compiles to WASM f32.sqrt or f64.sqrt instruction</span>
 <span class='tok-Function'>__builtin_wasm_memory_size</span>(<span class='tok-Number'>0</span>); <span class='tok-Comment'>// the number of 64Kb pages we have</span>
@@ -160,13 +160,10 @@ Note that you <i>must</i> provide the function now otherwise the WASM module wil
         js__sin<span class='tok-Unknown'>:</span> Math<span class='tok-Unknown'>.</span>sin, <span class='tok-Comment'>// added</span>
     },
 });</pre><p></p>Now you can call <code class='inline_code'>js__sin</code> from C.
-<p></p>This is also, for example, how you would do OpenGL bindings in WASM.
-<p></p><h2 id='memory'>Memory</h2><p></p>When we booted up our WASM code, we told it exactly how many memory pages it has to run in. Each memory page is 64KB.
-<p></p>Our whole program must run with the memory that it's given.
+<p></p>This is also, for example, how you would do WebGL bindings.
+<p></p><h2 id='memory'>Memory</h2><p></p>When we booted up our WASM code, we told it exactly how many memory pages it has. Each page is 64KB.
+Our program must run with the memory that it's given.
 While there is a builtin to request more memory from the WASM runtime, I prefer to just declare all the memory I will ever use upfront.
-<p></p><div class="message">
-⚠️ If you just try to write directly into your WASM program's memory you will be writing over the stack from <code class='inline_code'>[0, &__heap_base)</code>.
-</div>
 <p></p>You can get the heap size and base pointer with:
 <p></p><pre class='code'><span class='tok-Comment'>//</span>
 <span class='tok-Comment'>// NOTE(nick): clang will set the address of this variable to be in the</span>
@@ -183,12 +180,15 @@ While there is a builtin to request more memory from the WASM runtime, I prefer 
 {
     <span class='tok-Comment'>// IMPORTANT! get the _address_ of the __heap_base symbol</span>
     <span class='tok-Keyword'>return</span> (<span class='tok-Type'>void</span> *)&__heap_base;
-}</pre><p></p>Now we can define our own global allocator with a simple bump allocator:
+}</pre><p></p><div class="message">
+⚠️ If you just try to write directly into your WASM program's memory you will be writing over the stack from <code class='inline_code'>[0, &__heap_base)</code>.
+</div>
+<p></p>Now we can define our own global allocator with a simple bump allocator:
 <p></p><pre class='code'><span class='tok-Keyword'>static</span> <span class='tok-Type'>u32</span> offset = <span class='tok-Number'>0</span>;
 
 <span class='tok-Type'>u8</span> *<span class='tok-Function'>wasm__push</span>(<span class='tok-Type'>u32</span> size)
 {
-    <span class='tok-Type'>u8</span> *result = NULL;
+    <span class='tok-Type'>u8</span> *result = <span class='tok-Literal'>NULL</span>;
 
     <span class='tok-Comment'>// NOTE(nick): align up to the nearest 16 bytes</span>
     size = (size + <span class='tok-Number'>15</span>) & ~<span class='tok-Number'>15</span>;
@@ -217,14 +217,14 @@ While there is a builtin to request more memory from the WASM runtime, I prefer 
 </div>
 <p></p>Pointers will be <code class='inline_code'>u32</code>-sized because we are using <code class='inline_code'>wasm32</code>.
 As far as I can tell, the most you can return from a native function via the WASM FFI is a <code class='inline_code'>u64</code> and this gets returned to JavaScript as a <code class='inline_code'>BigInt</code>.
-If you need to read or write more than that, then you can use the <code class='inline_code'>wasm__push</code> and <code class='inline_code'>wasm__pop</code> functions.
+If you need to read or write more than that then you can use the <code class='inline_code'>wasm__push</code> and <code class='inline_code'>wasm__pop</code> functions.
 Another strategy would be to just agree on a reserved address space for JS-WASM communication, sort of like a global scratch buffer.
-<p></p>There is no <code class='inline_code'>malloc</code> or <code class='inline_code'>free</code> (again, no standard library).
+<p></p>There is no <code class='inline_code'>malloc</code> or <code class='inline_code'>free</code>.
 If you absolutely can't live without them, you can define your own or find an implementation online.
 In practice, I literally just use my <code class='inline_code'>Arena</code> allocator on top of the <code class='inline_code'>wasm__push</code> and <code class='inline_code'>wasm__pop</code> functions.
 <p></p><h2 id='strings'>Strings</h2><p></p>Strings in WASM are a special case of dealing with exchanging large amounts of information back and forth (I mean, larger than a <code class='inline_code'>u64</code>).
 You might require special handling to get the UTF8 part correctly, but otherwise we are literally just writing the bytes to some shared location on the heap and passing the pointer to them.
-<p></p>The browser has two built-in functions for dealing with UTF8 strings: <code class='inline_code'>TextDecoder</code> and <code class='inline_code'>TextEncoder</code>.
+<p></p>The browser has two built-in classes for dealing with UTF8 strings: <code class='inline_code'>TextDecoder</code> and <code class='inline_code'>TextEncoder</code>.
 <p></p>Let's define a couple of functions for reading and writing UTF8 strings:
 <p></p><pre class='code'><span class='tok-Keyword'>const</span> decoder = <span class='tok-Keyword'>new</span> <span class='tok-Function'>TextDecoder</span>(<span class='tok-String'>"utf8"</span>);
 
@@ -274,9 +274,9 @@ instance<span class='tok-Unknown'>.</span>exports<span class='tok-Unknown'>.</sp
 <span class='tok-Comment'>// NOTE(nick): `DataView` helps us read values out of the struct</span>
 <span class='tok-Keyword'>const</span> dataView = <span class='tok-Keyword'>new</span> <span class='tok-Function'>DataView</span>(memory<span class='tok-Unknown'>.</span>buffer);
 <span class='tok-Type'>let</span> at = ptr;
-<span class='tok-Keyword'>const</span> x = dataView<span class='tok-Unknown'>.</span><span class='tok-Function'>getUint32</span>(at, true);
+<span class='tok-Keyword'>const</span> x = dataView<span class='tok-Unknown'>.</span><span class='tok-Function'>getUint32</span>(at, <span class='tok-Literal'>true</span>);
 at += <span class='tok-Number'>4</span>;
-<span class='tok-Keyword'>const</span> y = dataView<span class='tok-Unknown'>.</span><span class='tok-Function'>getUint32</span>(at, true);
+<span class='tok-Keyword'>const</span> y = dataView<span class='tok-Unknown'>.</span><span class='tok-Function'>getUint32</span>(at, <span class='tok-Literal'>true</span>);
 at += <span class='tok-Number'>4</span>;
 
 <span class='tok-Comment'>// Now here is our reconstructed foo struct:</span>
@@ -302,10 +302,10 @@ instance<span class='tok-Unknown'>.</span>exports<span class='tok-Unknown'>.</sp
 <span class='tok-Comment'>// NOTE(nick): read the memory directly</span>
 <span class='tok-Keyword'>const</span> dataView = <span class='tok-Keyword'>new</span> <span class='tok-Function'>DataView</span>(memory<span class='tok-Unknown'>.</span>buffer);
 <span class='tok-Type'>let</span> at = ptr;
-<span class='tok-Keyword'>const</span> count = dataView<span class='tok-Unknown'>.</span><span class='tok-Function'>getUint32</span>(at, true);
+<span class='tok-Keyword'>const</span> count = dataView<span class='tok-Unknown'>.</span><span class='tok-Function'>getUint32</span>(at, <span class='tok-Literal'>true</span>);
 at += <span class='tok-Number'>4</span>;
 <span class='tok-Comment'>// NOTE(nick): pointers are u32</span>
-<span class='tok-Keyword'>const</span> data = dataView<span class='tok-Unknown'>.</span><span class='tok-Function'>getUint32</span>(at, true);
+<span class='tok-Keyword'>const</span> data = dataView<span class='tok-Unknown'>.</span><span class='tok-Function'>getUint32</span>(at, <span class='tok-Literal'>true</span>);
 at += <span class='tok-Number'>4</span>;
 
 <span class='tok-Keyword'>const</span> result = <span class='tok-Keyword'>new</span> <span class='tok-Function'>Float64Array</span>(memory<span class='tok-Unknown'>.</span>buffer, data, count);
@@ -319,7 +319,7 @@ You should use <code class='inline_code'>ArrayBuffer.isView()</code> instead.
 <p></p><h2 id='source_code'>Source code</h2><p></p>Here is the full source code of our program, also available on <a class='link' href='https://gist.github.com/nickav/b371ba3769160cd321063eac5503c9c7' target='_blank'>Github</a>:
 <p></p><pre class='code'><span class='tok-Comment'>// File: hello.c</span>
 <span class='tok-Comment'>// Types</span>
-<span class='tok-Macro'>#define</span> NULL <span class='tok-Number'>0</span>
+<span class='tok-Macro'>#define</span> <span class='tok-Literal'>NULL</span> <span class='tok-Number'>0</span>
 <span class='tok-Type'>typedef</span> <span class='tok-Type'>unsigned</span> <span class='tok-Type'>char</span>      <span class='tok-Type'>u8</span>;
 <span class='tok-Type'>typedef</span> <span class='tok-Type'>unsigned</span> <span class='tok-Type'>int</span>       <span class='tok-Type'>u32</span>;
 <span class='tok-Type'>typedef</span> <span class='tok-Type'>signed</span> <span class='tok-Type'>int</span>         <span class='tok-Type'>i32</span>;
@@ -362,7 +362,7 @@ You should use <code class='inline_code'>ArrayBuffer.isView()</code> instead.
 <span class='tok-Keyword'>__attribute__</span>((<span class='tok-Function'>export_name</span>(<span class='tok-String'>"wasm__push"</span>)))
 <span class='tok-Type'>u8</span> *<span class='tok-Function'>wasm__push</span>(<span class='tok-Type'>u32</span> size)
 {
-    <span class='tok-Type'>u8</span> *result = NULL;
+    <span class='tok-Type'>u8</span> *result = <span class='tok-Literal'>NULL</span>;
 
     <span class='tok-Comment'>// NOTE(nick): align up to the nearest 16 bytes</span>
     size = (size + <span class='tok-Number'>15</span>) & ~<span class='tok-Number'>15</span>;
@@ -529,10 +529,10 @@ f64_Array *<span class='tok-Function'>push_f64_array</span>(<span class='tok-Typ
             <span class='tok-Comment'>// NOTE(nick): read the memory directly</span>
             <span class='tok-Keyword'>const</span> dataView = <span class='tok-Keyword'>new</span> <span class='tok-Function'>DataView</span>(memory<span class='tok-Unknown'>.</span>buffer);
             <span class='tok-Type'>let</span> at = ptr;
-            <span class='tok-Keyword'>const</span> count = dataView<span class='tok-Unknown'>.</span><span class='tok-Function'>getUint32</span>(at, true);
+            <span class='tok-Keyword'>const</span> count = dataView<span class='tok-Unknown'>.</span><span class='tok-Function'>getUint32</span>(at, <span class='tok-Literal'>true</span>);
             at += <span class='tok-Number'>4</span>;
             <span class='tok-Comment'>// NOTE(nick): pointers are u32</span>
-            <span class='tok-Keyword'>const</span> data = dataView<span class='tok-Unknown'>.</span><span class='tok-Function'>getUint32</span>(at, true);
+            <span class='tok-Keyword'>const</span> data = dataView<span class='tok-Unknown'>.</span><span class='tok-Function'>getUint32</span>(at, <span class='tok-Literal'>true</span>);
             at += <span class='tok-Number'>4</span>;
 
             <span class='tok-Keyword'>const</span> result = <span class='tok-Keyword'>new</span> <span class='tok-Function'>Float64Array</span>(memory<span class='tok-Unknown'>.</span>buffer, data, count);
